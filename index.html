@@ -522,7 +522,8 @@ function ev(){
     }
   }
 
-  const d={edad,edadM,mesesSin,netas,piso:C.piso,afore,aforeReq,falta,aniosFin,ultima,
+  const aforeCubre=(afore!==null&&C.k>0)?afore/C.k:null;
+  const d={edad,edadM,mesesSin,netas,piso:C.piso,afore,aforeReq,falta,aniosFin,aforeCubre,ultima,
     aforeSrc:seg.aforeSrc, gancho:ganchoPension(netas, +seg.esc)};
   render(estatus,klass,ruta,razon,d,flags,say);
 }
@@ -546,6 +547,11 @@ function render(estatus,klass,ruta,razon,d,flags,say){
     add('Años a financiar', d.aniosFin);
     add('AFORE requerido', fmt(d.aforeReq));
     if(d.afore!=null) add('AFORE disponible', fmt(d.afore)+(d.falta>0?' (faltan '+fmt(d.falta)+')':' ✓'), d.falta>0?'ko':'good');
+    if(d.afore!=null && d.aforeCubre!=null){
+      const cv=(Math.round(d.aforeCubre*10)/10).toString();
+      if(d.falta>0) add('AFORE cubre', cv+' de '+d.aniosFin+' años · aporta '+fmt(d.falta),'ko');
+      else add('AFORE cubre','los '+d.aniosFin+' años ✓','good');
+    }
   }
 
   // qué preguntar / qué sigue
@@ -584,6 +590,7 @@ function render(estatus,klass,ruta,razon,d,flags,say){
   if(d.ultima) L.push('Última cotización: '+({trabajo:'Trabajo/patrón',mod10:'Mod 10',mod40:'Mod 40'})[d.ultima]);
   if(d.netas!=null) L.push('Semanas netas: '+d.netas+' (piso '+d.piso+')');
   if(d.aforeReq!=null) L.push('AFORE: '+(d.afore!=null?fmt(d.afore):'—')+' / req '+fmt(d.aforeReq)+(d.falta>0?(' · faltan '+fmt(d.falta)):' · alcanza'));
+  if(d.aforeReq!=null && d.afore!=null && d.aforeCubre!=null) L.push('AFORE cubre '+(Math.round(d.aforeCubre*10)/10)+' de '+d.aniosFin+' años'+(d.falta>0?(' · aporta '+fmt(d.falta)):''));
   if(d.gancho) L.push('Pensión ref. ('+d.gancho.edad+'a): hoy ~'+fmt(d.gancho.actual)+' → topada ~'+fmt(d.gancho.topada)+' (+'+fmt(d.gancho.dif)+')');
   if(flags.length){ L.push(''); L.push('Banderas para asesor:'); flags.forEach(([t,x])=>L.push('- '+t+': '+x)); }
   document.getElementById('crm').value=L.join('\n');
