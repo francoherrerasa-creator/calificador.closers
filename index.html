@@ -162,6 +162,10 @@
       <div class="field"><label>Nombre del lead</label><input type="text" id="nombre" placeholder="nombre" oninput="ev()"></div>
       <div class="field"><label>Tu nombre (closer)</label><input type="text" id="closer" placeholder="tu nombre" oninput="ev()"></div>
     </div>
+    <div class="field">
+      <label>Trato (se saca del CURP)</label>
+      <div class="seg" id="trato"><button data-v="señor">Señor</button><button data-v="señora">Señora</button></div>
+    </div>
 
     <div class="field">
       <label>CURP (saca la edad sola)</label>
@@ -366,8 +370,8 @@ function initSeg(id, def){
       b.classList.add('on'); ev(); };
   });
 }
-['ley73','pensionado','tramitando','cotiza','s52','aforeSrc','aporta','deudaAfore','demanda','quiere','issste','esc']
-  .forEach(id=>initSeg(id, {pensionado:'no',tramitando:'no',cotiza:'no',aforeSrc:'creditia',deudaAfore:'no',demanda:'no',issste:'no',esc:'60'}[id]||''));
+['ley73','pensionado','tramitando','cotiza','s52','aforeSrc','aporta','deudaAfore','demanda','quiere','issste','esc','trato']
+  .forEach(id=>initSeg(id, {pensionado:'no',tramitando:'no',cotiza:'no',aforeSrc:'creditia',deudaAfore:'no',demanda:'no',issste:'no',esc:'60',trato:'señor'}[id]||''));
 
 // ---------- tabla de pensión de referencia (Guión 3.0 p.3) ----------
 // semanas: [pensión actual ~$500/día, pensión topada ~$2,932/día]
@@ -399,6 +403,11 @@ function onCurp(){
   let meses = (hoy.getFullYear()-nac.getFullYear())*12 + (hoy.getMonth()-nac.getMonth());
   if(hoy.getDate()<nac.getDate()) meses--;
   const aE=Math.floor(meses/12), mE=meses%12;
+  const sexo=c.charAt(10);
+  if(sexo==='H'||sexo==='M'){
+    seg.trato = (sexo==='M')?'señora':'señor';
+    document.getElementById('trato').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===seg.trato));
+  }
   if(aE>0 && aE<110){
     document.getElementById('edad').value = aE;
     document.getElementById('edadM').value = mE;
@@ -604,6 +613,8 @@ function renderJourney(d){
   const fw=nf?nf.split(/\s+/)[0]:'';
   const nom=fw?(fw.charAt(0).toUpperCase()+fw.slice(1).toLowerCase()):'[nombre]';
   const clo=(document.getElementById('closer').value.trim())||'[tu nombre]';
+  const tr=(seg.trato==='señora')?'señora':'señor';
+  const Tr=tr.charAt(0).toUpperCase()+tr.slice(1);
   const ap=(d.falta&&d.falta>0)?fmt(d.falta):'[aportación aprox]';
   const G=d.gancho;
   const metaC =G?('$'+(Math.floor(G.topada/10000)*10)+' mil'):'$[X]';
@@ -611,17 +622,17 @@ function renderJourney(d){
   const actC1 =G?('$'+(Math.floor(G.actual/1000))+' mil'):'$[pensión actual]';
   const flow={
     main:[
-      {id:'A',l:'A · Primer contacto',msg:'¡Hola señor '+nom+'! Buenos días. Soy '+clo+', asesor de Pensión Perfecta. Me llegó su solicitud para ver cuánto podríamos subir su pensión con modalidad 40. ¿Sigue interesado?'},
-      {id:'B',l:'B · Documentación',msg:'¡Excelente, '+nom+'! Me da mucho gusto.\n\nLe cuento por qué vale la pena verlo: en Pensión Perfecta hemos ayudado a miles de personas en los últimos 8 años, incrementando su pensión desde $5 mil hasta más de $40 mil pesos al mes, de por vida. La mayoría de nuestros socios no sabía todo lo que podía recuperar.\n\nPara poder completar su información, lo mejor es que lo veamos rápido por una llamada, donde reviso su caso y le digo cómo lo podemos ayudar.\n\nSi antes me envía estos dos documentos, la llamada es más rápida y precisa, porque llego con su caso ya revisado:\n\n1. Su constancia de semanas cotizadas del IMSS.\n2. Su estado de cuenta del AFORE, de preferencia reciente.\n\nSi no tiene la constancia a la mano, con su CURP se la generamos.\n\n¿En qué horario le puedo marcar?'}
+      {id:'A',l:'A · Primer contacto',msg:'¡Hola '+tr+' '+nom+'! Buenos días. Soy '+clo+', asesor de Pensión Perfecta. Me llegó su solicitud para ver cuánto podríamos subir su pensión con modalidad 40. ¿Sigue interesado?'},
+      {id:'B',l:'B · Documentación',msg:'¡Excelente, '+tr+' '+nom+'! Me da mucho gusto.\n\nLe cuento por qué vale la pena verlo: en Pensión Perfecta hemos ayudado a miles de personas en los últimos 8 años, incrementando su pensión desde $5 mil hasta más de $40 mil pesos al mes, de por vida. La mayoría de nuestros socios no sabía todo lo que podía recuperar.\n\nPara poder completar su información, lo mejor es que lo veamos rápido por una llamada, donde reviso su caso y le digo cómo lo podemos ayudar.\n\nSi antes me envía estos dos documentos, la llamada es más rápida y precisa, porque llego con su caso ya revisado:\n\n1. Su constancia de semanas cotizadas del IMSS.\n2. Su estado de cuenta del AFORE, de preferencia reciente.\n\nSi no tiene la constancia a la mano, con su CURP se la generamos.\n\n¿En qué horario le puedo marcar?'}
     ],
-    aporta:{id:'C1',l:'Aportación adicional',msg:'Señor '+nom+', buenos días. Le platico sobre su caso.\nCon el financiamiento la meta sería subir su pensión de unos '+actC1+' a más de '+metaC1+' al mes, de por vida.\n\nPor cómo está su AFORE, en su caso se necesitaría una aportación adicional de su parte, además de lo que nosotros financiamos. ¿Estaría usted en posición de hacerla? Para ser claros, estamos hablando de una aportación del orden de '+ap+'.\nQuedo atento a su respuesta.'},
+    aporta:{id:'C1',l:'Aportación adicional',msg:''+Tr+' '+nom+', buenos días. Le platico sobre su caso.\nCon el financiamiento la meta sería subir su pensión de unos '+actC1+' a más de '+metaC1+' al mes, de por vida.\n\nPor cómo está su AFORE, en su caso se necesitaría una aportación adicional de su parte, además de lo que nosotros financiamos. ¿Estaría usted en posición de hacerla? Para ser claros, estamos hablando de una aportación del orden de '+ap+'.\nQuedo atento a su respuesta.'},
     ok:[
-      {id:'C',l:'C · Sí califica',msg:'¡Buenas noticias, señor '+nom+'! Revisé su caso y sí califica para el financiamiento.\nCon su modalidad 40 en retroactivo, la meta sería llevar su pensión a más de '+metaC+' al mes, de por vida.\n\nEl siguiente paso es una asesoría por videollamada con nuestro experto en financiamiento, donde le aterriza los números exactos y le explica el paso a paso.\nEsta asesoría normalmente tiene un costo, pero como usted cumple con todos los requisitos, se la damos sin costo. Tenemos espacio el [día] a las [hora]. ¿Le funciona, o prefiere otro horario?'},
+      {id:'C',l:'C · Sí califica',msg:'¡Buenas noticias, '+tr+' '+nom+'! Revisé su caso y sí califica para el financiamiento.\nCon su modalidad 40 en retroactivo, la meta sería llevar su pensión a más de '+metaC+' al mes, de por vida.\n\nEl siguiente paso es una asesoría por videollamada con nuestro experto en financiamiento, donde le aterriza los números exactos y le explica el paso a paso.\nEsta asesoría normalmente tiene un costo, pero como usted cumple con todos los requisitos, se la damos sin costo. Tenemos espacio el [día] a las [hora]. ¿Le funciona, o prefiere otro horario?'},
       {id:'D',l:'D · Grupo WhatsApp',msg:'¡Hola '+nom+'! Bienvenido a su grupo de seguimiento. Muchísimas gracias por su tiempo hoy.\nComo lo platicamos, queda agendada su asesoría para el [día] de [mes] a las [horas].\n\nEn este grupo está el equipo que va a llevar su caso de principio a fin: la asesora experta en financiamiento que le dará su asesoría, el área de soporte que le apoya con el trámite, y yo. Somos varios a propósito, para que en cada paso siempre tenga a quién acudir.\nCualquier duda antes de su asesoría, por aquí mismo nos escribe, por favor.\nQuedamos al pendiente.'}
     ],
     no:[
-      {id:'N',l:'No califica',msg:'Señor '+nom+', revisé su caso con detalle, y le voy a ser honesto.\nPara el financiamiento en específico no es viable en su caso. Pero eso no quiere decir que no podamos mejorar su pensión.\n\nTenemos una asesoría con un experto donde le armamos un plan personalizado, con varios escenarios, para sacarle el máximo a su pensión con lo que sí tiene a favor. La mayoría de nuestros clientes recupera lo que invierte en la asesoría en el primer mes de su pensión, y va con garantía: si no mejoramos su pensión, le devolvemos el 100%.\n\nLa inversión es de $1,990. ¿Le gustaría que le agendara un espacio para revisarlo?'},
-      {id:'NA',l:'No puede aportación',msg:'Entiendo, señor '+nom+', sin problema. Le soy claro: sin esa aportación, el financiamiento no es viable en su caso, porque se necesita completar ese monto para pagar el retroactivo.\n\nPero eso no quiere decir que no podamos mejorar su pensión. Tenemos una asesoría con un experto donde le armamos un plan personalizado, con varios escenarios, para sacarle el máximo a su pensión con lo que sí tiene a favor. La mayoría de nuestros clientes recupera lo que invierte en la asesoría en el primer mes de su pensión, y va con garantía: si no mejoramos su pensión, le devolvemos el 100%.\n\nLa inversión es de $1,990. ¿Le gustaría que le agendara un espacio para revisarlo?'}
+      {id:'N',l:'No califica',msg:''+Tr+' '+nom+', revisé su caso con detalle, y le voy a ser honesto.\nPara el financiamiento en específico no es viable en su caso. Pero eso no quiere decir que no podamos mejorar su pensión.\n\nTenemos una asesoría con un experto donde le armamos un plan personalizado, con varios escenarios, para sacarle el máximo a su pensión con lo que sí tiene a favor. La mayoría de nuestros clientes recupera lo que invierte en la asesoría en el primer mes de su pensión, y va con garantía: si no mejoramos su pensión, le devolvemos el 100%.\n\nLa inversión es de $1,990. ¿Le gustaría que le agendara un espacio para revisarlo?'},
+      {id:'NA',l:'No puede aportación',msg:'Entiendo, '+tr+' '+nom+', sin problema. Le soy claro: sin esa aportación, el financiamiento no es viable en su caso, porque se necesita completar ese monto para pagar el retroactivo.\n\nPero eso no quiere decir que no podamos mejorar su pensión. Tenemos una asesoría con un experto donde le armamos un plan personalizado, con varios escenarios, para sacarle el máximo a su pensión con lo que sí tiene a favor. La mayoría de nuestros clientes recupera lo que invierte en la asesoría en el primer mes de su pensión, y va con garantía: si no mejoramos su pensión, le devolvemos el 100%.\n\nLa inversión es de $1,990. ¿Le gustaría que le agendara un espacio para revisarlo?'}
     ]
   };
 
@@ -699,6 +710,7 @@ function reset(){
   ['ley73','s52','aporta','quiere'].forEach(id=>{seg[id]='';document.getElementById(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===''));});
   ['pensionado','tramitando','cotiza','demanda','issste','deudaAfore'].forEach(id=>{seg[id]='no';document.getElementById(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='no'));});
   seg.aforeSrc='creditia';document.getElementById('aforeSrc').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='creditia'));
+  seg.trato='señor';document.getElementById('trato').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='señor'));
   document.getElementById('curpHint').textContent='';
   ev();
 }
