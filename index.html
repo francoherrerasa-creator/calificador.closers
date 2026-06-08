@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calificador de Leads · Financiamiento Pensión Perfecta</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1e222b; --line:#2a2f3a;
+    --txt:#e7e9ee; --muted:#9aa3b2; --accent:#4f8cff;
+    --ok:#1f9d57; --okbg:#0f2a1c; --no:#d8453b; --nobg:#2a1413;
+    --warn:#d9a02b; --warnbg:#2a2412; --ahora:#2f7df6; --futuro:#8a5cf6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px;line-height:1.45}
+  .wrap{max-width:1100px;margin:0 auto;padding:14px;display:grid;
+    grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:820px){.wrap{grid-template-columns:1fr}}
+  h1{font-size:18px;margin:0}
+  .top{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;
+    gap:10px;flex-wrap:wrap}
+  .sub{color:var(--muted);font-size:12.5px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .card h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+    margin:0 0 10px}
+  .field{margin-bottom:11px}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  input[type=text],input[type=number],input[type=date],select{width:100%;background:var(--panel2);
+    color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:9px 10px;font-size:15px;color-scheme:dark}
+  input:focus,select:focus{outline:none;border-color:var(--accent)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .seg{display:flex;gap:6px;flex-wrap:wrap}
+  .seg button{flex:1;min-width:54px;background:var(--panel2);color:var(--txt);
+    border:1px solid var(--line);border-radius:8px;padding:8px;cursor:pointer;font-size:13.5px}
+  .seg button.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  .hint{font-size:11.5px;color:var(--muted);margin-top:3px}
+  /* OUTPUT */
+  #out{grid-column:1/-1}
+  .verdict{display:flex;align-items:center;gap:14px;border-radius:12px;padding:16px;
+    border:1px solid var(--line);flex-wrap:wrap}
+  .verdict.ok{background:var(--okbg);border-color:#1f9d57}
+  .verdict.no{background:var(--nobg);border-color:#d8453b}
+  .verdict.warn{background:var(--warnbg);border-color:#d9a02b}
+  .vstat{font-size:24px;font-weight:800;letter-spacing:.02em}
+  .chip{display:inline-block;padding:5px 12px;border-radius:999px;font-weight:700;font-size:14px}
+  .chip.ahora{background:var(--ahora);color:#fff}
+  .chip.futuro{background:var(--futuro);color:#fff}
+  .vreason{color:var(--muted);font-size:13.5px;flex-basis:100%}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media(max-width:820px){.grid2{grid-template-columns:1fr}}
+  .box{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .box h3{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+    display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .kv{display:flex;justify-content:space-between;gap:10px;padding:3px 0;font-size:14px;border-bottom:1px dashed #232833}
+  .kv:last-child{border-bottom:0}
+  .kv b{font-weight:600}
+  .flag,.say{padding:6px 0;font-size:13.5px;border-bottom:1px dashed #232833}
+  .flag:last-child,.say:last-child{border-bottom:0}
+  .flag .t{color:var(--warn);font-weight:700;margin-right:6px}
+  .say .q{color:var(--accent);font-weight:700;margin-right:6px}
+  .say .done{color:#46c97e;font-weight:700;margin-right:6px}
+  .say.cpy{cursor:pointer;border-radius:6px;padding:6px}
+  .say.cpy:hover{background:#20252f}
+  .cpytag{color:var(--accent);font-size:11px;margin-left:6px;white-space:nowrap}
+  .wamsg{border:1px solid var(--line);border-radius:8px;padding:9px 10px;margin-bottom:8px;background:#0c0e12;cursor:pointer;user-select:none}
+  .wamsg:hover{background:#12151b}
+  .wamsg .wt{font-size:13px;color:var(--accent);font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .wamsg .wb{display:none;font-size:12.5px;color:#cfe3ff;line-height:1.45;margin-top:7px;padding-top:7px;border-top:1px dashed var(--line);user-select:text}
+  .wamsg.open .wb{display:block}
+  .exp{color:var(--muted);font-size:11px;margin-left:8px;font-weight:400}
+  .steps{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .jstep{flex:1;min-width:120px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 8px;cursor:pointer;text-align:center}
+  .jstep:hover{border-color:var(--accent)}
+  .jstep.on{background:var(--accent);border-color:var(--accent)}
+  .jstep.on .jlabel{color:#fff}
+  .jstep.goal{border-style:dashed}
+  .jnum{width:26px;height:26px;border-radius:50%;background:var(--panel);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 6px;color:var(--accent)}
+  .jstep.on .jnum{background:rgba(255,255,255,.22);border-color:transparent;color:#fff}
+  .jlabel{font-size:12px;color:var(--txt);font-weight:600;line-height:1.2}
+  .jarrow{color:var(--muted);font-size:18px}
+  @media(max-width:600px){.jarrow{display:none}}
+  .jmsghead{font-size:13px;font-weight:700;color:var(--accent);display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .jmsghead.ok{color:#46c97e}
+  .jmsghead.no{color:#e8645a}
+  .jmsgbody{background:#0c0e12;border:1px solid var(--line);border-radius:8px;padding:11px;font-size:13px;color:#cfe3ff;line-height:1.5}
+  .jstep.main.on{background:var(--accent);border-color:var(--accent)}
+  .jstep.main.on .jlabel{color:#fff}
+  .jstep.ok{border-color:#2f7d4f}
+  .jstep.ok .jlabel{color:#7ee0a3}
+  .jstep.ok.on{background:var(--ok);border-color:var(--ok)}
+  .jstep.ok.on .jlabel{color:#fff}
+  .jstep.no{border-color:#8a3a34}
+  .jstep.no .jlabel{color:#f0a39d}
+  .jstep.no.on{background:var(--no);border-color:var(--no)}
+  .jstep.no.on .jlabel{color:#fff}
+  .branches{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media(max-width:700px){.branches{grid-template-columns:1fr}}
+  .branch{border:1px solid var(--line);border-radius:10px;padding:10px}
+  .branch.ok{background:rgba(31,157,87,.07);border-color:#2f7d4f}
+  .branch.no{background:rgba(216,69,59,.07);border-color:#8a3a34}
+  .bhead{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+  .bhead.ok{color:#46c97e}
+  .bhead.no{color:#e8645a}
+  .jstep.aporta{border-color:var(--warn);border-style:dashed;text-align:center}
+  .jstep.aporta .jlabel{color:#e8c372}
+  .jstep.aporta.on{background:var(--warn);border-color:var(--warn)}
+  .jstep.aporta.on .jlabel,.jstep.aporta.on .jsub{color:#1a1205}
+  .jsub{font-size:11px;color:var(--muted);font-weight:400;margin-top:3px}
+  .qmark{display:inline-block;margin-left:4px;background:rgba(217,160,43,.25);color:#e8c372;border-radius:50%;width:18px;height:18px;line-height:18px;text-align:center;font-size:12px;font-weight:800}
+  .jmsghead.aporta{color:var(--warn)}
+  .ko{color:var(--no);font-weight:700}
+  .good{color:#46c97e;font-weight:700}
+  .gancho .big{font-size:15px}
+  .gancho .up{color:#46c97e;font-weight:800;font-size:18px}
+  .gancho .today{color:var(--muted)}
+  textarea{width:100%;min-height:150px;background:#0c0e12;color:#cfe3ff;border:1px solid var(--line);
+    border-radius:8px;padding:10px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:12.5px;line-height:1.5;resize:vertical}
+  .btn{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:9px 14px;
+    font-size:14px;font-weight:600;cursor:pointer}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
+  .miniseg{display:flex;gap:4px}
+  .miniseg button{background:var(--panel);border:1px solid var(--line);color:var(--muted);
+    border-radius:6px;padding:2px 9px;font-size:12px;cursor:pointer}
+  .miniseg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  details.cfg{grid-column:1/-1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+  details.cfg summary{cursor:pointer;color:var(--muted);font-size:13px;font-weight:600}
+  .cfgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+  @media(max-width:820px){.cfgrid{grid-template-columns:1fr 1fr}}
+  .foot{grid-column:1/-1;color:var(--muted);font-size:11.5px;text-align:center;padding:6px}
+  .topbar{max-width:1100px;margin:0 auto;padding:14px 14px 0;display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}
+  .nav{display:flex;gap:8px;align-items:center}
+  .tab{background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:8px 16px;font-size:14px;font-weight:600;cursor:pointer}
+  .tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .wrapSingle{max-width:1100px;margin:0 auto;padding:14px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <h1>Calificador de Leads · Financiamiento</h1>
+    <div class="sub">Filtro rápido del setter en vivo. No reemplaza el cálculo fino del asesor. Uso interno.</div>
+  </div>
+  <div class="nav">
+    <button id="tabCalif" class="tab on" onclick="showView('calif')">Calificador</button>
+    <button id="tabJourney" class="tab" onclick="showView('journey')">Journey</button>
+    <button class="btn ghost" onclick="reset()">Limpiar</button>
+  </div>
+</div>
+
+<div class="wrap" id="viewCalif">
+
+  <!-- ENTRADA IZQUIERDA -->
+  <div class="card">
+    <h2>Datos del lead</h2>
+
+    <div class="row">
+      <div class="field"><label>Nombre del lead</label><input type="text" id="nombre" placeholder="nombre" oninput="ev()"></div>
+      <div class="field"><label>Tu nombre (closer)</label><input type="text" id="closer" placeholder="tu nombre" oninput="ev()"></div>
+    </div>
+
+    <div class="field">
+      <label>CURP (saca la edad sola)</label>
+      <input type="text" id="curp" maxlength="18" placeholder="18 caracteres" oninput="onCurp()">
+      <div class="hint" id="curpHint"></div>
+      <div class="hint">Si lo dicta mal, pídelo por escrito o foto del documento.</div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>Edad (años / meses)</label>
+        <div class="row">
+          <input type="number" id="edad" min="30" max="100" placeholder="años" oninput="ev()">
+          <input type="number" id="edadM" min="0" max="11" placeholder="meses" oninput="ev()">
+        </div>
+      </div>
+      <div class="field">
+        <label>¿Ley 73? (cotizó antes del 1 jul 1997)</label>
+        <div class="seg" id="ley73"><button data-v="si">Sí</button><button data-v="no">No</button><button data-v="">?</button></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>¿Cotizando hoy?</label>
+        <div class="seg" id="cotiza"><button data-v="no">No</button><button data-v="si">Sí</button></div>
+      </div>
+      <div class="field">
+        <label>¿Pensión definitiva?</label>
+        <div class="seg" id="pensionado"><button data-v="no">No</button><button data-v="si">Sí</button></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>¿Ya está tramitando su pensión ante el IMSS?</label>
+      <div class="seg" id="tramitando"><button data-v="no">No</button><button data-v="si">Sí</button></div>
+    </div>
+
+    <h2 style="margin-top:6px">Tiempo y tipo de cotización</h2>
+    <div class="field">
+      <label>Fecha exacta de última cotización (baja) — opcional</label>
+      <input type="date" id="fechaBaja" oninput="onFechaBaja()">
+      <div class="hint">Si la pones, calculo los años y meses sin cotizar solo. O captúralos a mano abajo.</div>
+    </div>
+    <div class="row3">
+      <div class="field">
+        <label>Años sin cotizar</label>
+        <input type="number" id="aSin" min="0" max="40" placeholder="años" oninput="ev()">
+      </div>
+      <div class="field">
+        <label>Meses extra</label>
+        <input type="number" id="mSin" min="0" max="11" placeholder="meses" oninput="ev()">
+      </div>
+      <div class="field">
+        <label>Última cotización</label>
+        <select id="ultima" onchange="ev()">
+          <option value="">—</option>
+          <option value="trabajo">Trabajo / patrón</option>
+          <option value="mod10">Modalidad 10</option>
+          <option value="mod40">Modalidad 40</option>
+        </select>
+      </div>
+    </div>
+    <div class="field" id="wrap52" style="display:none">
+      <label>¿Tiene 52+ semanas en los 5 años previos a su última cotización?</label>
+      <div class="seg" id="s52"><button data-v="si">Sí</button><button data-v="no">No</button><button data-v="">?</button></div>
+      <div class="hint">Solo Trabajo / Mod 10. No necesitan ser consecutivas (52 semanas = 1 año).</div>
+    </div>
+  </div>
+
+  <!-- ENTRADA DERECHA -->
+  <div class="card">
+    <h2>Semanas (de la constancia IMSS)</h2>
+    <div class="row3">
+      <div class="field">
+        <label>Cotizadas</label>
+        <input type="number" id="wCot" min="0" placeholder="0" oninput="ev()">
+      </div>
+      <div class="field">
+        <label>Descontadas</label>
+        <input type="number" id="wDes" min="0" placeholder="0" oninput="ev()">
+      </div>
+      <div class="field">
+        <label>Reintegradas</label>
+        <input type="number" id="wRei" min="0" placeholder="0" oninput="ev()">
+      </div>
+    </div>
+    <div class="hint">Netas = cotizadas − descontadas + reintegradas. Si tienes el "Total de semanas cotizadas" directo, ponlo en Cotizadas y deja 0 las otras.</div>
+
+    <h2 style="margin-top:12px">AFORE</h2>
+    <div class="row">
+      <div class="field">
+        <label>Monto en AFORE (MXN)</label>
+        <input type="number" id="afore" min="0" placeholder="ej. 400000" oninput="ev()">
+      </div>
+      <div class="field">
+        <label>Origen del dato</label>
+        <div class="seg" id="aforeSrc"><button data-v="creditia">Creditia</button><button data-v="real">Estado real</button></div>
+      </div>
+    </div>
+    <div class="hint" style="margin-top:-2px;margin-bottom:10px">Monto utilizable no lleva cesantía, vejez ni cuota social.</div>
+    <div class="field">
+      <label>Si no alcanza, ¿puede aportar la diferencia de su bolsa?</label>
+      <div class="seg" id="aporta"><button data-v="si">Sí</button><button data-v="no">No</button><button data-v="">?</button></div>
+    </div>
+    <div class="field">
+      <label>¿Debe dinero a su AFORE?</label>
+      <div class="seg" id="deudaAfore"><button data-v="no">No</button><button data-v="si">Sí</button></div>
+    </div>
+
+    <h2 style="margin-top:12px">Filtros del Guión</h2>
+    <div class="row">
+      <div class="field">
+        <label>¿Demanda laboral activa (en proceso)?</label>
+        <div class="seg" id="demanda"><button data-v="no">No</button><button data-v="si">Sí</button><button data-v="">?</button></div>
+      </div>
+      <div class="field">
+        <label>¿Quiere financiamiento? (no solo info)</label>
+        <div class="seg" id="quiere"><button data-v="si">Sí</button><button data-v="no">No</button><button data-v="">?</button></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>¿Tiene cuenta ISSSTE?</label>
+      <div class="seg" id="issste"><button data-v="no">No</button><button data-v="si">Sí</button></div>
+    </div>
+  </div>
+
+  <!-- SALIDA -->
+  <div id="out" class="card">
+    <div class="verdict" id="verdict">
+      <div class="vstat" id="vstat">—</div>
+      <div id="vchip"></div>
+      <div class="vreason" id="vreason">Captura los datos del lead conforme platicas.</div>
+    </div>
+
+    <div class="grid2">
+      <div class="box">
+        <h3>Diagnóstico</h3>
+        <div id="diag"></div>
+      </div>
+      <div class="box say-box">
+        <h3>Qué preguntar / qué sigue</h3>
+        <div id="say"><div class="say" style="color:var(--muted)">—</div></div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="box gancho">
+        <h3>Gancho de pensión (referencia)
+          <span class="miniseg" id="esc"><button data-v="60">60 años</button><button data-v="65">65 años</button></span>
+        </h3>
+        <div id="gancho"><div style="color:var(--muted);font-size:13px">Captura semanas para ver el estimado.</div></div>
+      </div>
+      <div class="box">
+        <h3>Banderas para el asesor</h3>
+        <div id="flags"><div class="flag" style="color:var(--muted)">—</div></div>
+      </div>
+    </div>
+
+    <div class="box" style="margin-top:12px">
+      <h3>Bloque para el CRM <button class="btn" onclick="copyCRM()" id="copyBtn" style="padding:4px 11px;font-size:12px">Copiar</button></h3>
+      <textarea id="crm" readonly></textarea>
+    </div>
+  </div>
+
+  <!-- CONFIG -->
+  <details class="cfg">
+    <summary>⚙️ Criterios editables (cámbialos cuando Checo ajuste el rango)</summary>
+    <div class="cfgrid">
+      <div class="field"><label>Piso de semanas netas</label><input type="number" id="cPiso" value="1000" oninput="ev()"></div>
+      <div class="field"><label>$ por año (AFORE)</label><input type="number" id="cK" value="100000" oninput="ev()"></div>
+      <div class="field"><label>Tope años a financiar</label><input type="number" id="cTope" value="5" oninput="ev()"></div>
+      <div class="field"><label>Edad mínima (descalifica si menos)</label><input type="number" id="cEdadMin" value="59" oninput="ev()"></div>
+      <div class="field"><label>Edad para "Ahora" (más de)</label><input type="number" id="cEdadAhora" value="60" oninput="ev()"></div>
+      <div class="field"><label>Meses sin cotizar para "Ahora" (más de)</label><input type="number" id="cMesesAhora" value="12" oninput="ev()"></div>
+      <div class="field"><label>Tope años sin cotizar (trabajo/mod10)</label><input type="number" id="cTopeSin" value="5" oninput="ev()"></div>
+      <div class="field"><label>Ventana Mod 40 (meses máx)</label><input type="number" id="cMod40" value="12" oninput="ev()"></div>
+    </div>
+    <div class="hint" style="margin-top:8px">Defaults confirmados por Checo (2026-06-07): piso 1000, 100k/año redondeo arriba, tope 5 años para todos. Mod 40 → Futuro.</div>
+  </details>
+
+  <div class="foot">v1 · uso interno · pendiente de visto de Checo para rollout a equipo · cifras de pensión = referencia del Playbook, no promesa al lead</div>
+</div>
+
+<div class="wrapSingle" id="viewJourney" style="display:none">
+  <div class="card">
+    <h2>Journey del lead</h2>
+    <div id="journeySteps"></div>
+    <div id="journeyMsg" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<script>
+// ---------- estado de botones segmentados ----------
+const seg = {};
+function initSeg(id, def){
+  const g = document.getElementById(id);
+  seg[id] = def || "";
+  g.querySelectorAll('button').forEach(b=>{
+    if(b.dataset.v===seg[id]) b.classList.add('on');
+    b.onclick=()=>{ seg[id]=b.dataset.v;
+      g.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on'); ev(); };
+  });
+}
+['ley73','pensionado','tramitando','cotiza','s52','aforeSrc','aporta','deudaAfore','demanda','quiere','issste','esc']
+  .forEach(id=>initSeg(id, {pensionado:'no',tramitando:'no',cotiza:'no',aforeSrc:'creditia',deudaAfore:'no',demanda:'no',issste:'no',esc:'60'}[id]||''));
+
+// ---------- tabla de pensión de referencia (Guión 3.0 p.3) ----------
+// semanas: [pensión actual ~$500/día, pensión topada ~$2,932/día]
+const PENS = {
+  60:{600:[10637,15283],800:[10637,23650],1000:[10637,32018],1200:[10637,39339],1400:[10637,47706],1600:[10637,54967],1800:[11042,62677],2000:[12383,69748]},
+  65:{600:[10637,20377],800:[10637,31534],1000:[10637,42690],1200:[10637,52452],1400:[11371,62867],1600:[12936,71013],1800:[14723,79786],2000:[16511,88412]}
+};
+function ganchoPension(netas, escenario){
+  if(netas==null) return null;
+  const t = PENS[escenario]||PENS[60];
+  const keys = Object.keys(t).map(Number).sort((a,b)=>a-b);
+  let k = keys[0], bajo = netas<keys[0];
+  for(const kk of keys){ if(netas>=kk) k=kk; }
+  const [actual,topada]=t[k];
+  return {bracket:k, bajo, actual, topada, dif:topada-actual, edad:escenario};
+}
+
+// ---------- CURP -> edad ----------
+function onCurp(){
+  const c = document.getElementById('curp').value.trim().toUpperCase();
+  const h = document.getElementById('curpHint');
+  if(c.length<10){ h.textContent=''; return; }
+  const yy=+c.substr(4,2), mm=+c.substr(6,2), dd=+c.substr(8,2);
+  if(isNaN(yy)||isNaN(mm)||isNaN(dd)){ h.textContent='CURP no reconocida'; return; }
+  const sig = c.charAt(16);
+  const siglo = /[0-9]/.test(sig) ? 1900 : 2000;
+  const nac = new Date(siglo+yy, mm-1, dd);
+  const hoy = new Date();
+  let meses = (hoy.getFullYear()-nac.getFullYear())*12 + (hoy.getMonth()-nac.getMonth());
+  if(hoy.getDate()<nac.getDate()) meses--;
+  const aE=Math.floor(meses/12), mE=meses%12;
+  if(aE>0 && aE<110){
+    document.getElementById('edad').value = aE;
+    document.getElementById('edadM').value = mE;
+    h.textContent = 'Nació '+nac.toLocaleDateString('es-MX')+' · '+aE+' años '+mE+' meses';
+    ev();
+  } else h.textContent='Fecha fuera de rango';
+}
+
+function onFechaBaja(){
+  const v=document.getElementById('fechaBaja').value;
+  if(!v){ ev(); return; }
+  const f=new Date(v+'T00:00:00'), hoy=new Date();
+  let meses=(hoy.getFullYear()-f.getFullYear())*12+(hoy.getMonth()-f.getMonth());
+  if(hoy.getDate()<f.getDate()) meses--;
+  if(meses<0) meses=0;
+  document.getElementById('aSin').value=Math.floor(meses/12);
+  document.getElementById('mSin').value=meses%12;
+  ev();
+}
+
+function num(id){ const v=parseFloat(document.getElementById(id).value); return isNaN(v)?null:v; }
+function cfg(id){ const v=parseFloat(document.getElementById(id).value); return isNaN(v)?0:v; }
+function fmt(n){ return '$'+Math.round(n).toLocaleString('es-MX'); }
+
+function toggle52(){
+  const u=document.getElementById('ultima').value;
+  document.getElementById('wrap52').style.display=(u==='trabajo'||u==='mod10')?'block':'none';
+}
+
+// ---------- MOTOR ----------
+function ev(){
+  toggle52();
+  const C={piso:cfg('cPiso'),k:cfg('cK'),tope:cfg('cTope'),edadMin:cfg('cEdadMin'),
+    edadAhora:cfg('cEdadAhora'),mesesAhora:cfg('cMesesAhora'),topeSin:cfg('cTopeSin'),mod40:cfg('cMod40')};
+
+  const edad=num('edad');
+  const edadM=num('edadM');
+  const edadTot=(edad!==null)?edad+(edadM||0)/12:null;
+  const aSin=num('aSin'), mSin=num('mSin');
+  const mesesSin = (aSin!==null||mSin!==null) ? (aSin||0)*12+(mSin||0) : null;
+  const ultima=document.getElementById('ultima').value;
+  const wCot=num('wCot'), wDes=num('wDes'), wRei=num('wRei');
+  const netas = (wCot!==null) ? (wCot-(wDes||0)+(wRei||0)) : null;
+  const afore=num('afore');
+
+  const reasons=[], missing=[], flags=[], say=[];
+
+  // -------- FILTROS DUROS --------
+  if(seg.quiere==='no') reasons.push('No quiere financiamiento (solo info / ya tiene el dinero).');
+  if(seg.ley73==='no') reasons.push('No es Ley 73 (es Ley 97) → va a consultoría.');
+  if(seg.pensionado==='si') reasons.push('Tiene pensión definitiva.');
+  if(seg.cotiza==='si') reasons.push('Sigue cotizando hoy (no se puede agendar).');
+  if(seg.tramitando==='si') reasons.push('Ya está tramitando su pensión ante el IMSS.');
+  if(seg.demanda==='si') reasons.push('Demanda laboral activa (no aplica hasta que concluya).');
+  if(edadTot!==null && edadTot<C.edadMin) reasons.push('Menor de '+C.edadMin+' años (muy joven).');
+  if(netas!==null && netas<C.piso) reasons.push('Semanas netas ('+netas+') por debajo del piso de '+C.piso+'.');
+  if(ultima==='mod40' && mesesSin!==null && mesesSin>=C.mod40)
+    reasons.push('Mod 40 con '+mesesSin+' meses sin cotizar: pasó la ventana de '+C.mod40+' meses → perdió derecho.');
+  if((ultima==='trabajo'||ultima==='mod10')){
+    if(mesesSin!==null && mesesSin>C.topeSin*12)
+      reasons.push('Más de '+C.topeSin+' años sin cotizar (trabajo/mod 10) → sin derecho a Mod 40 retroactivo.');
+    if(seg.s52==='no')
+      reasons.push('No tiene 52 semanas en los 5 años previos a su última cotización.');
+  }
+
+  // AFORE
+  let aforeReq=null, falta=0, aniosFin=null;
+  if(mesesSin!==null){
+    aniosFin=Math.ceil(mesesSin/12); if(aniosFin<1)aniosFin=1; aniosFin=Math.min(aniosFin,C.tope);
+    aforeReq=aniosFin*C.k;
+    if(afore!==null){
+      falta=Math.max(0,aforeReq-afore);
+      if(falta>0 && seg.aporta==='no') reasons.push('AFORE no cubre ('+fmt(afore)+' vs '+fmt(aforeReq)+') y no puede aportar la diferencia.');
+    }
+  }
+
+  // -------- FALTANTES + QUÉ PREGUNTAR (mensajes literales) --------
+  const ask=(cond,short,msg)=>{ if(cond){ missing.push(short); say.push({t:'msg',x:msg}); } };
+  ask(seg.quiere==='','¿quiere financiamiento?','En este momento, ¿lo que buscas es el financiamiento de tu modalidad 40, o más bien información/asesoría general?');
+  ask(seg.ley73==='','¿Ley 73?','Una pregunta, ¿sabes si eres Ley 73? Si no estás seguro, ¿en qué año empezaste a cotizar en el IMSS? (antes de julio de 1997 = Ley 73)');
+  ask(edad===null,'edad','¿Qué edad tienes actualmente?');
+  ask(mesesSin===null,'tiempo sin cotizar','¿Cuánto tiempo llevas sin cotizar en el IMSS? (más o menos, años y meses)');
+  ask(!ultima,'última cotización','Tu última cotización en el IMSS, ¿fue en un trabajo con patrón, en Modalidad 10, o en Modalidad 40?');
+  ask(netas===null,'semanas','Para sacar tu cálculo necesito tu reporte de semanas cotizadas del IMSS. ¿Tienes uno reciente? Si no lo tienes, pásame tu CURP y yo lo saco.');
+  ask(afore===null,'monto AFORE','Por último, ¿tienes un estado de cuenta de tu AFORE reciente (no mayor a 3 meses)? Si no lo tienes, no te preocupes, sacamos un aproximado.');
+  ask((ultima==='trabajo'||ultima==='mod10') && seg.s52==='','52 sem en 5 años','En los 5 años antes de tu última cotización, ¿alcanzaste a juntar al menos 1 año cotizado (52 semanas)? No tienen que ser seguidas.');
+  ask(aforeReq!==null && afore!==null && falta>0 && seg.aporta==='','¿aporta diferencia?','Para financiar tus '+aniosFin+' años de retroactivo se necesitan ~'+fmt(aforeReq)+' en tu AFORE y tienes ~'+fmt(afore)+', faltarían ~'+fmt(falta)+'. ¿Estarías en posición de aportar esa diferencia de tu bolsa, además del financiamiento?');
+
+  // -------- BANDERAS --------
+  if(ultima==='mod40') flags.push(['Mod 40','Explicar urgencia: la ventana de derecho es de '+C.mod40+' meses; no conviene dejarlo madurar.']);
+  if(wDes!==null && wDes>0) flags.push(['Semanas descontadas','Tiene '+wDes+' semanas descontadas por retiro (disposición de recursos).']);
+  if(seg.issste==='si') flags.push(['ISSSTE','Las semanas del ISSSTE NO suman al IMSS. Para el cálculo usa solo el reporte del IMSS.']);
+  if(seg.deudaAfore==='si') flags.push(['Deuda en AFORE','Debe dinero al AFORE. Validar con el asesor si reduce el financiamiento disponible.']);
+  if(afore!==null && aforeReq!==null && falta>0 && seg.aporta!=='no') flags.push(['AFORE no alcanza','Faltan ~'+fmt(falta)+'. Aporta de su bolsa o se financian menos años.']);
+  if(seg.aforeSrc==='creditia' && afore!==null) flags.push(['AFORE estimado','Es Creditia (estimado). Pedir estado de cuenta real, no mayor a 3 meses.']);
+
+  // -------- ESTATUS + RUTA --------
+  let estatus, klass, ruta=null, razon='';
+  if(reasons.length){ estatus='NO CALIFICA'; klass='no'; razon=reasons.join(' '); }
+  else if(missing.length){ estatus='POR CONFIRMAR'; klass='warn'; razon='Falta: '+missing.join(', ')+'.'; }
+  else {
+    estatus='CALIFICA'; klass='ok';
+    if(ultima==='mod40'){ ruta='FUTURO'; razon='Mod 40 → Futuro (directiva). El asesor explica la urgencia de la ventana.'; }
+    else if(edadTot>C.edadAhora && mesesSin>C.mesesAhora){ ruta='AHORA'; razon='Más de '+C.edadAhora+' años y más de '+C.mesesAhora+' meses sin cotizar → conviene financiar antes de 3 meses.'; }
+    else { ruta='FUTURO'; razon='Califica pero aún no conviene financiar hoy → Futuro (después de 3 meses).'; }
+  }
+
+  // -------- QUÉ SIGUE (cuando ya no faltan datos) --------
+  if(!missing.length){
+    if(estatus==='CALIFICA'){
+      say.length=0;
+      say.push({t:'msg',x:'Perfecto, por lo que me comentas cumples con todo lo que se necesita para que te podamos financiar tu modalidad 40. El siguiente paso es una asesoría sin costo con nuestro asesor experto, donde te arma tu proyecto exacto: cuánto puede subir tu pensión, qué hay que hacer y los números finales. ¿Te parece si te agendo un espacio?'});
+      if(falta>0) say.push({t:'msg',x:'Un detalle importante: en tu AFORE se necesitan ~'+fmt(aforeReq)+' para tus '+aniosFin+' años y tienes ~'+fmt(afore)+', así que aportarías ~'+fmt(falta)+' de tu bolsa, además del financiamiento. ¿Estás en posición de hacerlo?'});
+      say.push({t:'do',x:'Conseguir su reporte de semanas del IMSS (o sacarlo con su CURP en Consulta Única).'});
+      say.push({t:'do',x:'Pedir estado de cuenta de AFORE (≤3 meses); si no lo tiene, aproximado en Creditia.'});
+      say.push({t:'do',x:'Agendar en el calendario "'+(ruta==='AHORA'?'Financiamiento':'Financiamiento futuro')+'" (bloquea de 1 a 1.5 h, en hora exacta).'});
+      say.push({t:'do',x:'Crear el grupo de WhatsApp con el asesor y llenar el Tracker.'});
+    } else if(estatus==='NO CALIFICA'){
+      say.length=0;
+      say.push({t:'do',x:'No es lead de financiamiento. Explícale con respeto por qué; si aplica, pásalo a consultoría / As. PP.'});
+    }
+  }
+
+  const d={edad,edadM,mesesSin,netas,piso:C.piso,afore,aforeReq,falta,aniosFin,ultima,
+    aforeSrc:seg.aforeSrc, gancho:ganchoPension(netas, +seg.esc)};
+  render(estatus,klass,ruta,razon,d,flags,say);
+}
+
+function render(estatus,klass,ruta,razon,d,flags,say){
+  const v=document.getElementById('verdict');
+  v.className='verdict '+klass;
+  document.getElementById('vstat').textContent=estatus;
+  document.getElementById('vchip').innerHTML = ruta ? '<span class="chip '+(ruta==='AHORA'?'ahora':'futuro')+'">'+ruta+'</span>' : '';
+  document.getElementById('vreason').textContent=razon;
+
+  // diagnóstico
+  const diag=document.getElementById('diag'); diag.innerHTML='';
+  const add=(k,val,cls)=>{ const r=document.createElement('div'); r.className='kv';
+    r.innerHTML='<span>'+k+'</span><b class="'+(cls||'')+'">'+val+'</b>'; diag.appendChild(r); };
+  add('Edad', d.edad!=null?(d.edad+'a '+(d.edadM||0)+'m'):'—');
+  add('Sin cotizar', d.mesesSin!=null?(Math.floor(d.mesesSin/12)+'a '+(d.mesesSin%12)+'m'):'—');
+  add('Última cotización', d.ultima? ({trabajo:'Trabajo/patrón',mod10:'Mod 10',mod40:'Mod 40'})[d.ultima] : '—');
+  if(d.netas!=null) add('Semanas netas', d.netas+' / piso '+d.piso, d.netas>=d.piso?'good':'ko'); else add('Semanas netas','—');
+  if(d.aforeReq!=null){
+    add('Años a financiar', d.aniosFin);
+    add('AFORE requerido', fmt(d.aforeReq));
+    if(d.afore!=null) add('AFORE disponible', fmt(d.afore)+(d.falta>0?' (faltan '+fmt(d.falta)+')':' ✓'), d.falta>0?'ko':'good');
+  }
+
+  // qué preguntar / qué sigue
+  const s=document.getElementById('say');
+  if(say.length){ s.innerHTML=''; say.forEach(it=>{ const r=document.createElement('div'); r.className='say';
+    if(it.t==='msg'){ r.classList.add('cpy');
+      r.innerHTML='<span class="q">✉</span>'+it.x+'<span class="cpytag">copiar</span>';
+      r.onclick=()=>{ navigator.clipboard.writeText(it.x).then(()=>{ const tg=r.querySelector('.cpytag'); tg.textContent='copiado ✓'; setTimeout(()=>tg.textContent='copiar',1100); }); }; }
+    else { r.innerHTML='<span class="done">✓</span>'+it.x; }
+    s.appendChild(r); }); }
+  else s.innerHTML='<div class="say" style="color:var(--muted)">Completo. Sin datos pendientes.</div>';
+
+  // gancho
+  const g=document.getElementById('gancho');
+  if(d.gancho){
+    const G=d.gancho;
+    g.innerHTML =
+      '<div class="big today">Hoy, sin hacer nada (≈$500/día): <b>'+fmt(G.actual)+'/mes</b></div>'+
+      '<div class="big">Con Mod 40 al tope: <b>'+fmt(G.topada)+'/mes</b></div>'+
+      '<div class="up">↑ subiría +'+fmt(G.dif)+'/mes</div>'+
+      '<div class="hint">Referencia interna para ti; los montos al lead se los da el asesor, no el closer.</div>';
+  } else g.innerHTML='<div style="color:var(--muted);font-size:13px">Captura semanas para ver el estimado.</div>';
+
+  // banderas
+  const f=document.getElementById('flags');
+  if(flags.length){ f.innerHTML=''; flags.forEach(([t,x])=>{ const r=document.createElement('div');
+    r.className='flag'; r.innerHTML='<span class="t">'+t+'</span>'+x; f.appendChild(r); }); }
+  else f.innerHTML='<div class="flag" style="color:var(--muted)">—</div>';
+
+  // CRM
+  const L=[];
+  L.push('CALIFICACIÓN — '+estatus+(ruta?(' · '+ruta):''));
+  L.push(razon); L.push('');
+  if(d.edad!=null) L.push('Edad: '+d.edad+'a '+(d.edadM||0)+'m');
+  if(d.mesesSin!=null) L.push('Sin cotizar: '+Math.floor(d.mesesSin/12)+'a '+(d.mesesSin%12)+'m');
+  if(d.ultima) L.push('Última cotización: '+({trabajo:'Trabajo/patrón',mod10:'Mod 10',mod40:'Mod 40'})[d.ultima]);
+  if(d.netas!=null) L.push('Semanas netas: '+d.netas+' (piso '+d.piso+')');
+  if(d.aforeReq!=null) L.push('AFORE: '+(d.afore!=null?fmt(d.afore):'—')+' / req '+fmt(d.aforeReq)+(d.falta>0?(' · faltan '+fmt(d.falta)):' · alcanza'));
+  if(d.gancho) L.push('Pensión ref. ('+d.gancho.edad+'a): hoy ~'+fmt(d.gancho.actual)+' → topada ~'+fmt(d.gancho.topada)+' (+'+fmt(d.gancho.dif)+')');
+  if(flags.length){ L.push(''); L.push('Banderas para asesor:'); flags.forEach(([t,x])=>L.push('- '+t+': '+x)); }
+  document.getElementById('crm').value=L.join('\n');
+
+  renderJourney(d);
+}
+
+let jsel=null;
+function renderJourney(d){
+  const nf=document.getElementById('nombre').value.trim();
+  const fw=nf?nf.split(/\s+/)[0]:'';
+  const nom=fw?(fw.charAt(0).toUpperCase()+fw.slice(1).toLowerCase()):'[nombre]';
+  const clo=(document.getElementById('closer').value.trim())||'[tu nombre]';
+  const ap=(d.falta&&d.falta>0)?fmt(d.falta):'[aportación aprox]';
+  const G=d.gancho;
+  const metaC =G?('$'+(Math.floor(G.topada/10000)*10)+' mil'):'$[X]';
+  const metaC1=G?('$'+(Math.floor(G.topada/10000)*10)+' mil'):'$[pensión meta]';
+  const actC1 =G?('$'+(Math.floor(G.actual/1000))+' mil'):'$[pensión actual]';
+  const flow={
+    main:[
+      {id:'A',l:'A · Primer contacto',msg:'¡Hola señor '+nom+'! Buenos días. Soy '+clo+', asesor de Pensión Perfecta. Me llegó su solicitud para ver cuánto podríamos subir su pensión con modalidad 40. ¿Sigue interesado?'},
+      {id:'B',l:'B · Documentación',msg:'¡Excelente, señor '+nom+'! Me da mucho gusto.\nLe cuento por qué vale la pena verlo: en Pensión Perfecta hemos ayudado a miles de personas en los últimos 8 años, incrementando su pensión desde $5 mil hasta más de $40 mil pesos al mes, de por vida. La mayoría de nuestros socios no sabía todo lo que podía recuperar.\n\nPara decirle exactamente cuánto le tocaría a usted, lo mejor es que lo veamos rápido por una llamada, donde reviso su caso y le digo cómo lo podemos ayudar.\nSi antes me envía estos dos documentos, la llamada es más rápida y precisa, porque llego con su caso ya revisado:\n\n1. Su constancia de semanas cotizadas del IMSS.\n2. Su estado de cuenta del AFORE, de preferencia reciente.\n\nSi no tiene la constancia a la mano, con su CURP se la generamos.\n¿En qué horario le puedo marcar?'}
+    ],
+    aporta:{id:'C1',l:'Aportación adicional',msg:'Señor '+nom+', buenos días. Le platico sobre su caso.\nCon el financiamiento la meta sería subir su pensión de unos '+actC1+' a más de '+metaC1+' al mes, de por vida.\n\nPor cómo está su AFORE, en su caso se necesitaría una aportación adicional de su parte, además de lo que nosotros financiamos. ¿Estaría usted en posición de hacerla? Para ser claros, estamos hablando de una aportación del orden de '+ap+'.\nQuedo atento a su respuesta.'},
+    ok:[
+      {id:'C',l:'C · Sí califica',msg:'¡Buenas noticias, señor '+nom+'! Revisé su caso y sí califica para el financiamiento.\nCon su modalidad 40 en retroactivo, la meta sería llevar su pensión a más de '+metaC+' al mes, de por vida.\n\nEl siguiente paso es una asesoría por videollamada con nuestro experto en financiamiento, donde le aterriza los números exactos y le explica el paso a paso.\nEsta asesoría normalmente tiene un costo, pero como usted cumple con todos los requisitos, se la damos sin costo. Tenemos espacio el [día] a las [hora]. ¿Le funciona, o prefiere otro horario?'},
+      {id:'D',l:'D · Grupo WhatsApp',msg:'¡Hola '+nom+'! Bienvenido a su grupo de seguimiento. Muchísimas gracias por su tiempo hoy.\nComo lo platicamos, queda agendada su asesoría para el [día] de [mes] a las [horas].\n\nEn este grupo está el equipo que va a llevar su caso de principio a fin: la asesora experta en financiamiento que le dará su asesoría, el área de soporte que le apoya con el trámite, y yo. Somos varios a propósito, para que en cada paso siempre tenga a quién acudir.\nCualquier duda antes de su asesoría, por aquí mismo nos escribe, por favor.\nQuedamos al pendiente.'}
+    ],
+    no:[
+      {id:'N',l:'No califica',msg:'Señor '+nom+', revisé su caso con detalle, y le voy a ser honesto.\nPara el financiamiento en específico no es viable en su caso. Pero eso no quiere decir que no podamos mejorar su pensión.\n\nTenemos una asesoría con un experto donde le armamos un plan personalizado, con varios escenarios, para sacarle el máximo a su pensión con lo que sí tiene a favor. La mayoría de nuestros clientes recupera lo que invierte en la asesoría en el primer mes de su pensión, y va con garantía: si no mejoramos su pensión, le devolvemos el 100%.\n\nLa inversión es de $1,990. ¿Le gustaría que le agendara un espacio para revisarlo?'},
+      {id:'NA',l:'No puede aportación',msg:'Entiendo, señor '+nom+', sin problema. Le soy claro: sin esa aportación, el financiamiento no es viable en su caso, porque se necesita completar ese monto para pagar el retroactivo.\n\nPero eso no quiere decir que no podamos mejorar su pensión. Tenemos una asesoría con un experto donde le armamos un plan personalizado, con varios escenarios, para sacarle el máximo a su pensión con lo que sí tiene a favor. La mayoría de nuestros clientes recupera lo que invierte en la asesoría en el primer mes de su pensión, y va con garantía: si no mejoramos su pensión, le devolvemos el 100%.\n\nLa inversión es de $1,990. ¿Le gustaría que le agendara un espacio para revisarlo?'}
+    ]
+  };
+
+  const arrow=()=>{ const a=document.createElement('div'); a.className='jarrow'; a.textContent='→'; return a; };
+  const chip=(it,kind)=>{ const n=document.createElement('div'); n.className='jstep '+kind+(jsel===it.id?' on':'');
+    n.innerHTML='<div class="jlabel">'+it.l+'</div>';
+    n.onclick=()=>{ jsel=(jsel===it.id?null:it.id); renderJourney(d); }; return n; };
+
+  const sc=document.getElementById('journeySteps'); sc.innerHTML='';
+  const mrow=document.createElement('div'); mrow.className='steps';
+  flow.main.forEach((it,i)=>{ if(i) mrow.appendChild(arrow()); mrow.appendChild(chip(it,'main')); });
+  sc.appendChild(mrow);
+
+  const arow=document.createElement('div'); arow.className='steps'; arow.style.marginTop='10px';
+  const ac=document.createElement('div'); ac.className='jstep aporta'+(jsel==='C1'?' on':'');
+  ac.innerHTML='<div class="jlabel">'+flow.aporta.l+'</div><div class="jsub">solo si su AFORE no alcanza (depende de que el lead tenga el dinero)</div>';
+  ac.onclick=()=>{ jsel=(jsel==='C1'?null:'C1'); renderJourney(d); };
+  arow.appendChild(ac); sc.appendChild(arow);
+
+  const bw=document.createElement('div'); bw.className='branches';
+  const okb=document.createElement('div'); okb.className='branch ok'; okb.innerHTML='<div class="bhead ok">✓ Sí califica</div>';
+  const okr=document.createElement('div'); okr.className='steps';
+  flow.ok.forEach((it,i)=>{ if(i) okr.appendChild(arrow()); okr.appendChild(chip(it,'ok')); });
+  okb.appendChild(okr); bw.appendChild(okb);
+  const nob=document.createElement('div'); nob.className='branch no'; nob.innerHTML='<div class="bhead no">✕ No califica</div>';
+  const nor=document.createElement('div'); nor.className='steps';
+  flow.no.forEach((it,i)=>{ if(i) nor.appendChild(arrow()); nor.appendChild(chip(it,'no')); });
+  nob.appendChild(nor); bw.appendChild(nob);
+  sc.appendChild(bw);
+
+  const panel=document.getElementById('journeyMsg');
+  const all=[...flow.main.map(x=>['main',x]),['aporta',flow.aporta],...flow.ok.map(x=>['ok',x]),...flow.no.map(x=>['no',x])];
+  const sel=all.find(([k,x])=>x.id===jsel);
+  if(!sel){ panel.innerHTML='<div style="color:var(--muted);font-size:13px">Toca un paso del journey para ver su mensaje de WhatsApp (clic en Copiar para mandarlo).</div>'; return; }
+  const [kind,it]=sel;
+  const hc = kind==='ok'?' ok':(kind==='no'?' no':(kind==='aporta'?' aporta':''));
+  panel.innerHTML='<div class="jmsghead'+hc+'">'+it.l+' <button class="btn" id="jcopy" style="padding:4px 11px;font-size:12px">Copiar</button></div><div class="jmsgbody">'+it.msg.replace(/\n/g,'<br>')+'</div>';
+  document.getElementById('jcopy').onclick=()=>{ copyToClipboard(it.msg).then(()=>{ const b=document.getElementById('jcopy'); b.textContent='Copiado ✓'; setTimeout(()=>b.textContent='Copiar',1100); }).catch(()=>{}); };
+}
+
+function copyToClipboard(text){
+  if(navigator.clipboard && window.isSecureContext){
+    return navigator.clipboard.writeText(text);
+  }
+  return new Promise((resolve,reject)=>{
+    try{
+      const ta=document.createElement('textarea');
+      ta.value=text; ta.setAttribute('readonly','');
+      ta.style.position='fixed'; ta.style.top='0'; ta.style.left='0'; ta.style.opacity='0';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select(); ta.setSelectionRange(0,text.length);
+      const ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      ok?resolve():reject(new Error('execCommand falló'));
+    }catch(e){ reject(e); }
+  });
+}
+
+function copyCRM(){
+  copyToClipboard(document.getElementById('crm').value).then(()=>{
+    const b=document.getElementById('copyBtn'); b.textContent='Copiado ✓';
+    setTimeout(()=>b.textContent='Copiar',1200);
+  }).catch(()=>{});
+}
+
+function showView(v){
+  document.getElementById('viewCalif').style.display = v==='calif'?'grid':'none';
+  document.getElementById('viewJourney').style.display = v==='journey'?'block':'none';
+  document.getElementById('tabCalif').classList.toggle('on',v==='calif');
+  document.getElementById('tabJourney').classList.toggle('on',v==='journey');
+}
+
+function reset(){
+  document.querySelectorAll('input').forEach(i=>{ if(['cPiso','cK','cTope','cEdadMin','cEdadAhora','cMesesAhora','cTopeSin','cMod40','closer'].includes(i.id))return; i.value=''; });
+  ['ley73','s52','aporta','quiere'].forEach(id=>{seg[id]='';document.getElementById(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===''));});
+  ['pensionado','tramitando','cotiza','demanda','issste','deudaAfore'].forEach(id=>{seg[id]='no';document.getElementById(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='no'));});
+  seg.aforeSrc='creditia';document.getElementById('aforeSrc').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='creditia'));
+  document.getElementById('curpHint').textContent='';
+  ev();
+}
+
+ev();
+</script>
+</body>
+</html>
