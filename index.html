@@ -334,16 +334,12 @@
   <details class="cfg">
     <summary>⚙️ Criterios editables (cámbialos cuando Checo ajuste el rango)</summary>
     <div class="cfgrid">
-      <div class="field"><label>Piso de semanas netas</label><input type="number" id="cPiso" value="1000" oninput="ev()"></div>
-      <div class="field"><label>$ por año (AFORE)</label><input type="number" id="cK" value="100000" oninput="ev()"></div>
       <div class="field"><label>Tope años a financiar</label><input type="number" id="cTope" value="5" oninput="ev()"></div>
       <div class="field"><label>Edad mínima (descalifica si menos)</label><input type="number" id="cEdadMin" value="59" oninput="ev()"></div>
       <div class="field"><label>Edad para "Ahora" (más de)</label><input type="number" id="cEdadAhora" value="60" oninput="ev()"></div>
       <div class="field"><label>Meses sin cotizar para "Ahora" (más de)</label><input type="number" id="cMesesAhora" value="12" oninput="ev()"></div>
-      <div class="field"><label>Tope años sin cotizar (trabajo/mod10)</label><input type="number" id="cTopeSin" value="5" oninput="ev()"></div>
-      <div class="field"><label>Ventana Mod 40 (meses máx)</label><input type="number" id="cMod40" value="12" oninput="ev()"></div>
     </div>
-    <div class="hint" style="margin-top:8px">Defaults confirmados por Checo (2026-06-07): piso 1000, 100k/año redondeo arriba, tope 5 años para todos. Mod 40 → Futuro.</div>
+    <div class="hint" style="margin-top:8px">Tablas oficiales (hoja Generales, 2026-06-08): semanas mínimas por edad (900→750) y AFORE por año según semanas (100k→60k). Topes Mod 40: trabajo/mod10 4a11m22d, mod 40 11m22d. Esas tablas viven en el código; pídeme cambiarlas si Checo ajusta el rango.</div>
   </details>
 
   <div class="foot">v1 · uso interno · pendiente de visto de Checo para rollout a equipo · cifras de pensión = referencia del Playbook, no promesa al lead</div>
@@ -387,6 +383,46 @@ function ganchoPension(netas, escenario){
   for(const kk of keys){ if(netas>=kk) k=kk; }
   const [actual,topada]=t[k];
   return {bracket:k, bajo, actual, topada, dif:topada-actual, edad:escenario};
+}
+
+// ---------- tablas oficiales (hoja Generales PP) ----------
+// Semanas mínimas según edad (años decimales). Edad menor pide más semanas.
+const AGE_WEEKS=[
+  {maxEdad:60.5, w:900},   // hasta 60a 6m 0d
+  {maxEdad:61.5, w:870},   // 60a6m1d – 61a6m0d
+  {maxEdad:62.5, w:840},   // 61a6m1d – 62a6m0d
+  {maxEdad:63.5, w:810},   // 62a6m1d – 63a6m0d
+  {maxEdad:64.5, w:780},   // 63a6m1d – 64a6m0d
+  {maxEdad:Infinity, w:750} // más de 64a6m1d
+];
+function minSemanasPorEdad(edadTot){
+  if(edadTot==null) return null;
+  for(const r of AGE_WEEKS){ if(edadTot<=r.maxEdad) return r.w; }
+  return 750;
+}
+// AFORE requerido por año a financiar, según semanas netas (escalonado).
+const AFORE_TIER=[
+  {minW:1700, y:60000},
+  {minW:1450, y:70000},
+  {minW:1200, y:80000},
+  {minW:1000, y:90000},
+  {minW:0,    y:100000}
+];
+function aforePorAnio(netas){
+  if(netas==null) return null;
+  for(const r of AFORE_TIER){ if(netas>=r.minW) return r.y; }
+  return 100000;
+}
+// ¿Excede el tope de tiempo sin cotizar? Exacto con fecha de baja; si no, por meses.
+function excedeTope(mesesSin, ly, lm, ld){
+  const fb=document.getElementById('fechaBaja').value;
+  if(fb){
+    const f=new Date(fb+'T00:00:00');
+    const lim=new Date(f.getFullYear()+ly, f.getMonth()+lm, f.getDate()+ld);
+    return new Date() > lim;
+  }
+  if(mesesSin==null) return false;
+  return mesesSin > (ly*12+lm); // sin precisión de días
 }
 
 // ---------- CURP -> edad ----------
@@ -440,8 +476,7 @@ function toggle52(){
 // ---------- MOTOR ----------
 function ev(){
   toggle52();
-  const C={piso:cfg('cPiso'),k:cfg('cK'),tope:cfg('cTope'),edadMin:cfg('cEdadMin'),
-    edadAhora:cfg('cEdadAhora'),mesesAhora:cfg('cMesesAhora'),topeSin:cfg('cTopeSin'),mod40:cfg('cMod40')};
+  const C={tope:cfg('cTope'),edadMin:cfg('cEdadMin'),edadAhora:cfg('cEdadAhora'),mesesAhora:cfg('cMesesAhora')};
 
   const edad=num('edad');
   const edadM=num('edadM');
@@ -452,6 +487,8 @@ function ev(){
   const wCot=num('wCot'), wDes=num('wDes'), wRei=num('wRei');
   const netas = (wCot!==null) ? (wCot-(wDes||0)+(wRei||0)) : null;
   const afore=num('afore');
+  const pisoSem=minSemanasPorEdad(edadTot);
+  const perYear=aforePorAnio(netas);
 
   const reasons=[], missing=[], flags=[], say=[];
 
@@ -463,21 +500,21 @@ function ev(){
   if(seg.tramitando==='si') reasons.push('Ya está tramitando su pensión ante el IMSS.');
   if(seg.demanda==='si') reasons.push('Demanda laboral activa (no aplica hasta que concluya).');
   if(edadTot!==null && edadTot<C.edadMin) reasons.push('Menor de '+C.edadMin+' años (muy joven).');
-  if(netas!==null && netas<C.piso) reasons.push('Semanas netas ('+netas+') por debajo del piso de '+C.piso+'.');
-  if(ultima==='mod40' && mesesSin!==null && mesesSin>=C.mod40)
-    reasons.push('Mod 40 con '+mesesSin+' meses sin cotizar: pasó la ventana de '+C.mod40+' meses → perdió derecho.');
+  if(netas!==null && pisoSem!==null && netas<pisoSem) reasons.push('Semanas netas ('+netas+') por debajo del mínimo para su edad ('+pisoSem+').');
+  if(ultima==='mod40' && excedeTope(mesesSin,0,11,22))
+    reasons.push('Mod 40: pasó la ventana de 11 meses 22 días sin cotizar → perdió derecho.');
   if((ultima==='trabajo'||ultima==='mod10')){
-    if(mesesSin!==null && mesesSin>C.topeSin*12)
-      reasons.push('Más de '+C.topeSin+' años sin cotizar (trabajo/mod 10) → sin derecho a Mod 40 retroactivo.');
+    if(excedeTope(mesesSin,4,11,22))
+      reasons.push('Más de 4 años 11 meses 22 días sin cotizar (trabajo/mod 10) → sin derecho a Mod 40 retroactivo.');
     if(seg.s52==='no')
       reasons.push('No tiene 52 semanas en los 5 años previos a su última cotización.');
   }
 
-  // AFORE
+  // AFORE (requerido por año según semanas; tope años a financiar)
   let aforeReq=null, falta=0, aniosFin=null;
-  if(mesesSin!==null){
+  if(mesesSin!==null && perYear!==null){
     aniosFin=Math.ceil(mesesSin/12); if(aniosFin<1)aniosFin=1; aniosFin=Math.min(aniosFin,C.tope);
-    aforeReq=aniosFin*C.k;
+    aforeReq=aniosFin*perYear;
     if(afore!==null){
       falta=Math.max(0,aforeReq-afore);
       if(falta>0 && seg.aporta==='no') reasons.push('AFORE no cubre ('+fmt(afore)+' vs '+fmt(aforeReq)+') y no puede aportar la diferencia.');
@@ -497,7 +534,7 @@ function ev(){
   ask(aforeReq!==null && afore!==null && falta>0 && seg.aporta==='','¿aporta diferencia?','Para financiar tus '+aniosFin+' años de retroactivo se necesitan ~'+fmt(aforeReq)+' en tu AFORE y tienes ~'+fmt(afore)+', faltarían ~'+fmt(falta)+'. ¿Estarías en posición de aportar esa diferencia de tu bolsa, además del financiamiento?');
 
   // -------- BANDERAS --------
-  if(ultima==='mod40') flags.push(['Mod 40','Explicar urgencia: la ventana de derecho es de '+C.mod40+' meses; no conviene dejarlo madurar.']);
+  if(ultima==='mod40') flags.push(['Mod 40','Explicar urgencia: la ventana de derecho es de 11 meses 22 días; no conviene dejarlo madurar.']);
   if(wDes!==null && wDes>0) flags.push(['Semanas descontadas','Tiene '+wDes+' semanas descontadas por retiro (disposición de recursos).']);
   if(seg.issste==='si') flags.push(['ISSSTE','Las semanas del ISSSTE NO suman al IMSS. Para el cálculo usa solo el reporte del IMSS.']);
   if(seg.deudaAfore==='si') flags.push(['Deuda en AFORE','Debe dinero al AFORE. Validar con el asesor si reduce el financiamiento disponible.']);
@@ -531,8 +568,8 @@ function ev(){
     }
   }
 
-  const aforeCubre=(afore!==null&&C.k>0)?afore/C.k:null;
-  const d={edad,edadM,mesesSin,netas,piso:C.piso,afore,aforeReq,falta,aniosFin,aforeCubre,ultima,
+  const aforeCubre=(afore!==null&&perYear)?afore/perYear:null;
+  const d={edad,edadM,mesesSin,netas,piso:pisoSem,afore,aforeReq,falta,aniosFin,aforeCubre,ultima,
     aforeSrc:seg.aforeSrc, gancho:ganchoPension(netas, +seg.esc)};
   render(estatus,klass,ruta,razon,d,flags,say);
 }
@@ -551,7 +588,7 @@ function render(estatus,klass,ruta,razon,d,flags,say){
   add('Edad', d.edad!=null?(d.edad+'a '+(d.edadM||0)+'m'):'—');
   add('Sin cotizar', d.mesesSin!=null?(Math.floor(d.mesesSin/12)+'a '+(d.mesesSin%12)+'m'):'—');
   add('Última cotización', d.ultima? ({trabajo:'Trabajo/patrón',mod10:'Mod 10',mod40:'Mod 40'})[d.ultima] : '—');
-  if(d.netas!=null) add('Semanas netas', d.netas+' / piso '+d.piso, d.netas>=d.piso?'good':'ko'); else add('Semanas netas','—');
+  if(d.netas!=null) add('Semanas netas', d.netas+(d.piso!=null?(' / mín '+d.piso):''), (d.piso!=null&&d.netas>=d.piso)?'good':(d.piso!=null?'ko':'')); else add('Semanas netas','—');
   if(d.aforeReq!=null){
     add('Años a financiar', d.aniosFin);
     add('AFORE requerido', fmt(d.aforeReq));
@@ -597,7 +634,7 @@ function render(estatus,klass,ruta,razon,d,flags,say){
   if(d.edad!=null) L.push('Edad: '+d.edad+'a '+(d.edadM||0)+'m');
   if(d.mesesSin!=null) L.push('Sin cotizar: '+Math.floor(d.mesesSin/12)+'a '+(d.mesesSin%12)+'m');
   if(d.ultima) L.push('Última cotización: '+({trabajo:'Trabajo/patrón',mod10:'Mod 10',mod40:'Mod 40'})[d.ultima]);
-  if(d.netas!=null) L.push('Semanas netas: '+d.netas+' (piso '+d.piso+')');
+  if(d.netas!=null) L.push('Semanas netas: '+d.netas+(d.piso!=null?(' (mín edad '+d.piso+')'):''));
   if(d.aforeReq!=null) L.push('AFORE: '+(d.afore!=null?fmt(d.afore):'—')+' / req '+fmt(d.aforeReq)+(d.falta>0?(' · faltan '+fmt(d.falta)):' · alcanza'));
   if(d.aforeReq!=null && d.afore!=null && d.aforeCubre!=null) L.push('AFORE cubre '+(Math.round(d.aforeCubre*10)/10)+' de '+d.aniosFin+' años'+(d.falta>0?(' · aporta '+fmt(d.falta)):''));
   if(d.gancho) L.push('Pensión ref. ('+d.gancho.edad+'a): hoy ~'+fmt(d.gancho.actual)+' → topada ~'+fmt(d.gancho.topada)+' (+'+fmt(d.gancho.dif)+')');
@@ -706,7 +743,7 @@ function showView(v){
 }
 
 function reset(){
-  document.querySelectorAll('input').forEach(i=>{ if(['cPiso','cK','cTope','cEdadMin','cEdadAhora','cMesesAhora','cTopeSin','cMod40','closer'].includes(i.id))return; i.value=''; });
+  document.querySelectorAll('input').forEach(i=>{ if(['cTope','cEdadMin','cEdadAhora','cMesesAhora','closer'].includes(i.id))return; i.value=''; });
   ['ley73','s52','aporta','quiere'].forEach(id=>{seg[id]='';document.getElementById(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===''));});
   ['pensionado','tramitando','cotiza','demanda','issste','deudaAfore'].forEach(id=>{seg[id]='no';document.getElementById(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='no'));});
   seg.aforeSrc='creditia';document.getElementById('aforeSrc').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='creditia'));
