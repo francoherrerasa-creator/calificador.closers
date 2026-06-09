@@ -104,6 +104,12 @@
   .bhead{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
   .bhead.ok{color:#46c97e}
   .bhead.no{color:#e8645a}
+  .jbanner{padding:10px 12px;border-radius:8px;font-weight:700;font-size:13.5px;margin-bottom:12px;border:1px solid var(--line)}
+  .jbanner.ok{background:var(--okbg);border-color:#1f9d57;color:#46c97e}
+  .jbanner.no{background:var(--nobg);border-color:#d8453b;color:#e8645a}
+  .jbanner.warn{background:var(--warnbg);border-color:#d9a02b;color:#d9a02b}
+  .branch.ok.active{box-shadow:0 0 0 2px #1f9d57}
+  .branch.no.active{box-shadow:0 0 0 2px #d8453b}
   .jstep.aporta{border-color:var(--warn);border-style:dashed;text-align:center}
   .jstep.aporta .jlabel{color:#e8c372}
   .jstep.aporta.on{background:var(--warn);border-color:var(--warn)}
@@ -267,10 +273,6 @@
     </div>
     <div class="hint" style="margin-top:-2px;margin-bottom:10px">Mete el monto <b>bruto</b> que da Creditia. (El utilizable real es menor: no incluye cesantía, vejez ni cuota social.)</div>
     <div class="field">
-      <label>Si no alcanza, ¿puede aportar la diferencia de su bolsa?</label>
-      <div class="seg" id="aporta"><button data-v="si">Sí</button><button data-v="no">No</button><button data-v="">?</button></div>
-    </div>
-    <div class="field">
       <label>¿Debe dinero a su AFORE?</label>
       <div class="seg" id="deudaAfore"><button data-v="no">No</button><button data-v="si">Sí</button></div>
     </div>
@@ -366,7 +368,7 @@ function initSeg(id, def){
       b.classList.add('on'); ev(); };
   });
 }
-['ley73','pensionado','tramitando','cotiza','s52','aforeSrc','aporta','deudaAfore','demanda','quiere','issste','esc','trato']
+['ley73','pensionado','tramitando','cotiza','s52','aforeSrc','deudaAfore','demanda','quiere','issste','esc','trato']
   .forEach(id=>initSeg(id, {pensionado:'no',tramitando:'no',cotiza:'no',aforeSrc:'creditia',deudaAfore:'no',demanda:'no',issste:'no',esc:'60',trato:'señor'}[id]||''));
 
 // ---------- tabla de pensión de referencia (Guión 3.0 p.3) ----------
@@ -517,7 +519,7 @@ function ev(){
     aforeReq=aniosFin*perYear;
     if(afore!==null){
       falta=Math.max(0,aforeReq-afore);
-      if(falta>0 && seg.aporta==='no') reasons.push('AFORE no cubre ('+fmt(afore)+' vs '+fmt(aforeReq)+') y no puede aportar la diferencia.');
+      if(falta>0) reasons.push('AFORE no cubre los '+aniosFin+' años (tiene '+fmt(afore)+', se necesitan '+fmt(aforeReq)+'; faltan '+fmt(falta)+') → consultoría.');
     }
   }
 
@@ -531,14 +533,12 @@ function ev(){
   ask(netas===null,'semanas','Para sacar tu cálculo necesito tu reporte de semanas cotizadas del IMSS. ¿Tienes uno reciente? Si no lo tienes, pásame tu CURP y yo lo saco.');
   ask(afore===null,'monto AFORE','Por último, ¿tienes un estado de cuenta de tu AFORE reciente (no mayor a 3 meses)? Si no lo tienes, no te preocupes, sacamos un aproximado.');
   ask((ultima==='trabajo'||ultima==='mod10') && seg.s52==='','52 sem en 5 años','En los 5 años antes de tu última cotización, ¿alcanzaste a juntar al menos 1 año cotizado (52 semanas)? No tienen que ser seguidas.');
-  ask(aforeReq!==null && afore!==null && falta>0 && seg.aporta==='','¿aporta diferencia?','Para financiar tus '+aniosFin+' años de retroactivo se necesitan ~'+fmt(aforeReq)+' en tu AFORE y tienes ~'+fmt(afore)+', faltarían ~'+fmt(falta)+'. ¿Estarías en posición de aportar esa diferencia de tu bolsa, además del financiamiento?');
 
   // -------- BANDERAS --------
   if(ultima==='mod40') flags.push(['Mod 40','Explicar urgencia: la ventana de derecho es de 11 meses 22 días; no conviene dejarlo madurar.']);
   if(wDes!==null && wDes>0) flags.push(['Semanas descontadas','Tiene '+wDes+' semanas descontadas por retiro (disposición de recursos).']);
   if(seg.issste==='si') flags.push(['ISSSTE','Las semanas del ISSSTE NO suman al IMSS. Para el cálculo usa solo el reporte del IMSS.']);
   if(seg.deudaAfore==='si') flags.push(['Deuda en AFORE','Debe dinero al AFORE. Validar con el asesor si reduce el financiamiento disponible.']);
-  if(afore!==null && aforeReq!==null && falta>0 && seg.aporta!=='no') flags.push(['AFORE no alcanza','Faltan ~'+fmt(falta)+'. Aporta de su bolsa o se financian menos años.']);
   if(seg.aforeSrc==='creditia' && afore!==null) flags.push(['AFORE estimado','Es Creditia (estimado). Pedir estado de cuenta real, no mayor a 3 meses.']);
 
   // -------- ESTATUS + RUTA --------
@@ -557,7 +557,6 @@ function ev(){
     if(estatus==='CALIFICA'){
       say.length=0;
       say.push({t:'msg',x:'Perfecto, por lo que me comentas cumples con todo lo que se necesita para que te podamos financiar tu modalidad 40. El siguiente paso es una asesoría sin costo con nuestro asesor experto, donde te arma tu proyecto exacto: cuánto puede subir tu pensión, qué hay que hacer y los números finales. ¿Te parece si te agendo un espacio?'});
-      if(falta>0) say.push({t:'msg',x:'Un detalle importante: en tu AFORE se necesitan ~'+fmt(aforeReq)+' para tus '+aniosFin+' años y tienes ~'+fmt(afore)+', así que aportarías ~'+fmt(falta)+' de tu bolsa, además del financiamiento. ¿Estás en posición de hacerlo?'});
       say.push({t:'do',x:'Conseguir su reporte de semanas del IMSS (o sacarlo con su CURP en Consulta Única).'});
       say.push({t:'do',x:'Pedir estado de cuenta de AFORE (≤3 meses); si no lo tiene, aproximado en Creditia.'});
       say.push({t:'do',x:'Agendar en el calendario "'+(ruta==='AHORA'?'Financiamiento':'Financiamiento futuro')+'" (bloquea de 1 a 1.5 h, en hora exacta).'});
@@ -569,7 +568,7 @@ function ev(){
   }
 
   const aforeCubre=(afore!==null&&perYear)?afore/perYear:null;
-  const d={edad,edadM,mesesSin,netas,piso:pisoSem,afore,aforeReq,falta,aniosFin,aforeCubre,ultima,
+  const d={edad,edadM,mesesSin,netas,piso:pisoSem,afore,aforeReq,falta,aniosFin,aforeCubre,ultima,estatus,ruta,
     aforeSrc:seg.aforeSrc, gancho:ganchoPension(netas, +seg.esc)};
   render(estatus,klass,ruta,razon,d,flags,say);
 }
@@ -595,7 +594,7 @@ function render(estatus,klass,ruta,razon,d,flags,say){
     if(d.afore!=null) add('AFORE disponible', fmt(d.afore)+(d.falta>0?' (faltan '+fmt(d.falta)+')':' ✓'), d.falta>0?'ko':'good');
     if(d.afore!=null && d.aforeCubre!=null){
       const cv=(Math.round(d.aforeCubre*10)/10).toString();
-      if(d.falta>0) add('AFORE cubre', cv+' de '+d.aniosFin+' años · aporta '+fmt(d.falta),'ko');
+      if(d.falta>0) add('AFORE cubre', cv+' de '+d.aniosFin+' años · faltan '+fmt(d.falta),'ko');
       else add('AFORE cubre','los '+d.aniosFin+' años ✓','good');
     }
   }
@@ -636,7 +635,7 @@ function render(estatus,klass,ruta,razon,d,flags,say){
   if(d.ultima) L.push('Última cotización: '+({trabajo:'Trabajo/patrón',mod10:'Mod 10',mod40:'Mod 40'})[d.ultima]);
   if(d.netas!=null) L.push('Semanas netas: '+d.netas+(d.piso!=null?(' (mín edad '+d.piso+')'):''));
   if(d.aforeReq!=null) L.push('AFORE: '+(d.afore!=null?fmt(d.afore):'—')+' / req '+fmt(d.aforeReq)+(d.falta>0?(' · faltan '+fmt(d.falta)):' · alcanza'));
-  if(d.aforeReq!=null && d.afore!=null && d.aforeCubre!=null) L.push('AFORE cubre '+(Math.round(d.aforeCubre*10)/10)+' de '+d.aniosFin+' años'+(d.falta>0?(' · aporta '+fmt(d.falta)):''));
+  if(d.aforeReq!=null && d.afore!=null && d.aforeCubre!=null) L.push('AFORE cubre '+(Math.round(d.aforeCubre*10)/10)+' de '+d.aniosFin+' años'+(d.falta>0?(' · faltan '+fmt(d.falta)):''));
   if(d.gancho) L.push('Pensión ref. ('+d.gancho.edad+'a): hoy ~'+fmt(d.gancho.actual)+' → topada ~'+fmt(d.gancho.topada)+' (+'+fmt(d.gancho.dif)+')');
   if(flags.length){ L.push(''); L.push('Banderas para asesor:'); flags.forEach(([t,x])=>L.push('- '+t+': '+x)); }
   document.getElementById('crm').value=L.join('\n');
@@ -652,24 +651,19 @@ function renderJourney(d){
   const clo=(document.getElementById('closer').value.trim())||'[tu nombre]';
   const tr=(seg.trato==='señora')?'señora':'señor';
   const Tr=tr.charAt(0).toUpperCase()+tr.slice(1);
-  const ap=(d.falta&&d.falta>0)?fmt(d.falta):'[aportación aprox]';
   const G=d.gancho;
   const metaC =G?('$'+(Math.floor(G.topada/10000)*10)+' mil'):'$[X]';
-  const metaC1=G?('$'+(Math.floor(G.topada/10000)*10)+' mil'):'$[pensión meta]';
-  const actC1 =G?('$'+(Math.floor(G.actual/1000))+' mil'):'$[pensión actual]';
   const flow={
     main:[
       {id:'A',l:'A · Primer contacto',msg:'¡Hola '+tr+' '+nom+'! Buenos días. Soy '+clo+', asesor de Pensión Perfecta. Me llegó su solicitud para ver cuánto podríamos subir su pensión con modalidad 40. ¿Sigue interesado?'},
       {id:'B',l:'B · Documentación',msg:'¡Excelente, '+tr+' '+nom+'! Me da mucho gusto.\n\nLe cuento por qué vale la pena verlo: en Pensión Perfecta hemos ayudado a miles de personas en los últimos 8 años, incrementando su pensión desde $5 mil hasta más de $40 mil pesos al mes, de por vida. La mayoría de nuestros socios no sabía todo lo que podía recuperar.\n\nPara poder completar su información, lo mejor es que lo veamos rápido por una llamada, donde reviso su caso y le digo cómo lo podemos ayudar.\n\nSi antes me envía estos dos documentos, la llamada es más rápida y precisa, porque llego con su caso ya revisado:\n\n1. Su constancia de semanas cotizadas del IMSS.\n2. Su estado de cuenta del AFORE, de preferencia reciente.\n\nSi no tiene la constancia a la mano, con su CURP se la generamos.\n\n¿En qué horario le puedo marcar?'}
     ],
-    aporta:{id:'C1',l:'Aportación adicional',msg:''+Tr+' '+nom+', buenos días. Le platico sobre su caso.\nCon el financiamiento la meta sería subir su pensión de unos '+actC1+' a más de '+metaC1+' al mes, de por vida.\n\nPor cómo está su AFORE, en su caso se necesitaría una aportación adicional de su parte, además de lo que nosotros financiamos. ¿Estaría usted en posición de hacerla? Para ser claros, estamos hablando de una aportación del orden de '+ap+'.\nQuedo atento a su respuesta.'},
     ok:[
       {id:'C',l:'C · Sí califica',msg:'¡Buenas noticias, '+tr+' '+nom+'! Revisé su caso y sí califica para el financiamiento.\nCon su modalidad 40 en retroactivo, la meta sería llevar su pensión a más de '+metaC+' al mes, de por vida.\n\nEl siguiente paso es una asesoría por videollamada con nuestro experto en financiamiento, donde le aterriza los números exactos y le explica el paso a paso.\nEsta asesoría normalmente tiene un costo, pero como usted cumple con todos los requisitos, se la damos sin costo. Tenemos espacio el [día] a las [hora]. ¿Le funciona, o prefiere otro horario?'},
       {id:'D',l:'D · Grupo WhatsApp',msg:'¡Hola '+nom+'! Bienvenido a su grupo de seguimiento. Muchísimas gracias por su tiempo hoy.\nComo lo platicamos, queda agendada su asesoría para el [día] de [mes] a las [horas].\n\nEn este grupo está el equipo que va a llevar su caso de principio a fin: la asesora experta en financiamiento que le dará su asesoría, el área de soporte que le apoya con el trámite, y yo. Somos varios a propósito, para que en cada paso siempre tenga a quién acudir.\nCualquier duda antes de su asesoría, por aquí mismo nos escribe, por favor.\nQuedamos al pendiente.'}
     ],
     no:[
-      {id:'N',l:'No califica',msg:''+Tr+' '+nom+', revisé su caso con detalle, y le voy a ser honesto.\nPara el financiamiento en específico no es viable en su caso. Pero eso no quiere decir que no podamos mejorar su pensión.\n\nTenemos una asesoría con un experto donde le armamos un plan personalizado, con varios escenarios, para sacarle el máximo a su pensión con lo que sí tiene a favor. La mayoría de nuestros clientes recupera lo que invierte en la asesoría en el primer mes de su pensión, y va con garantía: si no mejoramos su pensión, le devolvemos el 100%.\n\nLa inversión es de $1,990. ¿Le gustaría que le agendara un espacio para revisarlo?'},
-      {id:'NA',l:'No puede aportación',msg:'Entiendo, '+tr+' '+nom+', sin problema. Le soy claro: sin esa aportación, el financiamiento no es viable en su caso, porque se necesita completar ese monto para pagar el retroactivo.\n\nPero eso no quiere decir que no podamos mejorar su pensión. Tenemos una asesoría con un experto donde le armamos un plan personalizado, con varios escenarios, para sacarle el máximo a su pensión con lo que sí tiene a favor. La mayoría de nuestros clientes recupera lo que invierte en la asesoría en el primer mes de su pensión, y va con garantía: si no mejoramos su pensión, le devolvemos el 100%.\n\nLa inversión es de $1,990. ¿Le gustaría que le agendara un espacio para revisarlo?'}
+      {id:'N',l:'Consultoría $1,990',msg:''+Tr+' '+nom+', revisé su caso con detalle, y le voy a ser honesto.\nPara el financiamiento en específico no es viable en su caso. Pero eso no quiere decir que no podamos mejorar su pensión.\n\nTenemos una asesoría con un experto donde le armamos un plan personalizado, con varios escenarios, para sacarle el máximo a su pensión con lo que sí tiene a favor. La mayoría de nuestros clientes recupera lo que invierte en la asesoría en el primer mes de su pensión, y va con garantía: si no mejoramos su pensión, le devolvemos el 100%.\n\nLa inversión es de $1,990. ¿Le gustaría que le agendara un espacio para revisarlo?'}
     ]
   };
 
@@ -679,33 +673,34 @@ function renderJourney(d){
     n.onclick=()=>{ jsel=(jsel===it.id?null:it.id); renderJourney(d); }; return n; };
 
   const sc=document.getElementById('journeySteps'); sc.innerHTML='';
+
+  const banner=document.createElement('div'); banner.className='jbanner';
+  if(d.estatus==='CALIFICA'){ banner.classList.add('ok'); banner.textContent='Este lead CALIFICA → Financiamiento (asesoría gratis)'+(d.ruta?(' · '+d.ruta):''); }
+  else if(d.estatus==='NO CALIFICA'){ banner.classList.add('no'); banner.textContent='Este lead NO CALIFICA → Consultoría $1,990'; }
+  else { banner.classList.add('warn'); banner.textContent='Faltan datos para definir el camino.'; }
+  sc.appendChild(banner);
+
   const mrow=document.createElement('div'); mrow.className='steps';
   flow.main.forEach((it,i)=>{ if(i) mrow.appendChild(arrow()); mrow.appendChild(chip(it,'main')); });
   sc.appendChild(mrow);
 
-  const arow=document.createElement('div'); arow.className='steps'; arow.style.marginTop='10px';
-  const ac=document.createElement('div'); ac.className='jstep aporta'+(jsel==='C1'?' on':'');
-  ac.innerHTML='<div class="jlabel">'+flow.aporta.l+'</div><div class="jsub">solo si su AFORE no alcanza (depende de que el lead tenga el dinero)</div>';
-  ac.onclick=()=>{ jsel=(jsel==='C1'?null:'C1'); renderJourney(d); };
-  arow.appendChild(ac); sc.appendChild(arow);
-
   const bw=document.createElement('div'); bw.className='branches';
-  const okb=document.createElement('div'); okb.className='branch ok'; okb.innerHTML='<div class="bhead ok">✓ Sí califica</div>';
+  const okb=document.createElement('div'); okb.className='branch ok'+(d.estatus==='CALIFICA'?' active':''); okb.innerHTML='<div class="bhead ok">✓ Califica → Financiamiento</div>';
   const okr=document.createElement('div'); okr.className='steps';
   flow.ok.forEach((it,i)=>{ if(i) okr.appendChild(arrow()); okr.appendChild(chip(it,'ok')); });
   okb.appendChild(okr); bw.appendChild(okb);
-  const nob=document.createElement('div'); nob.className='branch no'; nob.innerHTML='<div class="bhead no">✕ No califica</div>';
+  const nob=document.createElement('div'); nob.className='branch no'+(d.estatus==='NO CALIFICA'?' active':''); nob.innerHTML='<div class="bhead no">✕ No califica → Consultoría $1,990</div>';
   const nor=document.createElement('div'); nor.className='steps';
   flow.no.forEach((it,i)=>{ if(i) nor.appendChild(arrow()); nor.appendChild(chip(it,'no')); });
   nob.appendChild(nor); bw.appendChild(nob);
   sc.appendChild(bw);
 
   const panel=document.getElementById('journeyMsg');
-  const all=[...flow.main.map(x=>['main',x]),['aporta',flow.aporta],...flow.ok.map(x=>['ok',x]),...flow.no.map(x=>['no',x])];
+  const all=[...flow.main.map(x=>['main',x]),...flow.ok.map(x=>['ok',x]),...flow.no.map(x=>['no',x])];
   const sel=all.find(([k,x])=>x.id===jsel);
   if(!sel){ panel.innerHTML='<div style="color:var(--muted);font-size:13px">Toca un paso del journey para ver su mensaje de WhatsApp (clic en Copiar para mandarlo).</div>'; return; }
   const [kind,it]=sel;
-  const hc = kind==='ok'?' ok':(kind==='no'?' no':(kind==='aporta'?' aporta':''));
+  const hc = kind==='ok'?' ok':(kind==='no'?' no':'');
   panel.innerHTML='<div class="jmsghead'+hc+'">'+it.l+' <button class="btn" id="jcopy" style="padding:4px 11px;font-size:12px">Copiar</button></div><div class="jmsgbody">'+it.msg.replace(/\n/g,'<br>')+'</div>';
   document.getElementById('jcopy').onclick=()=>{ copyToClipboard(it.msg).then(()=>{ const b=document.getElementById('jcopy'); b.textContent='Copiado ✓'; setTimeout(()=>b.textContent='Copiar',1100); }).catch(()=>{}); };
 }
@@ -744,7 +739,7 @@ function showView(v){
 
 function reset(){
   document.querySelectorAll('input').forEach(i=>{ if(['cTope','cEdadMin','cEdadAhora','cMesesAhora','closer'].includes(i.id))return; i.value=''; });
-  ['ley73','s52','aporta','quiere'].forEach(id=>{seg[id]='';document.getElementById(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===''));});
+  ['ley73','s52','quiere'].forEach(id=>{seg[id]='';document.getElementById(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===''));});
   ['pensionado','tramitando','cotiza','demanda','issste','deudaAfore'].forEach(id=>{seg[id]='no';document.getElementById(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='no'));});
   seg.aforeSrc='creditia';document.getElementById('aforeSrc').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='creditia'));
   seg.trato='señor';document.getElementById('trato').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='señor'));
