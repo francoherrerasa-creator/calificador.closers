@@ -9,7 +9,7 @@
     --bg:#0f1115; --panel:#171a21; --panel2:#1e222b; --line:#2a2f3a;
     --txt:#e7e9ee; --muted:#9aa3b2; --accent:#4f8cff;
     --ok:#1f9d57; --okbg:#0f2a1c; --no:#d8453b; --nobg:#2a1413;
-    --warn:#d9a02b; --warnbg:#2a2412; --ahora:#2f7df6; --futuro:#8a5cf6;
+    --warn:#d9a02b; --warnbg:#2a2412; --ahora:#2f7df6; --futuro:#8a5cf6; --m10:#0ea5a4;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--txt);
@@ -48,6 +48,8 @@
   .chip{display:inline-block;padding:5px 12px;border-radius:999px;font-weight:700;font-size:14px}
   .chip.ahora{background:var(--ahora);color:#fff}
   .chip.futuro{background:var(--futuro);color:#fff}
+  .chip.m10{background:var(--m10);color:#fff}
+  .verdict.m10{background:rgba(14,165,164,.08);border-color:var(--m10)}
   .vreason{color:var(--muted);font-size:13.5px;flex-basis:100%}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
   @media(max-width:820px){.grid2{grid-template-columns:1fr}}
@@ -71,52 +73,6 @@
   .wamsg .wb{display:none;font-size:12.5px;color:#cfe3ff;line-height:1.45;margin-top:7px;padding-top:7px;border-top:1px dashed var(--line);user-select:text}
   .wamsg.open .wb{display:block}
   .exp{color:var(--muted);font-size:11px;margin-left:8px;font-weight:400}
-  .steps{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-  .jstep{flex:1;min-width:120px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 8px;cursor:pointer;text-align:center}
-  .jstep:hover{border-color:var(--accent)}
-  .jstep.on{background:var(--accent);border-color:var(--accent)}
-  .jstep.on .jlabel{color:#fff}
-  .jstep.goal{border-style:dashed}
-  .jnum{width:26px;height:26px;border-radius:50%;background:var(--panel);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 6px;color:var(--accent)}
-  .jstep.on .jnum{background:rgba(255,255,255,.22);border-color:transparent;color:#fff}
-  .jlabel{font-size:12px;color:var(--txt);font-weight:600;line-height:1.2}
-  .jarrow{color:var(--muted);font-size:18px}
-  @media(max-width:600px){.jarrow{display:none}}
-  .jmsghead{font-size:13px;font-weight:700;color:var(--accent);display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-  .jmsghead.ok{color:#46c97e}
-  .jmsghead.no{color:#e8645a}
-  .jmsgbody{background:#0c0e12;border:1px solid var(--line);border-radius:8px;padding:11px;font-size:13px;color:#cfe3ff;line-height:1.5}
-  .jstep.main.on{background:var(--accent);border-color:var(--accent)}
-  .jstep.main.on .jlabel{color:#fff}
-  .jstep.ok{border-color:#2f7d4f}
-  .jstep.ok .jlabel{color:#7ee0a3}
-  .jstep.ok.on{background:var(--ok);border-color:var(--ok)}
-  .jstep.ok.on .jlabel{color:#fff}
-  .jstep.no{border-color:#8a3a34}
-  .jstep.no .jlabel{color:#f0a39d}
-  .jstep.no.on{background:var(--no);border-color:var(--no)}
-  .jstep.no.on .jlabel{color:#fff}
-  .branches{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-  @media(max-width:700px){.branches{grid-template-columns:1fr}}
-  .branch{border:1px solid var(--line);border-radius:10px;padding:10px}
-  .branch.ok{background:rgba(31,157,87,.07);border-color:#2f7d4f}
-  .branch.no{background:rgba(216,69,59,.07);border-color:#8a3a34}
-  .bhead{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
-  .bhead.ok{color:#46c97e}
-  .bhead.no{color:#e8645a}
-  .jbanner{padding:10px 12px;border-radius:8px;font-weight:700;font-size:13.5px;margin-bottom:12px;border:1px solid var(--line)}
-  .jbanner.ok{background:var(--okbg);border-color:#1f9d57;color:#46c97e}
-  .jbanner.no{background:var(--nobg);border-color:#d8453b;color:#e8645a}
-  .jbanner.warn{background:var(--warnbg);border-color:#d9a02b;color:#d9a02b}
-  .branch.ok.active{box-shadow:0 0 0 2px #1f9d57}
-  .branch.no.active{box-shadow:0 0 0 2px #d8453b}
-  .jstep.aporta{border-color:var(--warn);border-style:dashed;text-align:center}
-  .jstep.aporta .jlabel{color:#e8c372}
-  .jstep.aporta.on{background:var(--warn);border-color:var(--warn)}
-  .jstep.aporta.on .jlabel,.jstep.aporta.on .jsub{color:#1a1205}
-  .jsub{font-size:11px;color:var(--muted);font-weight:400;margin-top:3px}
-  .qmark{display:inline-block;margin-left:4px;background:rgba(217,160,43,.25);color:#e8c372;border-radius:50%;width:18px;height:18px;line-height:18px;text-align:center;font-size:12px;font-weight:800}
-  .jmsghead.aporta{color:var(--warn)}
   .ko{color:var(--no);font-weight:700}
   .good{color:#46c97e;font-weight:700}
   .gancho .big{font-size:15px}
@@ -139,9 +95,6 @@
   .foot{grid-column:1/-1;color:var(--muted);font-size:11.5px;text-align:center;padding:6px}
   .topbar{max-width:1100px;margin:0 auto;padding:14px 14px 0;display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}
   .nav{display:flex;gap:8px;align-items:center}
-  .tab{background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:8px 16px;font-size:14px;font-weight:600;cursor:pointer}
-  .tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
-  .wrapSingle{max-width:1100px;margin:0 auto;padding:14px}
 </style>
 </head>
 <body>
@@ -152,8 +105,6 @@
     <div class="sub">Filtro rápido del setter en vivo. No reemplaza el cálculo fino del asesor. Uso interno.</div>
   </div>
   <div class="nav">
-    <button id="tabCalif" class="tab on" onclick="showView('calif')">Calificador</button>
-    <button id="tabJourney" class="tab" onclick="showView('journey')">Journey</button>
     <button class="btn ghost" onclick="reset()">Limpiar</button>
   </div>
 </div>
@@ -342,17 +293,10 @@
       <div class="field"><label>Meses sin cotizar para "Ahora" (más de)</label><input type="number" id="cMesesAhora" value="12" oninput="ev()"></div>
     </div>
     <div class="hint" style="margin-top:8px">Tablas oficiales (hoja Generales, 2026-06-08): semanas mínimas por edad (900→750) y AFORE por año según semanas (100k→60k). Topes Mod 40: trabajo/mod10 4a11m22d, mod 40 11m22d. Esas tablas viven en el código; pídeme cambiarlas si Checo ajusta el rango.</div>
+    <div class="hint" style="margin-top:6px">Recuperación Mod 10 (criterios confirmados Checo 2026-06-15): ≥59 años cumplidos · 400–1000 semanas (>1000 = bandera) · perdió derecho a pensión = lleva más del 25% del tiempo cotizado sin cotizar (años = semanas×25%÷52). Solo reporte de semanas; AFORE no es requisito (ideal traerlo a la asesoría). Si M40 no procede pero cumple esto, se rutea a recuperación Mod 10.</div>
   </details>
 
-  <div class="foot">v1 · uso interno · pendiente de visto de Checo para rollout a equipo · cifras de pensión = referencia del Playbook, no promesa al lead</div>
-</div>
-
-<div class="wrapSingle" id="viewJourney" style="display:none">
-  <div class="card">
-    <h2>Journey del lead</h2>
-    <div id="journeySteps"></div>
-    <div id="journeyMsg" style="margin-top:12px"></div>
-  </div>
+  <div class="foot">v2 · uso interno · incluye recuperación Mod 10 (criterios provisionales, guión formal pendiente) · cifras de pensión = referencia del Playbook, no promesa al lead</div>
 </div>
 
 <script>
@@ -523,27 +467,65 @@ function ev(){
     }
   }
 
+  // -------- RECUPERACIÓN MOD 10 (segunda cubeta) --------
+  // Derecho a PENSIÓN se conserva un 25% del tiempo cotizado. Si lleva más que eso
+  // sin cotizar, perdió el derecho y es candidato a recuperación vía Mod 10 al mínimo.
+  // No usa AFORE ni Creditia: solo reporte de semanas (video 2026-06-10).
+  const consAnios = (netas!==null) ? (netas*0.25)/52 : null;   // años de conservación del derecho a pensión
+  const consMeses = (consAnios!==null) ? consAnios*12 : null;
+  // Bloqueos que matan AMBAS cubetas (M40 y M10):
+  const blockUniv = (seg.quiere==='no'||seg.ley73==='no'||seg.pensionado==='si'||
+                     seg.cotiza==='si'||seg.tramitando==='si'||seg.demanda==='si'||
+                     (edadTot!==null && edadTot<C.edadMin));
+  // ¿M40 ya murió por semanas insuficientes para su edad? (si sí, no pedimos AFORE/última/52)
+  const m40Dead = (netas!==null && pisoSem!==null && netas<pisoSem);
+  // Elegibilidad M10: ≥59 (ya cubierto por blockUniv/edadMin), ≥450 sem, y perdió el derecho.
+  let m10ok=false;
+  const m10Missing=[];
+  if(!blockUniv){
+    if(edad===null) m10Missing.push('edad');
+    if(netas===null) m10Missing.push('semanas');
+    if(mesesSin===null) m10Missing.push('tiempo sin cotizar');
+    if(!m10Missing.length){
+      m10ok = (netas>=400 && mesesSin>consMeses);
+    }
+  }
+
   // -------- FALTANTES + QUÉ PREGUNTAR (mensajes literales) --------
   const ask=(cond,short,msg)=>{ if(cond){ missing.push(short); say.push({t:'msg',x:msg}); } };
   ask(seg.quiere==='','¿quiere financiamiento?','En este momento, ¿lo que buscas es el financiamiento de tu modalidad 40, o más bien información/asesoría general?');
   ask(seg.ley73==='','¿Ley 73?','Una pregunta, ¿sabes si eres Ley 73? Si no estás seguro, ¿en qué año empezaste a cotizar en el IMSS? (antes de julio de 1997 = Ley 73)');
   ask(edad===null,'edad','¿Qué edad tienes actualmente?');
   ask(mesesSin===null,'tiempo sin cotizar','¿Cuánto tiempo llevas sin cotizar en el IMSS? (más o menos, años y meses)');
-  ask(!ultima,'última cotización','Tu última cotización en el IMSS, ¿fue en un trabajo con patrón, en Modalidad 10, o en Modalidad 40?');
+  ask(!ultima && !m40Dead,'última cotización','Tu última cotización en el IMSS, ¿fue en un trabajo con patrón, en Modalidad 10, o en Modalidad 40?');
   ask(netas===null,'semanas','Para sacar tu cálculo necesito tu reporte de semanas cotizadas del IMSS. ¿Tienes uno reciente? Si no lo tienes, pásame tu CURP y yo lo saco.');
-  ask(afore===null,'monto AFORE','Por último, ¿tienes un estado de cuenta de tu AFORE reciente (no mayor a 3 meses)? Si no lo tienes, no te preocupes, sacamos un aproximado.');
-  ask((ultima==='trabajo'||ultima==='mod10') && seg.s52==='','52 sem en 5 años','En los 5 años antes de tu última cotización, ¿alcanzaste a juntar al menos 1 año cotizado (52 semanas)? No tienen que ser seguidas.');
+  ask(afore===null && !m40Dead,'monto AFORE','Por último, ¿tienes un estado de cuenta de tu AFORE (lo más actualizado que se pueda)? Si no lo tienes, no te preocupes, sacamos un aproximado.');
+  ask((ultima==='trabajo'||ultima==='mod10') && seg.s52==='' && !m40Dead,'52 sem en 5 años','En los 5 años antes de tu última cotización, ¿alcanzaste a juntar al menos 1 año cotizado (52 semanas)? No tienen que ser seguidas.');
 
   // -------- BANDERAS --------
   if(ultima==='mod40') flags.push(['Mod 40','Explicar urgencia: la ventana de derecho es de 11 meses 22 días; no conviene dejarlo madurar.']);
   if(wDes!==null && wDes>0) flags.push(['Semanas descontadas','Tiene '+wDes+' semanas descontadas por retiro (disposición de recursos).']);
   if(seg.issste==='si') flags.push(['ISSSTE','Las semanas del ISSSTE NO suman al IMSS. Para el cálculo usa solo el reporte del IMSS.']);
   if(seg.deudaAfore==='si') flags.push(['Deuda en AFORE','Debe dinero al AFORE. Validar con el asesor si reduce el financiamiento disponible.']);
-  if(seg.aforeSrc==='creditia' && afore!==null) flags.push(['AFORE estimado','Es Creditia (estimado). Pedir estado de cuenta real, no mayor a 3 meses.']);
+  if(seg.aforeSrc==='creditia' && afore!==null) flags.push(['AFORE estimado','Es Creditia (estimado). Pedir estado de cuenta real, lo más actualizado que se pueda.']);
 
-  // -------- ESTATUS + RUTA --------
+  // -------- ESTATUS + RUTA (3 cubetas: M40 → M10 → consultoría) --------
   let estatus, klass, ruta=null, razon='';
-  if(reasons.length){ estatus='NO CALIFICA'; klass='no'; razon=reasons.join(' '); }
+  const fmtSin = (m)=> Math.floor(m/12)+'a '+(m%12)+'m';
+  if(reasons.length){
+    // M40 no pasa limpio. ¿Aplica recuperación Mod 10?
+    if(m10ok){
+      estatus='CALIFICA'; klass='m10'; ruta='M10';
+      razon='No conserva derecho a pensión (lleva '+fmtSin(mesesSin)+' sin cotizar; lo conservaba ~'+consAnios.toFixed(1)+' años). No califica a Mod 40, pero le financiamos Mod 10 al mínimo (~$24,000 en 12 meses) para que recupere el derecho y se pensione.';
+      if(netas>1000) flags.push(['Más de 1000 semanas','Posiblemente le conviene una pensión más alta (Mod 40 / aumento), no solo la mínima. Validar con el asesor.']);
+      flags.push(['AFORE (ideal)','No es requisito para agendar Mod 10, pero es ideal que llegue con su estado de cuenta de AFORE a la asesoría.']);
+    } else if(!blockUniv && m10Missing.length){
+      estatus='POR CONFIRMAR'; klass='warn';
+      razon='Mod 40 no procede. Falta para evaluar recuperación Mod 10: '+m10Missing.join(', ')+'.';
+    } else {
+      estatus='NO CALIFICA'; klass='no'; razon=reasons.join(' ');
+    }
+  }
   else if(missing.length){ estatus='POR CONFIRMAR'; klass='warn'; razon='Falta: '+missing.join(', ')+'.'; }
   else {
     estatus='CALIFICA'; klass='ok';
@@ -552,23 +534,31 @@ function ev(){
     else { ruta='FUTURO'; razon='Califica pero aún no conviene financiar hoy → Futuro (después de 3 meses).'; }
   }
 
-  // -------- QUÉ SIGUE (cuando ya no faltan datos) --------
-  if(!missing.length){
-    if(estatus==='CALIFICA'){
-      say.length=0;
-      say.push({t:'msg',x:'Perfecto, por lo que me comentas cumples con todo lo que se necesita para que te podamos financiar tu modalidad 40. El siguiente paso es una asesoría sin costo con nuestro asesor experto, donde te arma tu proyecto exacto: cuánto puede subir tu pensión, qué hay que hacer y los números finales. ¿Te parece si te agendo un espacio?'});
-      say.push({t:'do',x:'Conseguir su reporte de semanas del IMSS (o sacarlo con su CURP en Consulta Única).'});
-      say.push({t:'do',x:'Pedir estado de cuenta de AFORE (≤3 meses); si no lo tiene, aproximado en Creditia.'});
-      say.push({t:'do',x:'Agendar en el calendario "'+(ruta==='AHORA'?'Financiamiento':'Financiamiento futuro')+'" (bloquea de 1 a 1.5 h, en hora exacta).'});
-      say.push({t:'do',x:'Crear el grupo de WhatsApp con el asesor y llenar el Tracker.'});
-    } else if(estatus==='NO CALIFICA'){
-      say.length=0;
-      say.push({t:'do',x:'No es lead de financiamiento. Explícale con respeto por qué; si aplica, pásalo a consultoría / As. PP.'});
-    }
+  // -------- QUÉ SIGUE --------
+  if(estatus==='CALIFICA' && ruta==='M10'){
+    say.length=0;
+    say.push({t:'msg',x:'[Borrador — guión formal pendiente] '+( (seg.trato==='señora')?'Señora':'Señor' )+', le tengo una buena opción. Usted ya tiene semanas cotizadas; lo que pasa es que dejó de cotizar y por eso hoy no podría pensionarse. Lo que hacemos en Pensión Perfecta es financiarle su Modalidad 10 al mínimo durante un año para que recupere su derecho y se pueda pensionar. Lo llevamos de la mano hasta que reciba su pensión, sin que usted ponga un peso de su bolsa. ¿Le agendo con el experto para que le aterrice cómo funciona en su caso?'});
+    say.push({t:'do',x:'Pedir el reporte de semanas del IMSS (con su CURP si no lo tiene). El AFORE no es requisito para agendar; es ideal que lo lleve a la asesoría.'});
+    say.push({t:'do',x:'Agendar a partir del LUNES en el calendario "M10 recuperación de derechos" (1 h = 2 bloques de 30 min).'});
+    say.push({t:'do',x:'Asignar solo a Sofía, Néstor o Jeniret (los 3 asesores nuevos aún no atienden M10).'});
+    say.push({t:'do',x:'Crear el grupo de WhatsApp y llenar el Tracker. En el pipeline el lead trae icono 💔.'});
+  }
+  else if(estatus==='CALIFICA'){
+    say.length=0;
+    say.push({t:'msg',x:'Perfecto, por lo que me comentas cumples con todo lo que se necesita para que te podamos financiar tu modalidad 40. El siguiente paso es una asesoría sin costo con nuestro asesor experto, donde te arma tu proyecto exacto: cuánto puede subir tu pensión, qué hay que hacer y los números finales. ¿Te parece si te agendo un espacio?'});
+    say.push({t:'do',x:'Conseguir su reporte de semanas del IMSS (o sacarlo con su CURP en Consulta Única).'});
+    say.push({t:'do',x:'AFORE: no es requisito para agendar (basta el aproximado de Creditia); ideal tenerlo antes de la asesoría, lo más actualizado posible.'});
+    say.push({t:'do',x:'Agendar en el calendario "'+(ruta==='AHORA'?'Financiamiento':'Financiamiento futuro')+'" (bloquea de 1 a 1.5 h, en hora exacta).'});
+    say.push({t:'do',x:'Crear el grupo de WhatsApp con el asesor y llenar el Tracker.'});
+  }
+  else if(estatus==='NO CALIFICA'){
+    say.length=0;
+    say.push({t:'do',x:'No es lead de financiamiento ni de recuperación Mod 10. Explícale con respeto; si aplica, pásalo a consultoría / As. PP ($1,990).'});
   }
 
   const aforeCubre=(afore!==null&&perYear)?afore/perYear:null;
   const d={edad,edadM,mesesSin,netas,piso:pisoSem,afore,aforeReq,falta,aniosFin,aforeCubre,ultima,estatus,ruta,
+    consAnios,consMeses,
     aforeSrc:seg.aforeSrc, gancho:ganchoPension(netas, +seg.esc)};
   render(estatus,klass,ruta,razon,d,flags,say);
 }
@@ -577,7 +567,8 @@ function render(estatus,klass,ruta,razon,d,flags,say){
   const v=document.getElementById('verdict');
   v.className='verdict '+klass;
   document.getElementById('vstat').textContent=estatus;
-  document.getElementById('vchip').innerHTML = ruta ? '<span class="chip '+(ruta==='AHORA'?'ahora':'futuro')+'">'+ruta+'</span>' : '';
+  const chipMap={AHORA:['ahora','AHORA'],FUTURO:['futuro','FUTURO'],M10:['m10','RECUPERACIÓN M10']};
+  document.getElementById('vchip').innerHTML = (ruta&&chipMap[ruta]) ? '<span class="chip '+chipMap[ruta][0]+'">'+chipMap[ruta][1]+'</span>' : '';
   document.getElementById('vreason').textContent=razon;
 
   // diagnóstico
@@ -588,6 +579,11 @@ function render(estatus,klass,ruta,razon,d,flags,say){
   add('Sin cotizar', d.mesesSin!=null?(Math.floor(d.mesesSin/12)+'a '+(d.mesesSin%12)+'m'):'—');
   add('Última cotización', d.ultima? ({trabajo:'Trabajo/patrón',mod10:'Mod 10',mod40:'Mod 40'})[d.ultima] : '—');
   if(d.netas!=null) add('Semanas netas', d.netas+(d.piso!=null?(' / mín '+d.piso):''), (d.piso!=null&&d.netas>=d.piso)?'good':(d.piso!=null?'ko':'')); else add('Semanas netas','—');
+  if(d.consAnios!=null && d.mesesSin!=null){
+    const perdio = d.mesesSin > d.consMeses;
+    add('Conserva pensión','~'+d.consAnios.toFixed(1)+'a (25% del cotizado)');
+    add('Derecho a pensión', perdio?'PERDIDO → recuperable Mod 10':'Vigente', perdio?'ko':'good');
+  }
   if(d.aforeReq!=null){
     add('Años a financiar', d.aniosFin);
     add('AFORE requerido', fmt(d.aforeReq));
@@ -611,7 +607,10 @@ function render(estatus,klass,ruta,razon,d,flags,say){
 
   // gancho
   const g=document.getElementById('gancho');
-  if(d.gancho){
+  if(d.ruta==='M10'){
+    g.innerHTML='<div class="big">Objetivo: <b>pensión mínima garantizada</b> (no aumento).</div>'+
+      '<div class="hint">La recuperación Mod 10 habilita el derecho a pensionarse, no busca subir la pensión. PP financia ~$24,000 (12 meses al mínimo); el lead repaga con su propia AFORE al pensionarse. El monto exacto lo confirma el asesor.</div>';
+  } else if(d.gancho){
     const G=d.gancho;
     g.innerHTML =
       '<div class="big today">Hoy, sin hacer nada (≈$500/día): <b>'+fmt(G.actual)+'/mes</b></div>'+
@@ -627,82 +626,23 @@ function render(estatus,klass,ruta,razon,d,flags,say){
   else f.innerHTML='<div class="flag" style="color:var(--muted)">—</div>';
 
   // CRM
+  const rutaTxt={AHORA:'AHORA',FUTURO:'FUTURO',M10:'RECUPERACIÓN MOD 10'};
   const L=[];
-  L.push('CALIFICACIÓN — '+estatus+(ruta?(' · '+ruta):''));
+  L.push('CALIFICACIÓN — '+estatus+(ruta?(' · '+(rutaTxt[ruta]||ruta)):''));
   L.push(razon); L.push('');
   if(d.edad!=null) L.push('Edad: '+d.edad+'a '+(d.edadM||0)+'m');
   if(d.mesesSin!=null) L.push('Sin cotizar: '+Math.floor(d.mesesSin/12)+'a '+(d.mesesSin%12)+'m');
   if(d.ultima) L.push('Última cotización: '+({trabajo:'Trabajo/patrón',mod10:'Mod 10',mod40:'Mod 40'})[d.ultima]);
   if(d.netas!=null) L.push('Semanas netas: '+d.netas+(d.piso!=null?(' (mín edad '+d.piso+')'):''));
-  if(d.aforeReq!=null) L.push('AFORE: '+(d.afore!=null?fmt(d.afore):'—')+' / req '+fmt(d.aforeReq)+(d.falta>0?(' · faltan '+fmt(d.falta)):' · alcanza'));
-  if(d.aforeReq!=null && d.afore!=null && d.aforeCubre!=null) L.push('AFORE cubre '+(Math.round(d.aforeCubre*10)/10)+' de '+d.aniosFin+' años'+(d.falta>0?(' · faltan '+fmt(d.falta)):''));
-  if(d.gancho) L.push('Pensión ref. ('+d.gancho.edad+'a): hoy ~'+fmt(d.gancho.actual)+' → topada ~'+fmt(d.gancho.topada)+' (+'+fmt(d.gancho.dif)+')');
+  if(d.consAnios!=null && d.mesesSin!=null) L.push('Derecho a pensión: '+(d.mesesSin>d.consMeses?'PERDIDO (conservaba ~'+d.consAnios.toFixed(1)+'a) → recuperable Mod 10':'Vigente (conserva ~'+d.consAnios.toFixed(1)+'a)'));
+  if(ruta==='M10'){ L.push('Servicio: financiar Mod 10 al mínimo ~$24,000 (12 meses). Solo reporte de semanas; sin AFORE.'); }
+  else {
+    if(d.aforeReq!=null) L.push('AFORE: '+(d.afore!=null?fmt(d.afore):'—')+' / req '+fmt(d.aforeReq)+(d.falta>0?(' · faltan '+fmt(d.falta)):' · alcanza'));
+    if(d.aforeReq!=null && d.afore!=null && d.aforeCubre!=null) L.push('AFORE cubre '+(Math.round(d.aforeCubre*10)/10)+' de '+d.aniosFin+' años'+(d.falta>0?(' · faltan '+fmt(d.falta)):''));
+    if(d.gancho) L.push('Pensión ref. ('+d.gancho.edad+'a): hoy ~'+fmt(d.gancho.actual)+' → topada ~'+fmt(d.gancho.topada)+' (+'+fmt(d.gancho.dif)+')');
+  }
   if(flags.length){ L.push(''); L.push('Banderas para asesor:'); flags.forEach(([t,x])=>L.push('- '+t+': '+x)); }
   document.getElementById('crm').value=L.join('\n');
-
-  renderJourney(d);
-}
-
-let jsel=null;
-function renderJourney(d){
-  const nf=document.getElementById('nombre').value.trim();
-  const fw=nf?nf.split(/\s+/)[0]:'';
-  const nom=fw?(fw.charAt(0).toUpperCase()+fw.slice(1).toLowerCase()):'[nombre]';
-  const clo=(document.getElementById('closer').value.trim())||'[tu nombre]';
-  const tr=(seg.trato==='señora')?'señora':'señor';
-  const Tr=tr.charAt(0).toUpperCase()+tr.slice(1);
-  const G=d.gancho;
-  const metaC =G?('$'+(Math.floor(G.topada/10000)*10)+' mil'):'$[X]';
-  const flow={
-    main:[
-      {id:'A',l:'A · Primer contacto',msg:'¡Hola '+tr+' '+nom+'! Buenos días. Soy '+clo+', asesor de Pensión Perfecta. Me llegó su solicitud para ver cuánto podríamos subir su pensión con modalidad 40. ¿Sigue interesado?'},
-      {id:'B',l:'B · Documentación',msg:'¡Excelente, '+tr+' '+nom+'! Me da mucho gusto.\n\nLe cuento por qué vale la pena verlo: en Pensión Perfecta hemos ayudado a miles de personas en los últimos 8 años, incrementando su pensión desde $5 mil hasta más de $40 mil pesos al mes, de por vida. La mayoría de nuestros socios no sabía todo lo que podía recuperar.\n\nPara poder completar su información, lo mejor es que lo veamos rápido por una llamada, donde reviso su caso y le digo cómo lo podemos ayudar.\n\nSi antes me envía estos dos documentos, la llamada es más rápida y precisa, porque llego con su caso ya revisado:\n\n1. Su constancia de semanas cotizadas del IMSS.\n2. Su estado de cuenta del AFORE, de preferencia reciente.\n\nSi no tiene la constancia a la mano, con su CURP se la generamos.\n\n¿En qué horario le puedo marcar?'}
-    ],
-    ok:[
-      {id:'C',l:'C · Sí califica',msg:'¡Buenas noticias, '+tr+' '+nom+'! Revisé su caso y sí califica para el financiamiento.\nCon su modalidad 40 en retroactivo, la meta sería llevar su pensión a más de '+metaC+' al mes, de por vida.\n\nEl siguiente paso es una asesoría por videollamada con nuestro experto en financiamiento, donde le aterriza los números exactos y le explica el paso a paso.\nEsta asesoría normalmente tiene un costo, pero como usted cumple con todos los requisitos, se la damos sin costo. Tenemos espacio el [día] a las [hora]. ¿Le funciona, o prefiere otro horario?'},
-      {id:'D',l:'D · Grupo WhatsApp',msg:'¡Hola '+nom+'! Bienvenido a su grupo de seguimiento. Muchísimas gracias por su tiempo hoy.\nComo lo platicamos, queda agendada su asesoría para el [día] de [mes] a las [horas].\n\nEn este grupo está el equipo que va a llevar su caso de principio a fin: la asesora experta en financiamiento que le dará su asesoría, el área de soporte que le apoya con el trámite, y yo. Somos varios a propósito, para que en cada paso siempre tenga a quién acudir.\nCualquier duda antes de su asesoría, por aquí mismo nos escribe, por favor.\nQuedamos al pendiente.'}
-    ],
-    no:[
-      {id:'N',l:'Consultoría $1,990',msg:''+Tr+' '+nom+', ya revisé su caso a detalle y le voy a ser muy honesto.\n\nEl financiamiento como tal no es la vía para usted. Pero quiero que le quede claro algo importante: que no podamos financiarle no significa que su pensión se tenga que quedar como está. Casi siempre hay forma de mejorarla, solo que con una estrategia distinta.\n\nJusto para eso es nuestra asesoría. Un experto se sienta con usted, revisa todo lo que tiene a favor y le arma un plan personalizado, con varios escenarios, para sacarle el máximo a su pensión. Es la parte que la mayoría de la gente nunca aprovecha, simplemente porque no sabe que se puede.\n\nLa mayoría de nuestros socios recupera lo que invierte en la asesoría en el primer mes de su pensión. Y va con garantía total: si no le mejoramos su pensión, le devolvemos el 100%.\n\nLa inversión es de $1,990. ¿Le agendo un espacio para que lo revise con el experto?'}
-    ]
-  };
-
-  const arrow=()=>{ const a=document.createElement('div'); a.className='jarrow'; a.textContent='→'; return a; };
-  const chip=(it,kind)=>{ const n=document.createElement('div'); n.className='jstep '+kind+(jsel===it.id?' on':'');
-    n.innerHTML='<div class="jlabel">'+it.l+'</div>';
-    n.onclick=()=>{ jsel=(jsel===it.id?null:it.id); renderJourney(d); }; return n; };
-
-  const sc=document.getElementById('journeySteps'); sc.innerHTML='';
-
-  const banner=document.createElement('div'); banner.className='jbanner';
-  if(d.estatus==='CALIFICA'){ banner.classList.add('ok'); banner.textContent='Este lead CALIFICA → Financiamiento (asesoría gratis)'+(d.ruta?(' · '+d.ruta):''); }
-  else if(d.estatus==='NO CALIFICA'){ banner.classList.add('no'); banner.textContent='Este lead NO CALIFICA → Consultoría $1,990'; }
-  else { banner.classList.add('warn'); banner.textContent='Faltan datos para definir el camino.'; }
-  sc.appendChild(banner);
-
-  const mrow=document.createElement('div'); mrow.className='steps';
-  flow.main.forEach((it,i)=>{ if(i) mrow.appendChild(arrow()); mrow.appendChild(chip(it,'main')); });
-  sc.appendChild(mrow);
-
-  const bw=document.createElement('div'); bw.className='branches';
-  const okb=document.createElement('div'); okb.className='branch ok'+(d.estatus==='CALIFICA'?' active':''); okb.innerHTML='<div class="bhead ok">✓ Califica → Financiamiento</div>';
-  const okr=document.createElement('div'); okr.className='steps';
-  flow.ok.forEach((it,i)=>{ if(i) okr.appendChild(arrow()); okr.appendChild(chip(it,'ok')); });
-  okb.appendChild(okr); bw.appendChild(okb);
-  const nob=document.createElement('div'); nob.className='branch no'+(d.estatus==='NO CALIFICA'?' active':''); nob.innerHTML='<div class="bhead no">✕ No califica → Consultoría $1,990</div>';
-  const nor=document.createElement('div'); nor.className='steps';
-  flow.no.forEach((it,i)=>{ if(i) nor.appendChild(arrow()); nor.appendChild(chip(it,'no')); });
-  nob.appendChild(nor); bw.appendChild(nob);
-  sc.appendChild(bw);
-
-  const panel=document.getElementById('journeyMsg');
-  const all=[...flow.main.map(x=>['main',x]),...flow.ok.map(x=>['ok',x]),...flow.no.map(x=>['no',x])];
-  const sel=all.find(([k,x])=>x.id===jsel);
-  if(!sel){ panel.innerHTML='<div style="color:var(--muted);font-size:13px">Toca un paso del journey para ver su mensaje de WhatsApp (clic en Copiar para mandarlo).</div>'; return; }
-  const [kind,it]=sel;
-  const hc = kind==='ok'?' ok':(kind==='no'?' no':'');
-  panel.innerHTML='<div class="jmsghead'+hc+'">'+it.l+' <button class="btn" id="jcopy" style="padding:4px 11px;font-size:12px">Copiar</button></div><div class="jmsgbody">'+it.msg.replace(/\n/g,'<br>')+'</div>';
-  document.getElementById('jcopy').onclick=()=>{ copyToClipboard(it.msg).then(()=>{ const b=document.getElementById('jcopy'); b.textContent='Copiado ✓'; setTimeout(()=>b.textContent='Copiar',1100); }).catch(()=>{}); };
 }
 
 function copyToClipboard(text){
@@ -728,13 +668,6 @@ function copyCRM(){
     const b=document.getElementById('copyBtn'); b.textContent='Copiado ✓';
     setTimeout(()=>b.textContent='Copiar',1200);
   }).catch(()=>{});
-}
-
-function showView(v){
-  document.getElementById('viewCalif').style.display = v==='calif'?'grid':'none';
-  document.getElementById('viewJourney').style.display = v==='journey'?'block':'none';
-  document.getElementById('tabCalif').classList.toggle('on',v==='calif');
-  document.getElementById('tabJourney').classList.toggle('on',v==='journey');
 }
 
 function reset(){
