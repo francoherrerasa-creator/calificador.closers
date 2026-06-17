@@ -102,7 +102,6 @@
   <div class="card">
     <h2>Identidad del lead</h2>
 
-    <div class="field"><label>Nombre del lead</label><input type="text" id="nombre" placeholder="nombre" oninput="ev()"></div>
     <div class="field">
       <label>Trato (se saca del CURP)</label>
       <div class="seg" id="trato"><button data-v="señor">Señor</button><button data-v="señora">Señora</button></div>
@@ -174,7 +173,7 @@
 
   <!-- ENTRADA DERECHA -->
   <div class="card">
-    <h2>Datos aproximados (de voz)</h2>
+    <h2>Semanas y AFORE</h2>
     <div class="field">
       <label>Semanas cotizadas (aprox, lo que recuerde)</label>
       <input type="number" id="wCot" min="0" placeholder="ej. 900" oninput="ev()">
@@ -184,11 +183,6 @@
       <label>AFORE aproximado (MXN, lo que recuerde)</label>
       <input type="number" id="afore" min="0" placeholder="ej. 400000" oninput="ev()">
       <div class="hint">Solo para tantear. El monto real se valida con su estado de cuenta / Creditia.</div>
-    </div>
-    <div class="field">
-      <label>Origen de semanas y AFORE</label>
-      <div class="seg" id="origen"><button data-v="lead">Info del lead (voz)</button><button data-v="real">Info real (reporte / edo. cuenta)</button></div>
-      <div class="hint">Marca "real" si ya tienes su reporte de semanas o estado de cuenta.</div>
     </div>
 
     <h2 style="margin-top:12px">Descalificadores (de voz)</h2>
@@ -207,6 +201,19 @@
       <label>¿Simulación laboral sin recibos timbrados?</label>
       <div class="seg" id="simulacion"><button data-v="no">No</button><button data-v="si">Sí</button><button data-v="">?</button></div>
     </div>
+
+    <h2 style="margin-top:12px">¿Qué documentos ya tienes?</h2>
+    <div class="row">
+      <div class="field">
+        <label>¿Ya tienes el reporte de semanas?</label>
+        <div class="seg" id="tieneSemanas"><button data-v="no">No</button><button data-v="si">Sí</button></div>
+      </div>
+      <div class="field">
+        <label>¿Ya tienes el AFORE real (edo. de cuenta)?</label>
+        <div class="seg" id="tieneAfore"><button data-v="no">No</button><button data-v="si">Sí</button></div>
+      </div>
+    </div>
+    <div class="hint">Si marcas "No", el tool te recuerda pedirlo y lo deja como pendiente en la nota.</div>
   </div>
 
   <!-- SALIDA -->
@@ -229,9 +236,7 @@
     </div>
 
     <div class="box gancho" style="margin-top:12px">
-      <h3>Gancho de pensión (aproximado, para la llamada)
-        <span class="miniseg" id="esc"><button data-v="60">60 años</button><button data-v="65">65 años</button></span>
-      </h3>
+      <h3>Gancho de pensión (aproximado, para la llamada)</h3>
       <div id="gancho"><div style="color:var(--muted);font-size:13px">Captura las semanas aprox para ver el rango.</div></div>
     </div>
 
@@ -260,8 +265,8 @@ function initSeg(id, def){
       b.classList.add('on'); ev(); };
   });
 }
-['ley73','pensionado','tramitando','cotiza','demanda','quiere','simulacion','origen','esc','trato']
-  .forEach(id=>initSeg(id, {pensionado:'no',tramitando:'no',cotiza:'no',demanda:'no',simulacion:'no',origen:'lead',esc:'60',trato:'señor'}[id]||''));
+['ley73','pensionado','tramitando','cotiza','demanda','quiere','simulacion','tieneSemanas','tieneAfore','trato']
+  .forEach(id=>initSeg(id, {pensionado:'no',tramitando:'no',cotiza:'no',demanda:'no',simulacion:'no',tieneSemanas:'no',tieneAfore:'no',trato:'señor'}[id]||''));
 
 // ---------- tabla de pensión de referencia (Playbook / Guión) ----------
 // semanas: [pensión actual ~$500/día, pensión topada]
@@ -343,7 +348,6 @@ function num(id){ const v=parseFloat(document.getElementById(id).value); return 
 
 // ---------- MOTOR ----------
 function ev(){
-  const nombre=document.getElementById('nombre').value.trim();
   const curp=document.getElementById('curp').value.trim().toUpperCase();
   const edad=num('edad'), edadM=num('edadM');
   const edadTot=(edad!==null)?edad+(edadM||0)/12:null;
@@ -445,8 +449,9 @@ function ev(){
 
     // qué sigue (pasos)
     say.push({t:'msg',x:(seg.trato==='señora'?'Señora':'Señor')+', por lo que me comenta, tiene con qué avanzar. Para darle el cálculo exacto necesito su reporte de semanas del IMSS; si no lo tiene, paseme su CURP y yo lo saco. Con eso confirmamos su proyecto y le agendo la asesoría sin costo con el experto.'});
-    say.push({t:'do',x:'Pídele su CURP (es la llave para sacar el reporte de semanas).'});
-    say.push({t:'do',x:'Saca / recibe el reporte de semanas y súbelo a Creditia → confirma Mod 40 (Ahora/Futuro) o Mod 10.'});
+    if(seg.tieneSemanas!=='si') say.push({t:'do',x:'Pídele su reporte de semanas (o sácalo con su CURP) y súbelo a Creditia → confirma Mod 40 o Mod 10.'});
+    if(seg.tieneAfore!=='si') say.push({t:'do',x:'Pídele su estado de cuenta del AFORE (o saca el aproximado en Creditia).'});
+    if(seg.tieneSemanas==='si' && seg.tieneAfore==='si') say.push({t:'do',x:'Ya tienes semanas y AFORE: confírmalo en Creditia y agenda.'});
     if(urg==='ALTA')  say.push({t:'do',x:'Urgencia ALTA: pide el reporte, valida en Creditia y cierra la asesoría hoy.'});
     if(urg==='MEDIA') say.push({t:'do',x:'Urgencia MEDIA: valida en Creditia con el reporte; si confirma, agéndalo (a Futuro si le falta tiempo). Consigue lo que falte.'});
     if(urg==='BAJA')  say.push({t:'do',x:'Urgencia BAJA: valida en Creditia (puede salir Mod 10); si no acredita, consultoría. No lo presiones.'});
@@ -456,8 +461,8 @@ function ev(){
     klass = urg==='ALTA' ? 'ok' : 'warn';
   }
 
-  const d={nombre,curp,edad,edadM,mesesSin,netas,piso:pisoSem,afore,aforeReq,aniosFin,aforeCubre,semOk,ultima,
-    origen:seg.origen,estatus,urg,prod,resumen,aforeTxt,aforeCls,band:ganchoBand(netas, +seg.esc)};
+  const d={curp,edad,edadM,mesesSin,netas,piso:pisoSem,afore,aforeReq,aniosFin,aforeCubre,semOk,ultima,
+    tieneSemanas:seg.tieneSemanas,tieneAfore:seg.tieneAfore,estatus,urg,prod,resumen,aforeTxt,aforeCls,band:ganchoBand(netas, 60)};
   render(estatus,klass,urg,prod,razon,d,say);
 }
 
@@ -501,19 +506,25 @@ function render(estatus,klass,urg,prod,razon,d,say){
       '<div class="hint">Rango aproximado para enganchar a la asesoría. El número exacto lo da el experto cuando arme su proyecto. No des cifras exactas.</div>';
   } else g.innerHTML='<div style="color:var(--muted);font-size:13px">Captura las semanas aprox para ver el rango.</div>';
 
-  // CRM — nota breve, estilo del closer (sin urgencia, sin gancho, sin "siguiente paso")
+  // CRM — nota breve, estilo del closer (sin nombre, sin urgencia, sin gancho)
+  const srcSem = d.tieneSemanas==='si' ? 'reporte real' : 'dato del lead';
+  const srcAfo = d.tieneAfore==='si' ? 'real' : 'dato del lead';
   const L=[];
-  L.push('PRE-CALIFICACIÓN (1ª llamada) — '+(d.nombre||'—')+(estatus==='PRE-CALIFICA'&&prod?(' · '+prod):(estatus==='CONSULTORÍA'?' · Consultoría':'')));
+  L.push('PRE-CALIFICACIÓN (1ª llamada)'+(estatus==='PRE-CALIFICA'&&prod?(' · '+prod):(estatus==='CONSULTORÍA'?' · Consultoría':'')));
   if(d.curp) L.push('CURP: '+d.curp);
-  L.push(d.origen==='real' ? 'Semanas y AFORE: info real (reporte / estado de cuenta)' : 'Semanas y AFORE: info del lead (de voz)');
   L.push('');
   if(d.edad!=null) L.push('- Edad: '+d.edad+'a '+(d.edadM||0)+'m');
   if(d.mesesSin!=null) L.push('- Sin cotizar: '+Math.floor(d.mesesSin/12)+'a '+(d.mesesSin%12)+'m'+(d.ultima?(' (última: '+({trabajo:'Trabajo/patrón',mod10:'Mod 10',mod40:'Mod 40'})[d.ultima]+')'):''));
-  if(d.netas!=null) L.push('- Semanas: '+d.netas+(d.piso!=null?(' (mín por edad '+d.piso+')'):''));
-  L.push('- AFORE: '+d.aforeTxt);
+  if(d.netas!=null) L.push('- Semanas: '+d.netas+(d.piso!=null?(' (mín por edad '+d.piso+')'):'')+' — '+srcSem);
+  L.push('- AFORE: '+d.aforeTxt+' — '+srcAfo);
   L.push('');
   L.push(d.resumen);
-  if(estatus==='PRE-CALIFICA') L.push('Pendiente: completar expediente.');
+  if(estatus==='PRE-CALIFICA'){
+    const reqs=[];
+    if(d.tieneSemanas!=='si') reqs.push('reporte de semanas');
+    if(d.tieneAfore!=='si') reqs.push('estado de cuenta del AFORE');
+    L.push(reqs.length ? ('Pendiente: pedir '+reqs.join(' y ')+'; completar expediente.') : 'Pendiente: completar expediente.');
+  }
   document.getElementById('crm').value=L.join('\n');
 }
 
@@ -544,7 +555,7 @@ function reset(){
   seg.demanda='no';document.getElementById('demanda').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='no'));
   seg.simulacion='no';document.getElementById('simulacion').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='no'));
   seg.trato='señor';document.getElementById('trato').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='señor'));
-  seg.origen='lead';document.getElementById('origen').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='lead'));
+  ['tieneSemanas','tieneAfore'].forEach(id=>{seg[id]='no';document.getElementById(id).querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='no'));});
   document.getElementById('ultima').value='';
   document.getElementById('curpHint').textContent='';
   ev();
