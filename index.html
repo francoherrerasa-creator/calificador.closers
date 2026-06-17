@@ -338,6 +338,8 @@ function num(id){ const v=parseFloat(document.getElementById(id).value); return 
 
 // ---------- MOTOR ----------
 function ev(){
+  const nombre=document.getElementById('nombre').value.trim();
+  const curp=document.getElementById('curp').value.trim().toUpperCase();
   const edad=num('edad'), edadM=num('edadM');
   const edadTot=(edad!==null)?edad+(edadM||0)/12:null;
   const aSin=num('aSin'), mSin=num('mSin');
@@ -400,41 +402,50 @@ function ev(){
     ask(netas===null,'semanas aprox','¿Más o menos cuántas semanas tienes cotizadas en el IMSS? No importa el número exacto, ya lo confirmamos con tu reporte.');
     ask(afore===null,'AFORE aprox','¿Tienes una idea de cuánto traes en tu AFORE? Aunque sea aproximado.');
 
+    // textos de apoyo
+    const semTxt = (netas!==null && pisoSem!==null) ? (netas+' vs mín '+pisoSem+' por su edad') : null;
+    const tiempoTxt = (mesesSin!==null) ? (Math.floor(mesesSin/12)+'a '+(mesesSin%12)+'m') : null;
+    const tiempoOk = (mesesSin!==null) ? (mesesSin>=C.mesesFuturo) : null;
+
     // producto probable (lo confirma Creditia)
     if(semOk===false && mesesSin!==null && mesesSin>12) prod='posible Mod 10 (recuperación)';
     else if(mesesSin!==null && edadTot!==null && edadTot>C.edadAhora && mesesSin>C.mesesAhora) prod='Mod 40 · Ahora';
     else prod='Mod 40 · Futuro';
 
-    // urgencia
-    const faltaEco = (netas===null || afore===null || mesesSin===null) || idMissing.length;
-    if(faltaEco){
+    // urgencia + motivo ESPECÍFICO (nombra el factor que decide)
+    const faltaInfo = (netas===null || afore===null || mesesSin===null || idMissing.length>0);
+    if(faltaInfo){
       urg='MEDIA';
-      razon='Falta validar con la información del lead. Pídele lo que falta ('+(missing.length?missing.join(', '):'sus datos')+') y confirma con el reporte de semanas en Creditia.';
+      razon='Aún falta confirmar '+(missing.length?missing.join(', '):'sus datos')+'. Consíguelo y valida con el reporte de semanas en Creditia para cerrar el veredicto.';
+    } else if(semOk && aforeCubre && tiempoOk){
+      urg='ALTA';
+      razon='Por voz cumple todo: semanas ('+semTxt+'), AFORE (regla 100k/año) y '+tiempoTxt+' sin cotizar. Pide el reporte de semanas, valida en Creditia y cierra la asesoría.';
+    } else if(semOk && aforeCubre && !tiempoOk){
+      urg='MEDIA';
+      const faltanM = C.mesesFuturo - mesesSin;
+      razon='Cumple semanas ('+semTxt+') y AFORE. Lo único corto es el tiempo: lleva '+tiempoTxt+' sin cotizar y Futuro pide '+C.mesesFuturo+' meses'+(faltanM>0?(' (le faltan ~'+faltanM+' '+(faltanM===1?'mes':'meses')+')'):'')+'. Valida en Creditia; si confirma, agéndalo a Futuro.';
+    } else if(semOk===false){
+      urg='BAJA';
+      razon='Las semanas que menciona ('+semTxt+') quedan por debajo del mínimo para su edad. Valida en Creditia con su reporte real: puede salir recuperación Mod 10. Si no acredita, consultoría. No lo presiones.';
     } else {
-      const cubre = (semOk===true) && (aforeCubre===true) && (mesesSin>=C.mesesFuturo);
-      if(cubre){
-        urg='ALTA';
-        razon='Falta validar con la información del lead, pero por lo que comenta cumple. Empuja, pide el reporte de semanas y cierra la asesoría.';
-      } else {
-        urg='BAJA';
-        razon='Falta validar con la información del lead. Con lo que dice, probablemente no cubre para Mod 40; valida con su reporte en Creditia (puede salir Mod 10). Si no pasa, va a consultoría. No lo presiones.';
-      }
+      urg='BAJA';
+      razon='Cumple semanas ('+semTxt+'), pero por lo que dice su AFORE no alcanza la regla de 100k por año. Valida en Creditia con su estado de cuenta real; si no cubre, consultoría. No lo presiones.';
     }
 
     // qué sigue (pasos)
     say.push({t:'msg',x:(seg.trato==='señora'?'Señora':'Señor')+', por lo que me comenta, tiene con qué avanzar. Para darle el cálculo exacto necesito su reporte de semanas del IMSS; si no lo tiene, paseme su CURP y yo lo saco. Con eso confirmamos su proyecto y le agendo la asesoría sin costo con el experto.'});
     say.push({t:'do',x:'Pídele su CURP (es la llave para sacar el reporte de semanas).'});
     say.push({t:'do',x:'Saca / recibe el reporte de semanas y súbelo a Creditia → confirma Mod 40 (Ahora/Futuro) o Mod 10.'});
-    if(urg==='ALTA')  say.push({t:'do',x:'Urgencia ALTA: empuja y cierra la asesoría hoy.'});
-    if(urg==='MEDIA') say.push({t:'do',x:'Urgencia MEDIA: consigue la info faltante y valida en Creditia antes de agendar.'});
-    if(urg==='BAJA')  say.push({t:'do',x:'Urgencia BAJA: valida en Creditia; si no acredita, pásalo a consultoría. No lo presiones.'});
+    if(urg==='ALTA')  say.push({t:'do',x:'Urgencia ALTA: pide el reporte, valida en Creditia y cierra la asesoría hoy.'});
+    if(urg==='MEDIA') say.push({t:'do',x:'Urgencia MEDIA: valida en Creditia con el reporte; si confirma, agéndalo (a Futuro si le falta tiempo). Consigue lo que falte.'});
+    if(urg==='BAJA')  say.push({t:'do',x:'Urgencia BAJA: valida en Creditia (puede salir Mod 10); si no acredita, consultoría. No lo presiones.'});
     say.push({t:'do',x:'Crea el grupo de WhatsApp y llena el Tracker.'});
     say.push({t:'do',x:'Pendiente: completar expediente con los documentos del lead (esperando su info).'});
 
     klass = urg==='ALTA' ? 'ok' : 'warn';
   }
 
-  const d={edad,edadM,mesesSin,netas,piso:pisoSem,afore,aforeReq,aniosFin,aforeCubre,semOk,ultima,
+  const d={nombre,curp,edad,edadM,mesesSin,netas,piso:pisoSem,afore,aforeReq,aniosFin,aforeCubre,semOk,ultima,
     estatus,urg,prod,aforeTxt,aforeCls,band:ganchoBand(netas, +seg.esc)};
   render(estatus,klass,urg,prod,razon,d,say);
 }
@@ -481,17 +492,24 @@ function render(estatus,klass,urg,prod,razon,d,say){
 
   // CRM (enfocado a primera llamada, sin montos exactos)
   const L=[];
-  L.push('PRE-CALIFICACIÓN (primera llamada) — '+estatus+(urg?(' · URGENCIA '+urg):'')+(prod?(' · '+prod):''));
-  L.push(razon); L.push('');
-  if(d.edad!=null) L.push('Edad: '+d.edad+'a '+(d.edadM||0)+'m');
-  if(d.mesesSin!=null) L.push('Sin cotizar: '+Math.floor(d.mesesSin/12)+'a '+(d.mesesSin%12)+'m');
-  if(d.ultima) L.push('Última cotización: '+({trabajo:'Trabajo/patrón',mod10:'Mod 10',mod40:'Mod 40'})[d.ultima]);
-  if(d.netas!=null) L.push('Semanas aprox: '+d.netas+(d.piso!=null?(' (mín edad '+d.piso+')'):''));
-  L.push('AFORE: '+d.aforeTxt);
-  if(estatus==='PRE-CALIFICA' && d.band) L.push('Gancho aprox: podría subir '+d.band+' al mes (lo confirma el asesor).');
+  L.push('PRE-CALIFICACIÓN (1ª llamada) — '+(d.nombre||'—'));
+  L.push('Estatus: '+estatus+(urg?(' · Urgencia '+urg):'')+(prod?(' · Probable: '+prod):''));
+  if(d.curp) L.push('CURP: '+d.curp);
   L.push('');
-  if(estatus==='PRE-CALIFICA') L.push('Pendiente: completar expediente con los documentos del lead.');
-  else L.push('Acción: ofrecer consultoría ($1,990) y mandar info por mensaje.');
+  L.push('Datos (de voz):');
+  if(d.edad!=null) L.push('- Edad: '+d.edad+'a '+(d.edadM||0)+'m');
+  if(d.mesesSin!=null) L.push('- Sin cotizar: '+Math.floor(d.mesesSin/12)+'a '+(d.mesesSin%12)+'m'+(d.ultima?(' (última: '+({trabajo:'Trabajo/patrón',mod10:'Mod 10',mod40:'Mod 40'})[d.ultima]+')'):''));
+  if(d.netas!=null) L.push('- Semanas aprox: '+d.netas+(d.piso!=null?(' (mín por edad '+d.piso+')'):''));
+  L.push('- AFORE: '+d.aforeTxt);
+  L.push('');
+  L.push('Motivo: '+razon);
+  if(estatus==='PRE-CALIFICA'){
+    L.push('Siguiente paso: sacar el reporte de semanas (con el CURP) y validar en Creditia → confirma Mod 40 o Mod 10.');
+    if(d.band) L.push('Gancho usado: ~'+d.band+'/mes (referencia; lo afina el asesor).');
+    L.push('Pendiente: completar expediente con los documentos del lead.');
+  } else {
+    L.push('Siguiente paso: ofrecer consultoría ($1,990) y mandar la info por mensaje.');
+  }
   document.getElementById('crm').value=L.join('\n');
 }
 
