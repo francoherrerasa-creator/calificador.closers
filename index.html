@@ -230,7 +230,7 @@
         <div id="diag"></div>
       </div>
       <div class="box say-box">
-        <h3>Qué preguntar / qué sigue</h3>
+        <h3>Next Steps</h3>
         <div id="say"><div class="say" style="color:var(--muted)">—</div></div>
       </div>
     </div>
@@ -387,9 +387,14 @@ function ev(){
   let semOk=null;               // ¿semanas alcanzan el piso por edad?
   if(netas!==null && pisoSem!==null) semOk = netas>=pisoSem;
 
-  // -------- preguntas (qué falta sacar en la llamada) --------
+  // -------- qué falta por calificar (para el primer next step) --------
   const say=[], missing=[];
-  const ask=(cond,short,msg)=>{ if(cond){ missing.push(short); say.push({t:'msg',x:msg}); } };
+  if(seg.ley73==='') missing.push('Ley 73');
+  if(seg.quiere==='') missing.push('si quiere financiamiento');
+  if(edad===null) missing.push('edad');
+  if(mesesSin===null) missing.push('tiempo sin cotizar');
+  if(netas===null) missing.push('semanas aprox');
+  if(afore===null) missing.push('AFORE aprox');
 
   // -------- estatus + urgencia + producto probable --------
   let estatus, klass, urg=null, prod='', razon='', resumen='', aforeTxt='Falta dato', aforeCls='';
@@ -401,16 +406,11 @@ function ev(){
     estatus='CONSULTORÍA'; klass='no';
     razon=idFail.join(' ')+' No es lead de financiamiento ni recuperación.';
     resumen='No califica a financiamiento: '+idFail.join(' ')+' Va a consultoría.';
-    say.push({t:'do',x:'No califica a financiamiento ni recuperación. Ofrécele la consultoría ($1,990) y mándale la info de consultoría por mensaje.'});
+    say.push({t:'do',x:'Ofrécele la consultoría ($1,990) y mándale la info por mensaje.'});
+    say.push({t:'do',x:'Actualiza el lead en el CRM (pega la nota de abajo).'});
   } else {
     // PRE-CALIFICA — pasa identidad (o falta confirmar algo de identidad)
     estatus='PRE-CALIFICA';
-    ask(seg.ley73==='','¿Ley 73?','Una pregunta, ¿sabes si eres Ley 73? Si no estás seguro, ¿en qué año empezaste a cotizar en el IMSS? (antes de julio de 1997 = Ley 73).');
-    ask(seg.quiere==='','¿quiere financiamiento?','En este momento, ¿lo que buscas es financiar tu Modalidad 40 para subir tu pensión, o más bien solo información?');
-    ask(edad===null,'edad','¿Qué edad tienes actualmente?');
-    ask(mesesSin===null,'tiempo sin cotizar','¿Cuánto tiempo llevas sin cotizar en el IMSS? (más o menos, años y meses).');
-    ask(netas===null,'semanas aprox','¿Más o menos cuántas semanas tienes cotizadas en el IMSS? No importa el número exacto, ya lo confirmamos con tu reporte.');
-    ask(afore===null,'AFORE aprox','¿Tienes una idea de cuánto traes en tu AFORE? Aunque sea aproximado.');
 
     // textos de apoyo
     const semTxt = (netas!==null && pisoSem!==null) ? (netas+' vs mín '+pisoSem+' por su edad') : null;
@@ -447,16 +447,18 @@ function ev(){
       resumen='Cumple semanas ('+semTxt+'); el AFORE no alcanza la regla de 100k por año.';
     }
 
-    // qué sigue (pasos)
-    say.push({t:'msg',x:(seg.trato==='señora'?'Señora':'Señor')+', por lo que me comenta, tiene con qué avanzar. Para darle el cálculo exacto necesito su reporte de semanas del IMSS; si no lo tiene, paseme su CURP y yo lo saco. Con eso confirmamos su proyecto y le agendo la asesoría sin costo con el experto.'});
-    if(seg.tieneSemanas!=='si') say.push({t:'do',x:'Pídele su reporte de semanas (o sácalo con su CURP) y súbelo a Creditia → confirma Mod 40 o Mod 10.'});
-    if(seg.tieneAfore!=='si') say.push({t:'do',x:'Pídele su estado de cuenta del AFORE (o saca el aproximado en Creditia).'});
-    if(seg.tieneSemanas==='si' && seg.tieneAfore==='si') say.push({t:'do',x:'Ya tienes semanas y AFORE: confírmalo en Creditia y agenda.'});
-    if(urg==='ALTA')  say.push({t:'do',x:'Urgencia ALTA: pide el reporte, valida en Creditia y cierra la asesoría hoy.'});
-    if(urg==='MEDIA') say.push({t:'do',x:'Urgencia MEDIA: valida en Creditia con el reporte; si confirma, agéndalo (a Futuro si le falta tiempo). Consigue lo que falte.'});
-    if(urg==='BAJA')  say.push({t:'do',x:'Urgencia BAJA: valida en Creditia (puede salir Mod 10); si no acredita, consultoría. No lo presiones.'});
-    say.push({t:'do',x:'Crea el grupo de WhatsApp y llena el Tracker.'});
-    say.push({t:'do',x:'Pendiente: completar expediente con los documentos del lead (esperando su info).'});
+    // NEXT STEPS (solo acciones)
+    if(missing.length) say.push({t:'do',x:'Termina de calificar: pregunta '+missing.join(', ')+'.'});
+    const docs=[];
+    if(seg.tieneSemanas!=='si') docs.push('reporte de semanas (o CURP)');
+    if(seg.tieneAfore!=='si') docs.push('estado de cuenta del AFORE');
+    if(docs.length) say.push({t:'do',x:'Pide la documentación que falte: '+docs.join(' y ')+'.'});
+    say.push({t:'do',x:'Valida en Creditia (confirma Mod 40 o Mod 10).'});
+    const rutaTxt = (prod.indexOf('Ahora')>=0)?'Ahora':((prod.indexOf('Mod 10')>=0)?'recuperación Mod 10':'Futuro');
+    if(urg==='BAJA') say.push({t:'do',x:'Si Creditia acredita, agéndalo ('+rutaTxt+'); si no, pásalo a consultoría. No lo presiones.'});
+    else say.push({t:'do',x:'Agenda la asesoría sin costo ('+rutaTxt+').'});
+    say.push({t:'do',x:'Crea el grupo de WhatsApp.'});
+    say.push({t:'do',x:'Actualiza el lead en el CRM (pega la nota de abajo) y llena el Tracker.'});
 
     klass = urg==='ALTA' ? 'ok' : 'warn';
   }
