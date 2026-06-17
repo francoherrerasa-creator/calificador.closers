@@ -185,6 +185,11 @@
       <input type="number" id="afore" min="0" placeholder="ej. 400000" oninput="ev()">
       <div class="hint">Solo para tantear. El monto real se valida con su estado de cuenta / Creditia.</div>
     </div>
+    <div class="field">
+      <label>Origen de semanas y AFORE</label>
+      <div class="seg" id="origen"><button data-v="lead">Info del lead (voz)</button><button data-v="real">Info real (reporte / edo. cuenta)</button></div>
+      <div class="hint">Marca "real" si ya tienes su reporte de semanas o estado de cuenta.</div>
+    </div>
 
     <h2 style="margin-top:12px">Descalificadores (de voz)</h2>
     <div class="row">
@@ -255,8 +260,8 @@ function initSeg(id, def){
       b.classList.add('on'); ev(); };
   });
 }
-['ley73','pensionado','tramitando','cotiza','demanda','quiere','simulacion','esc','trato']
-  .forEach(id=>initSeg(id, {pensionado:'no',tramitando:'no',cotiza:'no',demanda:'no',simulacion:'no',esc:'60',trato:'señor'}[id]||''));
+['ley73','pensionado','tramitando','cotiza','demanda','quiere','simulacion','origen','esc','trato']
+  .forEach(id=>initSeg(id, {pensionado:'no',tramitando:'no',cotiza:'no',demanda:'no',simulacion:'no',origen:'lead',esc:'60',trato:'señor'}[id]||''));
 
 // ---------- tabla de pensión de referencia (Playbook / Guión) ----------
 // semanas: [pensión actual ~$500/día, pensión topada]
@@ -383,7 +388,7 @@ function ev(){
   const ask=(cond,short,msg)=>{ if(cond){ missing.push(short); say.push({t:'msg',x:msg}); } };
 
   // -------- estatus + urgencia + producto probable --------
-  let estatus, klass, urg=null, prod='', razon='', aforeTxt='Falta dato', aforeCls='';
+  let estatus, klass, urg=null, prod='', razon='', resumen='', aforeTxt='Falta dato', aforeCls='';
   if(aforeCubre===true){ aforeTxt='Cubre (regla 100k/año)'; aforeCls='good'; }
   else if(aforeCubre===false){ aforeTxt='No cubre (regla 100k/año)'; aforeCls='ko'; }
 
@@ -391,6 +396,7 @@ function ev(){
     // CONSULTORÍA — falla un must de identidad
     estatus='CONSULTORÍA'; klass='no';
     razon=idFail.join(' ')+' No es lead de financiamiento ni recuperación.';
+    resumen='No califica a financiamiento: '+idFail.join(' ')+' Va a consultoría.';
     say.push({t:'do',x:'No califica a financiamiento ni recuperación. Ofrécele la consultoría ($1,990) y mándale la info de consultoría por mensaje.'});
   } else {
     // PRE-CALIFICA — pasa identidad (o falta confirmar algo de identidad)
@@ -417,19 +423,24 @@ function ev(){
     if(faltaInfo){
       urg='MEDIA';
       razon='Aún falta confirmar '+(missing.length?missing.join(', '):'sus datos')+'. Consíguelo y valida con el reporte de semanas en Creditia para cerrar el veredicto.';
+      resumen='Pre-califica a '+prod+'; falta confirmar '+(missing.length?missing.join(', '):'datos')+'.';
     } else if(semOk && aforeCubre && tiempoOk){
       urg='ALTA';
       razon='Por voz cumple todo: semanas ('+semTxt+'), AFORE (regla 100k/año) y '+tiempoTxt+' sin cotizar. Pide el reporte de semanas, valida en Creditia y cierra la asesoría.';
+      resumen='Pre-califica a '+prod+'. Cumple semanas ('+semTxt+'), AFORE y tiempo ('+tiempoTxt+' sin cotizar).';
     } else if(semOk && aforeCubre && !tiempoOk){
       urg='MEDIA';
       const faltanM = C.mesesFuturo - mesesSin;
       razon='Cumple semanas ('+semTxt+') y AFORE. Lo único corto es el tiempo: lleva '+tiempoTxt+' sin cotizar y Futuro pide '+C.mesesFuturo+' meses'+(faltanM>0?(' (le faltan ~'+faltanM+' '+(faltanM===1?'mes':'meses')+')'):'')+'. Valida en Creditia; si confirma, agéndalo a Futuro.';
+      resumen='Pre-califica a Mod 40 Futuro. Cumple semanas ('+semTxt+') y AFORE; le faltan ~'+faltanM+' '+(faltanM===1?'mes':'meses')+' sin cotizar para Futuro (lleva '+tiempoTxt+', pide '+C.mesesFuturo+').';
     } else if(semOk===false){
       urg='BAJA';
       razon='Las semanas que menciona ('+semTxt+') quedan por debajo del mínimo para su edad. Valida en Creditia con su reporte real: puede salir recuperación Mod 10. Si no acredita, consultoría. No lo presiones.';
+      resumen='Semanas ('+semTxt+') por debajo del mínimo para su edad; posible recuperación Mod 10.';
     } else {
       urg='BAJA';
       razon='Cumple semanas ('+semTxt+'), pero por lo que dice su AFORE no alcanza la regla de 100k por año. Valida en Creditia con su estado de cuenta real; si no cubre, consultoría. No lo presiones.';
+      resumen='Cumple semanas ('+semTxt+'); el AFORE no alcanza la regla de 100k por año.';
     }
 
     // qué sigue (pasos)
@@ -446,7 +457,7 @@ function ev(){
   }
 
   const d={nombre,curp,edad,edadM,mesesSin,netas,piso:pisoSem,afore,aforeReq,aniosFin,aforeCubre,semOk,ultima,
-    estatus,urg,prod,aforeTxt,aforeCls,band:ganchoBand(netas, +seg.esc)};
+    origen:seg.origen,estatus,urg,prod,resumen,aforeTxt,aforeCls,band:ganchoBand(netas, +seg.esc)};
   render(estatus,klass,urg,prod,razon,d,say);
 }
 
@@ -490,26 +501,19 @@ function render(estatus,klass,urg,prod,razon,d,say){
       '<div class="hint">Rango aproximado para enganchar a la asesoría. El número exacto lo da el experto cuando arme su proyecto. No des cifras exactas.</div>';
   } else g.innerHTML='<div style="color:var(--muted);font-size:13px">Captura las semanas aprox para ver el rango.</div>';
 
-  // CRM (enfocado a primera llamada, sin montos exactos)
+  // CRM — nota breve, estilo del closer (sin urgencia, sin gancho, sin "siguiente paso")
   const L=[];
-  L.push('PRE-CALIFICACIÓN (1ª llamada) — '+(d.nombre||'—'));
-  L.push('Estatus: '+estatus+(urg?(' · Urgencia '+urg):'')+(prod?(' · Probable: '+prod):''));
+  L.push('PRE-CALIFICACIÓN (1ª llamada) — '+(d.nombre||'—')+(estatus==='PRE-CALIFICA'&&prod?(' · '+prod):(estatus==='CONSULTORÍA'?' · Consultoría':'')));
   if(d.curp) L.push('CURP: '+d.curp);
+  L.push(d.origen==='real' ? 'Semanas y AFORE: info real (reporte / estado de cuenta)' : 'Semanas y AFORE: info del lead (de voz)');
   L.push('');
-  L.push('Datos (de voz):');
   if(d.edad!=null) L.push('- Edad: '+d.edad+'a '+(d.edadM||0)+'m');
   if(d.mesesSin!=null) L.push('- Sin cotizar: '+Math.floor(d.mesesSin/12)+'a '+(d.mesesSin%12)+'m'+(d.ultima?(' (última: '+({trabajo:'Trabajo/patrón',mod10:'Mod 10',mod40:'Mod 40'})[d.ultima]+')'):''));
-  if(d.netas!=null) L.push('- Semanas aprox: '+d.netas+(d.piso!=null?(' (mín por edad '+d.piso+')'):''));
+  if(d.netas!=null) L.push('- Semanas: '+d.netas+(d.piso!=null?(' (mín por edad '+d.piso+')'):''));
   L.push('- AFORE: '+d.aforeTxt);
   L.push('');
-  L.push('Motivo: '+razon);
-  if(estatus==='PRE-CALIFICA'){
-    L.push('Siguiente paso: sacar el reporte de semanas (con el CURP) y validar en Creditia → confirma Mod 40 o Mod 10.');
-    if(d.band) L.push('Gancho usado: ~'+d.band+'/mes (referencia; lo afina el asesor).');
-    L.push('Pendiente: completar expediente con los documentos del lead.');
-  } else {
-    L.push('Siguiente paso: ofrecer consultoría ($1,990) y mandar la info por mensaje.');
-  }
+  L.push(d.resumen);
+  if(estatus==='PRE-CALIFICA') L.push('Pendiente: completar expediente.');
   document.getElementById('crm').value=L.join('\n');
 }
 
@@ -540,6 +544,7 @@ function reset(){
   seg.demanda='no';document.getElementById('demanda').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='no'));
   seg.simulacion='no';document.getElementById('simulacion').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='no'));
   seg.trato='señor';document.getElementById('trato').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='señor'));
+  seg.origen='lead';document.getElementById('origen').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v==='lead'));
   document.getElementById('ultima').value='';
   document.getElementById('curpHint').textContent='';
   ev();
