@@ -222,6 +222,7 @@
       <div class="vstat" id="vstat">—</div>
       <div id="vchip"></div>
       <div class="vreason" id="vreason">Captura los datos del lead conforme platicas.</div>
+      <div class="vreason" id="vnota" style="font-style:italic;opacity:.85"></div>
     </div>
 
     <div class="grid2">
@@ -478,6 +479,9 @@ function render(estatus,klass,urg,prod,razon,d,say){
   if(prod) chips+='<span class="chip prod">'+prod+'</span>';
   document.getElementById('vchip').innerHTML=chips;
   document.getElementById('vreason').textContent=razon;
+  document.getElementById('vnota').textContent = (estatus==='PRE-CALIFICA')
+    ? 'Puede aplicar a un producto nuevo (actualización de pensión mínima ⏰ o completar 500 semanas); falta validar con su información en Creditia.'
+    : '';
 
   // diagnóstico
   const diag=document.getElementById('diag'); diag.innerHTML='';
