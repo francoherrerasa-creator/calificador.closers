@@ -246,7 +246,8 @@
     </div>
   </div>
 
-  <div class="foot">Pre-Calificador · primera llamada · uso del closer · el veredicto final lo da Creditia con el reporte de semanas · rangos de pensión = referencia, no promesa al lead</div>
+  <div class="foot">Pre-Calificador · primera llamada · el producto final lo define Creditia con el reporte de semanas.<br>
+  5 productos: Financiamiento Ahora · Financiamiento Futuro · Recuperación de derechos 💔 · Actualización de pensión mínima ⏰ · Completar 500 semanas (pendiente). Sin ícono = Mod 40. · Rangos de pensión = referencia, no promesa al lead.</div>
 </div>
 
 <script>
@@ -453,7 +454,7 @@ function ev(){
     if(seg.tieneSemanas!=='si') docs.push('reporte de semanas (o CURP)');
     if(seg.tieneAfore!=='si') docs.push('estado de cuenta del AFORE');
     if(docs.length) say.push({t:'do',x:'Pide la documentación que falte: '+docs.join(' y ')+'.'});
-    say.push({t:'do',x:'Valida en Creditia (confirma Mod 40 o Mod 10).'});
+    say.push({t:'do',x:'Valida en Creditia: él define el producto — Financiamiento Ahora/Futuro, Recuperación 💔, Pensión mínima ⏰, o Completar 500 (pendiente).'});
     const rutaTxt = (prod.indexOf('Ahora')>=0)?'Ahora':((prod.indexOf('Mod 10')>=0)?'recuperación Mod 10':'Futuro');
     if(urg==='BAJA') say.push({t:'do',x:'Si Creditia acredita, agéndalo ('+rutaTxt+'); si no, pásalo a consultoría. No lo presiones.'});
     else say.push({t:'do',x:'Agenda la asesoría sin costo ('+rutaTxt+').'});
