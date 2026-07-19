@@ -52,13 +52,13 @@
   .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);font-weight:700;margin:0 0 8px}
   h1{font-size:clamp(21px,2.9vw,30px);font-weight:800;letter-spacing:-.02em;margin:0;text-wrap:balance}
   .sub{color:var(--muted);margin:6px 0 0;font-size:13.5px}
-  .rule{display:flex;align-items:baseline;gap:11px;justify-content:center;flex-wrap:wrap;max-width:860px;
-    margin:14px auto 0;background:var(--panel);border:1px solid var(--line);border-radius:999px;
-    padding:8px 22px;box-shadow:var(--shadow);font-size:13px;line-height:1.4}
-  .rule-tag{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);font-weight:800;white-space:nowrap}
-  .rule-body{color:var(--muted)}
-  .rule-body .g{color:var(--green);font-weight:800}
-  .rule-why{color:var(--faint)}
+  .rule{display:flex;align-items:center;gap:13px;justify-content:center;flex-wrap:wrap;max-width:830px;
+    margin:14px auto 0;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:11px 20px;box-shadow:var(--shadow);font-size:13.5px;line-height:1.45}
+  .rule-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:800;
+    background:var(--green-soft);padding:5px 12px;border-radius:999px;white-space:nowrap}
+  .rule-body{color:var(--muted);text-align:left}
+  .rule-body .g{color:var(--ink);font-weight:800}
   .scroller{overflow-x:auto;padding:6px 2px 4px;margin-top:8px;scrollbar-width:thin}
   .board{min-width:1000px}
   .phases{display:flex;padding:0 8px;margin-bottom:2px}
@@ -114,8 +114,8 @@
   </header>
 
   <div class="rule">
-    <span class="rule-tag">La regla que no se rompe</span>
-    <span class="rule-body"><span class="g">2 llamadas primero.</span> El mensaje entra solo si no contestó las dos <span class="rule-why">· cambió por el bloqueo de líneas de WhatsApp</span>.</span>
+    <span class="rule-tag">Primer contacto</span>
+    <span class="rule-body"><span class="g">Doble llamada, siempre.</span> Todo lead empieza con una llamada, y otra más antes de moverlo. Hablar es lo que agenda; el mensaje solo entra si no contestó las dos.</span>
   </div>
 
   <div class="scroller">
@@ -150,7 +150,7 @@ const STEPS=[
   detail:"El lead entra por una fuente verde: <b>Nuevo Lead</b> (llenó el formulario, no agendó), <b>Agenda propia</b> (te agendó una llamada, te está esperando), <b>Re-agendar</b> (tenía asesoría y no asistió) u <b>Otros leads</b> (base del CRM). Trabaja siempre de izquierda a derecha: lo de la izquierda es lo más caliente."},
  {ph:"Primer contacto",type:"call",icon:"📞",title:"Llamada 1",desc:"Doble marcaje",stage:"desde tu número de trabajo",
   detail:"El primer contacto es <b>llamada, sí o sí</b>. Marca desde Olmeca o tu número de trabajo, nunca tu celular personal. Si no contesta, marcas de inmediato una segunda vez.",
-  rule:"Antes era mensaje primero; cambió por el bloqueo de líneas de WhatsApp."},
+  rule:"Hablar es lo que agenda: la llamada va primero y el mensaje queda solo de respaldo."},
  {ph:"Primer contacto",type:"call",icon:"📞",title:"Llamada 2",desc:"Si no contestó la 1",stage:"segundo intento obligatorio",
   detail:"Son <b>2 intentos de llamada obligatorios</b> antes de escribir. Si contesta cualquiera de las dos, te vas directo a calificar. Si no contesta las dos, recién ahí entra el mensaje."},
  {ph:"Primer contacto",type:"msg",icon:"💬",title:"Mensaje 1·2·3",desc:"Solo si no contestó las 2 llamadas",stage:"⭕ Se envió mensaje → Env. Msj 2 → 3",
