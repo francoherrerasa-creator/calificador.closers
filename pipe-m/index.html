@@ -46,26 +46,27 @@
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);line-height:1.5;
-    -webkit-font-smoothing:antialiased;padding:clamp(22px,4vw,54px) 0 68px}
+    -webkit-font-smoothing:antialiased;padding:clamp(14px,2.2vw,26px) 0 38px}
   .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,3vw,30px)}
-  header{text-align:center;margin-bottom:8px}
-  .eyebrow{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);font-weight:700;margin:0 0 12px}
-  h1{font-size:clamp(27px,4.2vw,42px);font-weight:800;letter-spacing:-.02em;margin:0;text-wrap:balance}
-  .sub{color:var(--muted);margin:9px 0 0;font-size:15px}
-  .hero{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);
-    max-width:660px;margin:28px auto 6px;padding:24px 30px 26px;text-align:center;overflow:hidden}
-  .hero::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--green),var(--blue))}
-  .hero-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:700}
-  .hero-num{font-size:clamp(38px,6.5vw,56px);font-weight:800;color:var(--green);letter-spacing:-.03em;line-height:1.02;margin:8px 0 10px}
-  .hero-text{color:var(--muted);font-size:14.5px;max-width:540px;margin:0 auto;line-height:1.55}
-  .scroller{overflow-x:auto;padding:8px 2px 6px;margin-top:14px;scrollbar-width:thin}
+  header{text-align:center;margin-bottom:6px}
+  .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);font-weight:700;margin:0 0 8px}
+  h1{font-size:clamp(21px,2.9vw,30px);font-weight:800;letter-spacing:-.02em;margin:0;text-wrap:balance}
+  .sub{color:var(--muted);margin:6px 0 0;font-size:13.5px}
+  .rule{display:flex;align-items:baseline;gap:11px;justify-content:center;flex-wrap:wrap;max-width:860px;
+    margin:14px auto 0;background:var(--panel);border:1px solid var(--line);border-radius:999px;
+    padding:8px 22px;box-shadow:var(--shadow);font-size:13px;line-height:1.4}
+  .rule-tag{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);font-weight:800;white-space:nowrap}
+  .rule-body{color:var(--muted)}
+  .rule-body .g{color:var(--green);font-weight:800}
+  .rule-why{color:var(--faint)}
+  .scroller{overflow-x:auto;padding:6px 2px 4px;margin-top:8px;scrollbar-width:thin}
   .board{min-width:1000px}
   .phases{display:flex;padding:0 8px;margin-bottom:2px}
   .pl{text-align:center;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700;
     padding-bottom:12px;border-bottom:1px solid var(--line);position:relative}
   .pl + .pl{margin-left:14px}
-  .track{position:relative;display:flex;padding:30px 8px 4px}
-  .track::before{content:"";position:absolute;top:52px;left:5.2%;right:5.2%;height:2px;
+  .track{position:relative;display:flex;padding:24px 8px 2px}
+  .track::before{content:"";position:absolute;top:46px;left:5.2%;right:5.2%;height:2px;
     background:repeating-linear-gradient(90deg,var(--line) 0 8px,transparent 8px 15px)}
   .node{flex:1;position:relative;z-index:1;background:none;border:0;cursor:pointer;color:inherit;
     display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 3px;font-family:inherit}
@@ -77,15 +78,15 @@
   .node:hover .dot{transform:translateY(-3px)}
   .badge{position:absolute;right:-6px;bottom:-6px;width:20px;height:20px;border-radius:50%;background:var(--panel);
     border:1px solid var(--line);display:grid;place-items:center;font-size:10px;line-height:1}
-  .txt{display:flex;flex-direction:column;align-items:center;gap:3px;min-height:74px}
+  .txt{display:flex;flex-direction:column;align-items:center;gap:3px;min-height:66px}
   .st-title{font-weight:800;font-size:13.5px;line-height:1.18;color:var(--c)}
   .st-desc{font-size:11px;color:var(--muted);line-height:1.35;max-width:132px}
   .node[aria-selected="true"] .dot{box-shadow:var(--shadow-dot),0 0 0 3px var(--ground),0 0 0 5px var(--c);transform:translateY(-3px)}
-  .legend{display:flex;flex-wrap:wrap;gap:14px 22px;justify-content:center;align-items:center;margin:24px 0 2px;font-size:13px;color:var(--muted)}
+  .legend{display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:center;align-items:center;margin:14px 0 2px;font-size:12.5px;color:var(--muted)}
   .legend span{display:inline-flex;align-items:center;gap:8px}
   .key{width:11px;height:11px;border-radius:50%}
   .detail{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);
-    padding:24px 28px;margin:22px auto 0;max-width:840px;transition:none}
+    padding:18px 24px;margin:14px auto 0;max-width:860px;transition:none}
   .dh{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-bottom:4px}
   .dn{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px;flex:none;box-shadow:var(--shadow-dot)}
   .detail h2{font-size:20px;font-weight:800;margin:0;letter-spacing:-.01em}
@@ -95,10 +96,10 @@
   .script{margin-top:14px;background:var(--panel-2);border:1px solid var(--line-2);border-left:3px solid var(--blue);
     border-radius:12px;padding:12px 15px;font-size:13.5px;line-height:1.55}
   .script b{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
-  .redbar{margin:22px auto 0;max-width:840px;background:var(--red-soft);border:1px solid var(--line);border-left:3px solid var(--red);
-    border-radius:14px;padding:15px 20px;font-size:13.5px;line-height:1.55}
+  .redbar{margin:14px auto 0;max-width:860px;background:var(--red-soft);border:1px solid var(--line);border-left:3px solid var(--red);
+    border-radius:14px;padding:12px 18px;font-size:13px;line-height:1.5}
   .redbar b{color:var(--red)}
-  .footer-note{max-width:720px;margin:32px auto 0;text-align:center;color:var(--muted);font-size:14px;line-height:1.65}
+  .footer-note{max-width:720px;margin:16px auto 0;text-align:center;color:var(--muted);font-size:13px;line-height:1.6}
   .footer-note b{color:var(--ink)}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -112,10 +113,9 @@
     <p class="sub">CF-M · cómo se trabaja un lead de principio a fin</p>
   </header>
 
-  <div class="hero">
-    <div class="hero-label">La regla que no se rompe</div>
-    <div class="hero-num">2 llamadas</div>
-    <p class="hero-text">El primer contacto es por llamada, sí o sí (doble marcaje). El mensaje entra solo si no contestó las dos. Cambió de mensaje-primero por el bloqueo de líneas de WhatsApp.</p>
+  <div class="rule">
+    <span class="rule-tag">La regla que no se rompe</span>
+    <span class="rule-body"><span class="g">2 llamadas primero.</span> El mensaje entra solo si no contestó las dos <span class="rule-why">· cambió por el bloqueo de líneas de WhatsApp</span>.</span>
   </div>
 
   <div class="scroller">
