@@ -130,7 +130,8 @@ const CATS={
   comi:{name:"Comisiones",c:"var(--violet)"},
   tracker:{name:"Tracker",c:"var(--slate)"},
   obj:{name:"Objeciones",c:"var(--red)"},
-  proceso:{name:"SOP: tu proceso",c:"#9a7b4e"}
+  proceso:{name:"SOP: tu proceso",c:"#9a7b4e"},
+  tools:{name:"Herramientas y accesos",c:"#2b8fb0"}
 };
 const E=[
  // IMSS Y PRODUCTO
@@ -233,7 +234,7 @@ const E=[
   a:"En <b>Consulta Única</b>: entra, ve a Consultas, elige “Semanas Cotizadas IMSS”, escribe el <b>CURP</b>, espera ~1 min y refresca hasta que diga “Completada”, y descarga. Si no jala, pásalo al grupo de reportes con nombre completo, CURP y NSS."},
  {c:"proceso",q:"¿Cómo saco el AFORE aproximado?",kw:"afore aproximado creditia calculo estado cuenta no tiene mod 10",
   a:"Sube el <b>reporte de semanas</b> a <b>Creditia</b>, dale imprimir → abrir PDF en vista previa, y guárdalo con el nombre del cliente. Se usa solo si no tiene su estado de cuenta real; <b>en Mod 10 no aplica</b>, ahí va el AFORE real."},
- {c:"proceso",q:"¿Qué pestañas debo tener abiertas?",kw:"pestañas herramientas abiertas crm tracker guion conversaciones consulta unica creditia calendarios",
+ {c:"tools",q:"¿Qué pestañas debo tener abiertas?",kw:"pestañas herramientas abiertas crm tracker guion conversaciones consulta unica creditia calendarios",
   a:"Centro de Información, Tracker, CRM (una con owner sin asignar y otra con lo tuyo), guión de ventas, ALLMK en conversaciones, agendas filtradas a ti, Consulta Única, Creditia, carpeta de expedientes, calendarios de los asesores y WhatsApp."},
  {c:"proceso",q:"¿Cuál es el ritmo del día?",kw:"ritmo dia horario actividades mañana mensajes llamadas junta rojas cierre 10am",
   a:"Junta a las <b>10 am</b>. En la mañana (9–12) mandas mensajes: confirmar agendas propias, confirmar asesorías de hoy y mañana, intentos 1 y 2. De <b>12 a 8 pm</b>, llamadas. Las llamadas agendadas o solicitadas se toman <b>a cualquier hora</b>. Al cierre, todas las <b>rojas vacías</b>."},
@@ -264,10 +265,23 @@ const E=[
  {c:"msgs",q:"Bienvenida al grupo de WhatsApp",kw:"grupo whatsapp bienvenida crear presentar asesor requisitos que mandar",
   a:"Al crear el grupo, cuando agendas:<div class='msg'>¡Hola {{nombre}}, bienvenido a su grupo de seguimiento! Aquí estamos el equipo que va a llevar su caso de principio a fin: su asesor experto en pensiones, el área de soporte y yo. Su asesoría queda el {{día}} a las {{hora}}. Es una videollamada sin costo donde le presentamos, con números, cuánto puede mejorar la pensión que tanto trabajó. Para aprovecharla, tenga a la mano su constancia de semanas del IMSS y su estado de cuenta del AFORE. Cualquier duda antes, aquí estamos.</div>"},
  {c:"msgs",q:"¿Cómo manejo el grupo de WhatsApp?",kw:"grupo whatsapp journey comunicacion como manejar secuencia estandar",
-  a:"El grupo tiene su propia secuencia (bienvenida, prueba de plataforma, recordatorios, rescate). Síguela paso a paso en el <a class='dlink' href='https://francoherrerasa-creator.github.io/calificador.closers/journey/' target='_blank' rel='noopener'>journey de comunicación del grupo →</a>."}
+  a:"El grupo tiene su propia secuencia (bienvenida, prueba de plataforma, recordatorios, rescate). Síguela paso a paso en el <a class='dlink' href='https://francoherrerasa-creator.github.io/calificador.closers/journey/' target='_blank' rel='noopener'>journey de comunicación del grupo →</a>."},
+ // HERRAMIENTAS Y ACCESOS
+ {c:"tools",q:"¿Qué es Creditia y para qué me sirve?",kw:"creditia que es para que sirve producto ruta afore aproximado pasa lead califica",
+  a:"Es la plataforma donde <b>confirmas si el lead pasa</b> y <b>a qué producto/ruta va</b> según sus semanas. También la usas para sacar el <b>AFORE aproximado</b> a partir del reporte de semanas.<span class='note'>En Mod 10 (recuperación) NO te bases en Creditia: ahí va el estado de cuenta real del AFORE.</span>"},
+ {c:"tools",q:"¿Qué es Consulta Única?",kw:"consulta unica que es reporte semanas imss curp nss descargar",
+  a:"Es de donde <b>sacas el reporte de semanas cotizadas del IMSS</b> con el CURP del cliente. Ahí generas el documento que sube al expediente y que usas en Creditia."},
+ {c:"tools",q:"¿Qué es el Centro de Información?",kw:"centro de informacion cifras exactas comisiones montos semanas criterios donde",
+  a:"Es la fuente oficial de las <b>cifras que no debes citar de memoria</b>: montos de comisión, criterios de semanas y AFORE, montos del financiamiento. <b>Cuando dudes de un número, se confirma ahí.</b>"},
+ // COMISIONES (extra)
+ {c:"comi",q:"¿Se paga por agendar o por que asista?",kw:"comision agendar asistir no show pierdo se paga solo agenda",
+  a:"<b>Por agenda que asiste y queda completa</b>, no por solo agendar. Si el lead no asiste, o falta expediente, o no moviste la oportunidad, esa agenda <b>no paga</b>. Por eso confirmar y reagendar es parte de tu comisión."},
+ // TRACKER (extra)
+ {c:"tracker",q:"¿Qué es la línea negra del tracker?",kw:"linea negra tracker divide closer asesor columnas que lleno",
+  a:"Divide lo que llena cada quien: <b>de la línea negra a la izquierda es tuyo</b> (agenda, datos del lead, oferta, asesor, expediente); a la derecha lo llena el asesor (asistencia, calificación, firma, montos). No invadas su lado."}
 ];
 
-const TOP=new Set(["¿Qué es la Modalidad 40?","¿Cuáles son los 5 productos?","¿Cómo funciona el financiamiento de PP?","¿Quién califica? (los must)","¿Qué descalifica de inmediato?","¿Qué red flags debo preguntar?","No me contestó nunca, ¿a dónde lo muevo?","Agendé la asesoría, ¿a dónde muevo la oportunidad?","No asistió a la asesoría, ¿qué hago?","¿Para qué les pago si yo mismo puedo?","¿Es seguro? ¿Es legal?","El interés se me hace alto","¿Cómo completo el expediente?","¿Cómo consigo el reporte de semanas del IMSS?","¿Cuál es el ritmo del día?","Mensaje 1 · primer contacto","Bienvenida al grupo de WhatsApp","¿Cómo manejo el grupo de WhatsApp?"]);
+const TOP=new Set(["¿Qué es la Modalidad 40?","¿Cuáles son los 5 productos?","¿Cómo funciona el financiamiento de PP?","¿Quién califica? (los must)","¿Qué descalifica de inmediato?","¿Qué red flags debo preguntar?","No me contestó nunca, ¿a dónde lo muevo?","Agendé la asesoría, ¿a dónde muevo la oportunidad?","No asistió a la asesoría, ¿qué hago?","¿Para qué les pago si yo mismo puedo?","¿Es seguro? ¿Es legal?","El interés se me hace alto","¿Cómo completo el expediente?","¿Cómo consigo el reporte de semanas del IMSS?","¿Cuál es el ritmo del día?","Mensaje 1 · primer contacto","Bienvenida al grupo de WhatsApp","¿Cómo manejo el grupo de WhatsApp?","¿En qué calendario agendo?","¿Cómo confirmo la asistencia?","¿Qué es Creditia y para qué me sirve?","¿Qué es Consulta Única?"]);
 const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
 const resEl=document.getElementById('results'),
   countEl=document.getElementById('count'),qEl=document.getElementById('q'),clearEl=document.getElementById('clear');
@@ -309,7 +323,7 @@ function render(){
   const grid=document.createElement('div');grid.className='cat-grid';
   Object.keys(CATS).forEach(k=>{
     const items=E.filter(e=>e.c===k);
-    const ex=items.filter(e=>TOP.has(e.q)); const show=(ex.length?ex:items).slice(0,3);
+    const ex=items.filter(e=>TOP.has(e.q)); const show=(ex.length?ex:items).slice(0,2);
     const tile=document.createElement('div');tile.className='cat-tile';tile.style.setProperty('--c',CATS[k].c);
     const head=document.createElement('button');head.type='button';head.className='cat-head';
     head.innerHTML=`<span class="d"></span>${CATS[k].name}`;
