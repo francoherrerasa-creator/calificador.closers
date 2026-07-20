@@ -71,6 +71,17 @@
   .morelink{border:0;background:none;color:var(--green);font:inherit;font-weight:700;font-size:12.5px;cursor:pointer;
     padding:8px 2px 2px 37px;text-align:left;display:block}
   .morelink:hover{text-decoration:underline}
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:12px}
+  .cat-tile{text-align:left;border:1px solid var(--line);background:var(--panel);border-radius:14px;box-shadow:var(--shadow);
+    padding:15px 16px 14px;cursor:pointer;font:inherit;color:inherit;display:flex;flex-direction:column;gap:9px;transition:border-color .15s,transform .15s}
+  .cat-tile:hover{border-color:var(--c);transform:translateY(-2px)}
+  .cat-tile:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+  .cat-head{display:flex;align-items:center;gap:9px;font-weight:800;font-size:15px;color:var(--c)}
+  .cat-head .d{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
+  .cat-ex{margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+  .cat-ex li{list-style:none;font-size:12.5px;color:var(--muted);line-height:1.4;padding-left:14px;position:relative}
+  .cat-ex li::before{content:"›";position:absolute;left:0;color:var(--faint)}
+  .cat-more{font-size:11.5px;font-weight:700;color:var(--c);margin-top:1px}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
   .foot{text-align:center;color:var(--faint);font-size:12.5px;margin-top:26px;line-height:1.6}
 </style>
@@ -252,19 +263,19 @@ function render(){
     items.forEach(e=>resEl.appendChild(card(e,false,false)));
     return;
   }
-  countEl.textContent='Escribe tu duda arriba. Estas son las reglas por sección:';
+  countEl.textContent='¿Sobre qué es tu duda? Escríbela arriba, o elige un tema:';
+  const grid=document.createElement('div');grid.className='cat-grid';
   Object.keys(CATS).forEach(k=>{
     const items=E.filter(e=>e.c===k);
-    const show=items.length<=3?items:items.filter(e=>TOP.has(e.q));
-    resEl.appendChild(grpLabel(k));
-    show.forEach(e=>resEl.appendChild(card(e,false,false)));
-    if(items.length>show.length){
-      const m=document.createElement('button');m.className='morelink';m.type='button';
-      m.textContent=`Ver las ${items.length} de ${CATS[k].name} →`;
-      m.onclick=()=>{activeCat=k;render();window.scrollTo({top:0,behavior:'smooth'});};
-      resEl.appendChild(m);
-    }
+    const ex=items.filter(e=>TOP.has(e.q)); const show=(ex.length?ex:items).slice(0,3);
+    const t=document.createElement('button');t.className='cat-tile';t.type='button';t.style.setProperty('--c',CATS[k].c);
+    t.innerHTML=`<span class="cat-head"><span class="d"></span>${CATS[k].name}</span>
+      <ul class="cat-ex">${show.map(e=>`<li>${e.q.replace(/^"|"$/g,'')}</li>`).join('')}</ul>
+      <span class="cat-more">${items.length} preguntas →</span>`;
+    t.onclick=()=>{activeCat=k;render();window.scrollTo({top:0,behavior:'smooth'});};
+    grid.appendChild(t);
   });
+  resEl.appendChild(grid);
 }
 function card(e,showCat,open){
   const id=e.q;
