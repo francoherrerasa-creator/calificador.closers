@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>Resuelve tu duda · Closers de Financiamiento</title>
 <style>
   :root{
@@ -59,11 +60,16 @@
   .arrow{color:var(--faint);transition:transform .18s ease;flex:none}
   .card.open .arrow{transform:rotate(90deg)}
   .ans{max-height:0;overflow:hidden;transition:max-height .22s ease}
-  .card.open .ans{max-height:600px}
+  .card.open .ans{max-height:1600px}
   .ans-in{padding:0 16px 15px 37px;font-size:14px;color:var(--ink);line-height:1.62}
   .ans-in b{font-weight:700}
   .ans-in .note{display:block;margin-top:9px;font-size:12.5px;color:var(--muted);border-left:2px solid var(--gold);
     padding-left:10px}
+  .ans-in .msg{white-space:pre-wrap;background:rgba(37,142,90,.07);border:1px solid rgba(37,142,90,.20);
+    border-left:3px solid var(--green);border-radius:10px;padding:11px 13px;margin-top:9px;
+    font-size:13px;line-height:1.55;color:var(--ink)}
+  .ans-in .dlink,a.dlink{color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px solid transparent}
+  a.dlink:hover{border-bottom-color:currentColor}
   .catname{font-size:11px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.04em;
     padding:2px 16px 12px 37px;margin-top:-4px}
   .empty{text-align:center;color:var(--muted);padding:30px 10px;font-size:14.5px}
@@ -71,17 +77,24 @@
   .morelink{border:0;background:none;color:var(--green);font:inherit;font-weight:700;font-size:12.5px;cursor:pointer;
     padding:8px 2px 2px 37px;text-align:left;display:block}
   .morelink:hover{text-decoration:underline}
-  .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:12px}
-  .cat-tile{text-align:left;border:1px solid var(--line);background:var(--panel);border-radius:14px;box-shadow:var(--shadow);
-    padding:15px 16px 14px;cursor:pointer;font:inherit;color:inherit;display:flex;flex-direction:column;gap:9px;transition:border-color .15s,transform .15s}
-  .cat-tile:hover{border-color:var(--c);transform:translateY(-2px)}
-  .cat-tile:focus-visible{outline:2px solid var(--c);outline-offset:2px}
-  .cat-head{display:flex;align-items:center;gap:9px;font-weight:800;font-size:15px;color:var(--c)}
-  .cat-head .d{width:10px;height:10px;border-radius:50%;background:var(--c);flex:none}
-  .cat-ex{margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
-  .cat-ex li{list-style:none;font-size:12.5px;color:var(--muted);line-height:1.4;padding-left:14px;position:relative}
-  .cat-ex li::before{content:"›";position:absolute;left:0;color:var(--faint)}
-  .cat-more{font-size:11.5px;font-weight:700;color:var(--c);margin-top:1px}
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:14px}
+  .cat-tile{border:1px solid var(--line);background:var(--panel);border-radius:16px;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;overflow:hidden;transition:border-color .15s,transform .15s,box-shadow .15s}
+  .cat-tile:hover{border-color:var(--c);transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.10)}
+  .cat-head{display:flex;align-items:center;gap:9px;font-weight:800;font-size:14.5px;color:var(--c);
+    background:none;border:0;font-family:inherit;text-align:left;cursor:pointer;padding:15px 16px 12px;
+    border-bottom:1px solid var(--line)}
+  .cat-head .d{width:9px;height:9px;border-radius:50%;background:var(--c);flex:none}
+  .cat-head:hover{background:rgba(128,128,128,.06)}
+  .cat-ex{margin:0;padding:6px;display:flex;flex-direction:column;gap:1px;list-style:none;flex:1}
+  .cat-ex li{list-style:none}
+  .exq{width:100%;background:none;border:0;font:inherit;font-size:12.8px;color:var(--muted);line-height:1.35;
+    text-align:left;cursor:pointer;padding:8px 8px 8px 22px;position:relative;border-radius:9px}
+  .exq::before{content:"›";position:absolute;left:9px;top:8px;color:var(--faint);font-weight:800}
+  .exq:hover{color:var(--c);background:rgba(128,128,128,.07)}
+  .cat-more{background:none;border:0;font:inherit;font-size:11.5px;font-weight:700;color:var(--c);cursor:pointer;
+    text-align:left;padding:6px 16px 14px;margin-top:auto}
+  .cat-more:hover{text-decoration:underline}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
   .foot{text-align:center;color:var(--faint);font-size:12.5px;margin-top:26px;line-height:1.6}
 </style>
@@ -113,10 +126,11 @@ const CATS={
   imss:{name:"IMSS y producto",c:"var(--blue)"},
   crm:{name:"CRM y etapas",c:"var(--gold)"},
   agenda:{name:"Agendar y confirmar",c:"var(--teal)"},
+  msgs:{name:"Mensajes y grupo",c:"#a85878"},
   comi:{name:"Comisiones",c:"var(--violet)"},
   tracker:{name:"Tracker",c:"var(--slate)"},
   obj:{name:"Objeciones",c:"var(--red)"},
-  proceso:{name:"Proceso y herramientas",c:"#9a7b4e"}
+  proceso:{name:"SOP: tu proceso",c:"#9a7b4e"}
 };
 const E=[
  // IMSS Y PRODUCTO
@@ -222,10 +236,38 @@ const E=[
  {c:"proceso",q:"¿Qué pestañas debo tener abiertas?",kw:"pestañas herramientas abiertas crm tracker guion conversaciones consulta unica creditia calendarios",
   a:"Centro de Información, Tracker, CRM (una con owner sin asignar y otra con lo tuyo), guión de ventas, ALLMK en conversaciones, agendas filtradas a ti, Consulta Única, Creditia, carpeta de expedientes, calendarios de los asesores y WhatsApp."},
  {c:"proceso",q:"¿Cuál es el ritmo del día?",kw:"ritmo dia horario actividades mañana mensajes llamadas junta rojas cierre 10am",
-  a:"Junta a las <b>10 am</b>. En la mañana (9–12) mandas mensajes: confirmar agendas propias, confirmar asesorías de hoy y mañana, intentos 1 y 2. De <b>12 a 8 pm</b>, llamadas. Las llamadas agendadas o solicitadas se toman <b>a cualquier hora</b>. Al cierre, todas las <b>rojas vacías</b>."}
+  a:"Junta a las <b>10 am</b>. En la mañana (9–12) mandas mensajes: confirmar agendas propias, confirmar asesorías de hoy y mañana, intentos 1 y 2. De <b>12 a 8 pm</b>, llamadas. Las llamadas agendadas o solicitadas se toman <b>a cualquier hora</b>. Al cierre, todas las <b>rojas vacías</b>."},
+ {c:"proceso",q:"¿Cuál es mi proceso completo (SOP)?",kw:"sop proceso completo flujo paso a paso dia closer resumen todo pipe",
+  a:"Tu flujo, de punta a punta:<br>1) Lead nuevo → <b>2 llamadas</b> el mismo día; si no contesta, mensaje 1.<br>2) Contacta → <b>califica</b> (Ley 73, no pensionado, semanas, sin cotizar) y decide <b>Ahora</b> o <b>Futuro</b>.<br>3) Si califica → <b>agenda</b> la asesoría, crea el <b>grupo</b> y arma el <b>expediente</b> (semanas IMSS + AFORE).<br>4) Mueve la oportunidad en el CRM y regístrala en el <b>tracker</b>.<br>5) <b>Confirma</b> la asesoría (un día antes y el día) y manda el enlace.<br>6) No-show → <b>reagenda</b>. Al cierre, todas las rojas vacías.<span class='note'>Cada paso tiene su regla y su mensaje aquí en Resuelve tu duda.</span>"},
+ // MÁS CONCEPTOS (semanas por modalidad)
+ {c:"imss",q:"¿Qué necesita para entrar a Modalidad 40?",kw:"modalidad 40 requisitos semanas 52 baja 5 años entrar cuantas",
+  a:"Tres cosas: estar <b>dado de baja</b> del régimen obligatorio (ya no cotizar por un empleo), haber cotizado <b>al menos 52 semanas</b>, y <b>no más de 5 años</b> desde la baja."},
+ {c:"imss",q:"¿Cuántas semanas para poder pensionarse?",kw:"semanas pensionarse 500 minimo cuantas incremento anual",
+  a:"<b>Mínimo 500</b> semanas cotizadas. Cada bloque de <b>52 semanas</b> por encima de 500 da un incremento anual sobre la pensión."},
+ {c:"imss",q:"¿Cuánto se cotiza para recuperar derechos (Mod 10)?",kw:"mod 10 cuanto tiempo meses semanas recuperar derechos creditia",
+  a:"Se vuelve a cotizar unos meses (Mod 10 o Mod 40). <b>El tiempo exacto y la modalidad los confirma Creditia</b> según las semanas del cliente; tú no lo calculas.<span class='note'>Si el lead pasa o no, y cuántos meses, sale de Creditia. Aquí ves la lógica del producto.</span>"},
+ // MENSAJES Y GRUPO
+ {c:"msgs",q:"Mensaje 1 · primer contacto",kw:"mensaje 1 primer contacto texto whatsapp nuevo lead que mandar",
+  a:"Si no contestó las 2 llamadas, este es el primer mensaje:<div class='msg'>Buen día {{nombre}}. Soy {{tú}}, analista de Pensión Perfecta. Nos dejó sus datos para mejorar su pensión y, por lo que nos compartió, vale la pena que lo veamos pronto: en este trámite el tiempo corre y entre antes se mueva, más puede ganar.\n\nEn una llamada corta le agendo una asesoría sin costo con uno de nuestros expertos, que le resuelve todas sus dudas y le explica, paso a paso, cuál es su mejor opción para llevarse la pensión más alta posible.\n\n¿Le marco ahorita o a qué hora le queda bien hoy?</div>"},
+ {c:"msgs",q:"Mensaje 2 · segundo toque",kw:"mensaje 2 segundo toque no localice whatsapp",
+  a:"<div class='msg'>{{nombre}}, le marqué hace un momento y no logré localizarle, no se preocupe. Sigo pendiente de su caso porque de verdad vale la pena que revisemos cuánto puede subir la pensión que tanto trabajó. ¿En qué horario le llamo hoy?</div>"},
+ {c:"msgs",q:"Mensaje 3 · último intento",kw:"mensaje 3 ultimo intento no deje pasar oportunidad whatsapp",
+  a:"<div class='msg'>{{nombre}}, no quiero que deje pasar esta oportunidad. Usted trabajó toda su vida y merece la mejor pensión posible; en Pensión Perfecta llevamos 8 años ayudando a más de 18,000 personas a lograrlo, y su caso todavía está a tiempo. Regáleme una llamada corta y le agendo su asesoría sin costo con un experto. ¿En qué horario le marco hoy?</div>"},
+ {c:"msgs",q:"Confirmar la llamada agendada (agenda propia)",kw:"confirmar agenda propia llamada mensaje mañana ok",
+  a:"A quien te agendó una llamada, en la mañana:<div class='msg'>Hola {{nombre}}, me agendaste una llamada para hoy a las {{hora}}, ya todo listo por acá para platicar más tarde. La idea es ver cuánto podemos elevar tu pensión financiando tu Modalidad 40; si de favor pudieras responderme un “ok” por aquí en WhatsApp para confirmar, estaría excelente.</div>"},
+ {c:"msgs",q:"Confirmar la asesoría · un día antes (T-1)",kw:"confirmar asesoria dia antes recordatorio mañana grupo t-1",
+  a:"En el grupo, un día antes de la asesoría:<div class='msg'>Buen día {{nombre}}, le confirmo su asesoría de mañana {{día}} a las {{hora}}. Es la llamada donde nuestro experto revisa su caso con calma y le dice, con números, cuánto puede mejorar la pensión que tanto trabajó. ¿Me confirma que ahí estará?</div>"},
+ {c:"msgs",q:"Confirmar la asesoría · el mismo día",kw:"confirmar asesoria mismo dia recordatorio hoy enlace meet grupo",
+  a:"El día de la cita, en la mañana:<div class='msg'>¡Buen día {{nombre}}! Hoy es su asesoría, a las {{hora}}. Le esperamos con gusto y con todo listo para revisar su caso.</div>Y 1-2 horas antes, con el enlace:<div class='msg'>{{nombre}}, ya casi es su cita, a las {{hora}}. El experto ya está listo para atenderle. Aquí le dejo el enlace para entrar: {{enlace}}. Le esperamos.</div>"},
+ {c:"msgs",q:"Reagendar a quien no llegó (no-show)",kw:"reagendar no show no llego no asistio mensaje recuperar grupo",
+  a:"<div class='msg'>{{nombre}}, le estuvimos esperando en su asesoría y no logramos conectar. ¿Le pasó algo? No se preocupe, con gusto se la reagendo. Usted ya llegó hasta aquí, no deje pasar la oportunidad de mejorar su pensión. ¿A qué hora le puedo marcar?</div>"},
+ {c:"msgs",q:"Bienvenida al grupo de WhatsApp",kw:"grupo whatsapp bienvenida crear presentar asesor requisitos que mandar",
+  a:"Al crear el grupo, cuando agendas:<div class='msg'>¡Hola {{nombre}}, bienvenido a su grupo de seguimiento! Aquí estamos el equipo que va a llevar su caso de principio a fin: su asesor experto en pensiones, el área de soporte y yo. Su asesoría queda el {{día}} a las {{hora}}. Es una videollamada sin costo donde le presentamos, con números, cuánto puede mejorar la pensión que tanto trabajó. Para aprovecharla, tenga a la mano su constancia de semanas del IMSS y su estado de cuenta del AFORE. Cualquier duda antes, aquí estamos.</div>"},
+ {c:"msgs",q:"¿Cómo manejo el grupo de WhatsApp?",kw:"grupo whatsapp journey comunicacion como manejar secuencia estandar",
+  a:"El grupo tiene su propia secuencia (bienvenida, prueba de plataforma, recordatorios, rescate). Síguela paso a paso en el <a class='dlink' href='https://francoherrerasa-creator.github.io/calificador.closers/journey/' target='_blank' rel='noopener'>journey de comunicación del grupo →</a>."}
 ];
 
-const TOP=new Set(["¿Qué es la Modalidad 40?","¿Cuáles son los 5 productos?","¿Cómo funciona el financiamiento de PP?","¿Quién califica? (los must)","¿Qué descalifica de inmediato?","¿Qué red flags debo preguntar?","No me contestó nunca, ¿a dónde lo muevo?","Agendé la asesoría, ¿a dónde muevo la oportunidad?","No asistió a la asesoría, ¿qué hago?","¿Para qué les pago si yo mismo puedo?","¿Es seguro? ¿Es legal?","El interés se me hace alto","¿Cómo completo el expediente?","¿Cómo consigo el reporte de semanas del IMSS?","¿Cuál es el ritmo del día?"]);
+const TOP=new Set(["¿Qué es la Modalidad 40?","¿Cuáles son los 5 productos?","¿Cómo funciona el financiamiento de PP?","¿Quién califica? (los must)","¿Qué descalifica de inmediato?","¿Qué red flags debo preguntar?","No me contestó nunca, ¿a dónde lo muevo?","Agendé la asesoría, ¿a dónde muevo la oportunidad?","No asistió a la asesoría, ¿qué hago?","¿Para qué les pago si yo mismo puedo?","¿Es seguro? ¿Es legal?","El interés se me hace alto","¿Cómo completo el expediente?","¿Cómo consigo el reporte de semanas del IMSS?","¿Cuál es el ritmo del día?","Mensaje 1 · primer contacto","Bienvenida al grupo de WhatsApp","¿Cómo manejo el grupo de WhatsApp?"]);
 const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
 const resEl=document.getElementById('results'),
   countEl=document.getElementById('count'),qEl=document.getElementById('q'),clearEl=document.getElementById('clear');
@@ -268,15 +310,30 @@ function render(){
   Object.keys(CATS).forEach(k=>{
     const items=E.filter(e=>e.c===k);
     const ex=items.filter(e=>TOP.has(e.q)); const show=(ex.length?ex:items).slice(0,3);
-    const t=document.createElement('button');t.className='cat-tile';t.type='button';t.style.setProperty('--c',CATS[k].c);
-    t.innerHTML=`<span class="cat-head"><span class="d"></span>${CATS[k].name}</span>
-      <ul class="cat-ex">${show.map(e=>`<li>${e.q.replace(/^"|"$/g,'')}</li>`).join('')}</ul>
-      <span class="cat-more">${items.length} preguntas →</span>`;
-    t.onclick=()=>{activeCat=k;render();window.scrollTo({top:0,behavior:'smooth'});};
-    grid.appendChild(t);
+    const tile=document.createElement('div');tile.className='cat-tile';tile.style.setProperty('--c',CATS[k].c);
+    const head=document.createElement('button');head.type='button';head.className='cat-head';
+    head.innerHTML=`<span class="d"></span>${CATS[k].name}`;
+    head.onclick=()=>openCat(k);
+    const ul=document.createElement('ul');ul.className='cat-ex';
+    show.forEach(e=>{
+      const li=document.createElement('li');
+      const b=document.createElement('button');b.type='button';b.className='exq';
+      b.textContent=e.q.replace(/^"|"$/g,'');
+      b.onclick=()=>openCat(k,e.q);
+      li.appendChild(b);ul.appendChild(li);
+    });
+    tile.appendChild(head);tile.appendChild(ul);
+    if(items.length>show.length){
+      const more=document.createElement('button');more.type='button';more.className='cat-more';
+      more.textContent='Ver más →';
+      more.onclick=()=>openCat(k);
+      tile.appendChild(more);
+    }
+    grid.appendChild(tile);
   });
   resEl.appendChild(grid);
 }
+function openCat(k,q){activeCat=k;if(q)openSet.add(q);render();window.scrollTo({top:0,behavior:'smooth'});}
 function card(e,showCat,open){
   const id=e.q;
   const d=document.createElement('div');d.className='card'+((open||openSet.has(id))?' open':'');
