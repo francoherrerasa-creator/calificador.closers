@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resuelve tu duda · Closers de Financiamiento</title>
+<style>
+  :root{
+    --ground:#ecefe7;--panel:#fffffe;--panel-2:#f4f6ee;
+    --ink:#242b23;--muted:#697162;--faint:#8a9182;--line:#d9ddd0;--line-2:#e6e9de;
+    --green:#1e6f47;--green-soft:#e6f0e9;--blue:#345f97;--blue-soft:#e6ecf5;
+    --gold:#9c7118;--gold-soft:#f1e9d7;--red:#b34a3a;--red-soft:#f5e4e0;
+    --slate:#535c4c;--slate-soft:#e8ebe2;--teal:#2b7d76;--teal-soft:#e0eeec;--violet:#6a4f96;--violet-soft:#ece6f4;
+    --shadow:0 1px 2px rgba(40,50,35,.05),0 10px 30px rgba(40,50,35,.08);--r:16px;
+    --font:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --ground:#14160f;--panel:#1d2017;--panel-2:#23261b;
+    --ink:#e9ecdf;--muted:#98a08d;--faint:#7a8271;--line:#2f342a;--line-2:#272c21;
+    --green:#54c088;--green-soft:#182619;--blue:#82abe8;--blue-soft:#182335;
+    --gold:#d7ab55;--gold-soft:#2a2415;--red:#e07d6f;--red-soft:#2d1b18;
+    --slate:#a7af9a;--slate-soft:#232619;--teal:#5cbdb3;--teal-soft:#152524;--violet:#a98fd0;--violet-soft:#20192c;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.4);
+  }}
+  :root[data-theme="dark"]{--ground:#14160f;--panel:#1d2017;--panel-2:#23261b;--ink:#e9ecdf;--muted:#98a08d;--faint:#7a8271;--line:#2f342a;--line-2:#272c21;--green:#54c088;--green-soft:#182619;--blue:#82abe8;--blue-soft:#182335;--gold:#d7ab55;--gold-soft:#2a2415;--red:#e07d6f;--red-soft:#2d1b18;--slate:#a7af9a;--slate-soft:#232619;--teal:#5cbdb3;--teal-soft:#152524;--violet:#a98fd0;--violet-soft:#20192c;--shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.4)}
+  :root[data-theme="light"]{--ground:#ecefe7;--panel:#fffffe;--panel-2:#f4f6ee;--ink:#242b23;--muted:#697162;--faint:#8a9182;--line:#d9ddd0;--line-2:#e6e9de;--green:#1e6f47;--green-soft:#e6f0e9;--blue:#345f97;--blue-soft:#e6ecf5;--gold:#9c7118;--gold-soft:#f1e9d7;--red:#b34a3a;--red-soft:#f5e4e0;--slate:#535c4c;--slate-soft:#e8ebe2;--teal:#2b7d76;--teal-soft:#e0eeec;--violet:#6a4f96;--violet-soft:#ece6f4;--shadow:0 1px 2px rgba(40,50,35,.05),0 10px 30px rgba(40,50,35,.08)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);line-height:1.55;
+    -webkit-font-smoothing:antialiased;padding:clamp(18px,3vw,40px) 0 60px}
+  .wrap{max-width:820px;margin:0 auto;padding:0 clamp(16px,3vw,26px)}
+  header{text-align:center;margin-bottom:20px}
+  .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);font-weight:700;margin:0 0 9px}
+  h1{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.02em;margin:0;text-wrap:balance}
+  .sub{color:var(--muted);margin:8px 0 0;font-size:15px}
+  .searchbox{position:relative;margin:6px 0 16px}
+  .searchbox svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--faint)}
+  #q{width:100%;font:inherit;font-size:16px;padding:15px 44px 15px 48px;border:1.5px solid var(--line);border-radius:14px;
+    background:var(--panel);color:var(--ink);box-shadow:var(--shadow);outline:none}
+  #q:focus{border-color:var(--green)}
+  #q::placeholder{color:var(--faint)}
+  .clearbtn{position:absolute;right:12px;top:50%;transform:translateY(-50%);border:0;background:var(--panel-2);color:var(--muted);
+    width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:15px;display:none}
+  .clearbtn.on{display:grid;place-items:center}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:8px}
+  .chip{border:1px solid var(--line);background:var(--panel);color:var(--muted);font:inherit;font-size:12.5px;font-weight:600;
+    padding:6px 13px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .chip .dot{width:8px;height:8px;border-radius:50%}
+  .chip[aria-pressed="true"]{border-color:currentColor;background:var(--panel-2)}
+  .count{text-align:center;color:var(--faint);font-size:12.5px;margin:10px 0 12px}
+  .results{display:flex;flex-direction:column;gap:9px}
+  .grp-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--faint);
+    margin:16px 2px 2px;display:flex;align-items:center;gap:8px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);overflow:hidden}
+  .qbtn{width:100%;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer;
+    display:flex;align-items:center;gap:12px;padding:14px 16px}
+  .qbtn:focus-visible{outline:2px solid var(--green);outline-offset:-2px}
+  .qtag{width:9px;height:9px;border-radius:50%;flex:none}
+  .qtext{font-weight:700;font-size:14.5px;flex:1;line-height:1.35}
+  .arrow{color:var(--faint);transition:transform .18s ease;flex:none}
+  .card.open .arrow{transform:rotate(90deg)}
+  .ans{max-height:0;overflow:hidden;transition:max-height .22s ease}
+  .card.open .ans{max-height:600px}
+  .ans-in{padding:0 16px 15px 37px;font-size:14px;color:var(--ink);line-height:1.62}
+  .ans-in b{font-weight:700}
+  .ans-in .note{display:block;margin-top:9px;font-size:12.5px;color:var(--muted);border-left:2px solid var(--gold);
+    padding-left:10px}
+  .catname{font-size:11px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.04em;
+    padding:2px 16px 12px 37px;margin-top:-4px}
+  .empty{text-align:center;color:var(--muted);padding:30px 10px;font-size:14.5px}
+  .empty b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  .foot{text-align:center;color:var(--faint);font-size:12.5px;margin-top:26px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Closers de Financiamiento · Uso interno</p>
+    <h1>Resuelve tu duda</h1>
+    <p class="sub">Escribe tu pregunta y encuentra la respuesta al instante.</p>
+  </header>
+
+  <div class="searchbox">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="q" type="search" autocomplete="off" placeholder="Ej: a dónde muevo un lead que no contestó, qué es Modalidad 40, cuándo me pagan...">
+    <button class="clearbtn" id="clear" aria-label="Limpiar">✕</button>
+  </div>
+
+  <div class="chips" id="chips"></div>
+  <div class="count" id="count"></div>
+  <div class="results" id="results"></div>
+
+  <p class="foot">Uso interno. Esta guía explica la lógica, no cifras en pesos: comisiones y montos exactos siempre en el <b>Centro de Información</b> o con Creditia.</p>
+</div>
+
+<script>
+const CATS={
+  calif:{name:"Calificación",c:"var(--green)"},
+  imss:{name:"IMSS y producto",c:"var(--blue)"},
+  crm:{name:"CRM y etapas",c:"var(--gold)"},
+  agenda:{name:"Agendar y confirmar",c:"var(--teal)"},
+  comi:{name:"Comisiones",c:"var(--violet)"},
+  tracker:{name:"Tracker",c:"var(--slate)"},
+  obj:{name:"Objeciones",c:"var(--red)"}
+};
+const E=[
+ // IMSS Y PRODUCTO
+ {c:"imss",q:"¿Qué es el IMSS?",kw:"imss instituto seguro social que es",
+  a:"El <b>Instituto Mexicano del Seguro Social</b>: la institución pública que da seguridad social en México (salud y pensiones). Para nosotros lo clave es que <b>administra las pensiones</b>: el cliente cotizó al IMSS durante su vida laboral y por eso tiene derecho a una pensión al retirarse."},
+ {c:"imss",q:"¿Qué es una pensión y de qué depende?",kw:"pension que es depende como se calcula factores",
+  a:"Es un <b>pago mensual de por vida</b> que el IMSS le da al retirarse (Ley 73, de los 60 en adelante), casi siempre mejor que quedarse con el AFORE de golpe. Depende de 3 cosas: <b>semanas cotizadas</b> (mínimo 500), <b>promedio salarial de las últimas 250 semanas</b> (4 años 10 meses) y <b>edad</b> (60 = 75%, sube 5% por año, 65 = 100%)."},
+ {c:"imss",q:"¿Qué es el AFORE?",kw:"afore que es cuenta retiro ahorro subcuentas",
+  a:"La administradora que <b>guarda y hace crecer el dinero del retiro</b>. Para nosotros es la <b>garantía</b> del financiamiento. Al pensionarse por Ley 73, unas subcuentas van al gobierno (cesantía, vejez, cuota social) y otras las recibe el cliente (SAR 92, Retiro 97, vivienda Infonavit, aportaciones voluntarias)."},
+ {c:"imss",q:"Ley 73 vs. Ley 97: ¿por qué solo Ley 73?",kw:"ley 73 97 diferencia cuando empezo cotizar 1997",
+  a:"<b>Ley 73:</b> empezó a cotizar <b>antes del 1 de julio de 1997</b>. Pensión generosa que se puede mejorar muchísimo. Es nuestro cliente. <b>Ley 97:</b> empezó el 1-jul-1997 o después; pensión atada al AFORE, <b>no aplica</b>. La primera pregunta que define todo: ¿cuándo empezó a cotizar?"},
+ {c:"imss",q:"¿Qué es la Modalidad 40?",kw:"modalidad 40 mod40 que es corazon negocio",
+  a:"La <b>continuación voluntaria</b>: sigue cotizando al IMSS aunque ya no trabaje, con el <b>salario que él elija</b>, para <b>subir el promedio</b> de las últimas 250 semanas y sumar semanas. Resultado: pensión mucho más alta. Es el corazón del negocio."},
+ {c:"imss",q:"¿Qué es el retroactivo?",kw:"retroactivo pagar hacia atras golpe",
+  a:"En vez de cotizar mes a mes esos últimos años, se pagan <b>de golpe hacia atrás</b>. Como es mucho dinero junto, ahí entra <b>nuestro financiamiento</b>. La inversión se recupera en pocos meses de pensión y luego se cobra de más el resto de la vida."},
+ {c:"imss",q:"¿Qué es la Modalidad 10?",kw:"modalidad 10 mod10 que es mas cara recuperacion",
+  a:"Otra continuación voluntaria, <b>más cara</b> que la Mod 40. Para solo subir pensión casi siempre conviene Mod 40; la Mod 10 se usa sobre todo para <b>recuperación de derechos</b>. Cuál modalidad va cada caso lo confirma Creditia según las semanas."},
+ {c:"imss",q:"¿Cuáles son los 5 productos?",kw:"5 productos cuales financiamiento ahora futuro",
+  a:"<b>1)</b> Financiamiento Mod 40 Ahora · <b>2)</b> Financiamiento Mod 40 Futuro · <b>3)</b> Recuperación de derechos (Mod 10) · <b>4)</b> Actualización de pensión mínima · <b>5)</b> Completar 500 semanas. Tú calificas y agendas; <b>la ruta la confirma Creditia</b>."},
+ {c:"imss",q:"¿Qué es recuperación de derechos?",kw:"recuperacion derechos perdio pensionarse volver cotizar",
+  a:"Quien dejó de cotizar más allá de su periodo de conservación <b>pierde el derecho a pensionarse</b>. Para recuperarlo tiene que <b>volver a cotizar</b> (Mod 10 o Mod 40, lo define Creditia). Es la base más grande que tenemos hoy."},
+ {c:"imss",q:"¿Qué es conservación de derechos?",kw:"conservacion derechos cuanto tiempo cuarto",
+  a:"El tiempo que conserva el derecho a pensionarse tras dejar de cotizar: <b>un cuarto del tiempo que cotizó</b>. Ej: quien cotizó ~1,000 semanas conserva derechos ~5 años. Si se pasa de ese plazo, lo pierde y pasa a recuperación de derechos."},
+ {c:"imss",q:"Actualización de pensión mínima",kw:"actualizacion pension minima dejo cotizar 2 años",
+  a:"La persona <b>ya tiene derecho</b>, pero dejó de cotizar +2 años, así que le calcularían la mínima de años atrás. Cotizando <b>alrededor de 1 mes</b> se actualiza a la mínima del año actual."},
+ {c:"imss",q:"Completar 500 semanas",kw:"completar 500 semanas cerca 440 470",
+  a:"Quien anda cerca (<b>440 a 470 semanas</b>) puede financiar lo que le falta para <b>llegar a 500</b> y alcanzar el derecho a pensionarse."},
+ {c:"imss",q:"¿Cómo funciona el financiamiento de PP?",kw:"financiamiento como funciona presta paga pension tope",
+  a:"Le <b>prestamos</b> para pagar el Mod 40 retroactivo; lo paga con su <b>misma pensión aumentada</b>, sin sacar dinero de su bolsa. <b>Tope: 5 años.</b> La asesoría de financiamiento es <b>gratis</b> para el lead."},
+ {c:"imss",q:"Regla de oro: mínimo vs. topado",kw:"minimo topado 25 uma ventana 250 semanas regla oro",
+  a:"El monto con que cotiza <b>solo cuenta dentro de las últimas 250 semanas</b>. Fuera de esa ventana conviene cotizar al <b>mínimo</b> (suma semanas sin gastar); dentro conviene cotizar <b>lo más alto</b> (hasta 25 UMA) para disparar la pensión. El plan con fechas lo da PP.<span class='note'>El closer no calcula esto; solo entiende la lógica. El número exacto lo da el asesor.</span>"},
+ {c:"imss",q:"¿Qué le pasa al AFORE al pensionarse?",kw:"afore subcuentas gobierno cliente cesantia vejez sar retiro 97",
+  a:"<b>Van al gobierno</b> (financian la pensión vitalicia): Cesantía, Vejez y Cuota Social. <b>Las recibe el cliente:</b> SAR 92, Retiro 97, vivienda Infonavit (92 y 97) y aportaciones voluntarias. Por eso el AFORE es nuestra garantía."},
+ // CALIFICACIÓN
+ {c:"calif",q:"¿Quién califica? (los must)",kw:"quien califica requisitos must ley 73 pensionado edad",
+  a:"Debe cumplir <b>todos</b>: Ley 73 · no pensionado · no en trámite ante el IMSS · no cotizando hoy · <b>59 años o más</b> · y que quiera que lo ayudemos. El tiempo sin cotizar, el AFORE y las semanas <b>no descartan</b>: definen a qué producto va (lo confirma Creditia)."},
+ {c:"calif",q:"¿Qué descalifica de inmediato?",kw:"descalifica no pierdas tiempo ley 97 pensionado tramite demanda menor 59",
+  a:"Ley 97 · ya pensionado (definitiva) · en trámite de su pensión · cotizando hoy · <b>menor de 59</b> · <b>demanda contra el IMSS</b> · <b>simulación laboral sin recibos timbrados</b>. Esos van a consultoría, no pierdas tiempo."},
+ {c:"calif",q:"¿Qué red flags debo preguntar?",kw:"red flags demanda simulacion accionista plataformas infonavit didi uber",
+  a:"<b>Demanda al IMSS, Infonavit o AFORE</b> (en proceso descalifica) · <b>simulación sin recibos timbrados</b> (descalifica) · demanda a un patrón · accionista · <b>plataformas digitales</b> (Didi/Uber, pedir baja) · crédito Infonavit (puede bajar lo que cubre)."},
+ {c:"calif",q:"¿Cuántas semanas mínimas pide?",kw:"semanas minimas cuantas 500 900 califica",
+  a:"Por identidad, <b>500</b> para poder pensionarse. Para financiamiento el criterio pide más semanas y AFORE suficiente, y <b>se ajusta seguido</b>.<span class='note'>No cites un número de semanas o de AFORE sin confirmarlo en el Centro de Información. Lo exacto lo da Creditia.</span>"},
+ {c:"calif",q:"¿Y si no tiene su estado de cuenta del AFORE?",kw:"afore estado cuenta no tiene creditia aproximado mod 10",
+  a:"Se pide el estado de cuenta real. <b>En Mod 10 (recuperación) es obligatorio el real, no basta Creditia.</b> En Mod 40, si no lo tiene, después de la llamada generas el <b>aproximado con Creditia</b> a partir del reporte de semanas."},
+ // CRM Y ETAPAS
+ {c:"crm",q:"No me contestó nunca, ¿a dónde lo muevo?",kw:"no contesto donde mover nunca llamada mensaje",
+  a:"Después de tus 2 llamadas + los 3 mensajes sin respuesta → <b>No contestó</b>. Es para quien nunca tuviste contacto real."},
+ {c:"crm",q:"Contestó pero no quiso agendar, ¿a dónde?",kw:"perdido contesto no quiso agendar no interes",
+  a:"→ <b>Perdido</b>. Es cuando <b>sí calificaba y sí te contestó</b>, hiciste el guión, pero no quiso la asesoría."},
+ {c:"crm",q:"No es Ley 73 o ya está pensionado, ¿a dónde?",kw:"no califica ley 97 pensionado donde mover cafe",
+  a:"→ <b>No califica</b>. Si es Ley 73, no pensionado, pero no aplica a financiamiento y sí a una asesoría de pensiones → <b>N.C. - As. PP</b>."},
+ {c:"crm",q:"Ya habíamos hablado y me dejó de contestar, ¿a dónde?",kw:"abandono dejo contestar seguimiento ignoro donde mover",
+  a:"→ <b>Abandonó</b>. Es cuando <b>ya hubo contacto</b> (le hiciste guión o quedó en enviar algo) y luego te ignoró tras varios intentos."},
+ {c:"crm",q:"Agendé la asesoría, ¿a dónde muevo la oportunidad?",kw:"agende asesoria donde mover as fin ahora futuro no le aparece asesor",
+  a:"A <b>As. Fin. Ahora</b> o <b>As. Fin. Futuro</b>, según el caso. <b>Si no la mueves ahí, no le aparece al asesor y no se paga tu comisión.</b> Agendar y mover: las dos cosas, siempre."},
+ {c:"crm",q:"¿Cuándo uso Seguimiento y cómo?",kw:"seguimiento futuro task tarea 30 dias cuando",
+  a:"Cuando hay interés pero no cerró hoy: → <b>Seguimiento</b> con <b>task</b> (si el task es a menos de 30 días) o <b>Seguimiento futuro</b> (más de 30). <b>Siempre con task</b>: si lo mueves sin task, cae en rojo."},
+ {c:"crm",q:"¿Qué son las etapas rojas?",kw:"rojas etapas alerta whatsapp sin seguimiento agenda task vencido desasigna",
+  a:"Son <b>alertas</b>: algo que debiste hacer y no hiciste. <b>WhatsApp sin seguimiento · Agenda sin seguimiento · Task vencido · Seguimiento sin task.</b> Deben quedar <b>vacías al cierre del día</b>; si una dura 2 días, se te desasigna el lead."},
+ {c:"crm",q:"¿Cómo funciona owner y follower?",kw:"owner follower propietario asesor closer cambia",
+  a:"Mientras el lead es tuyo, <b>tú eres owner</b>. Cuando la agenda pasa al pipeline del asesor, <b>el asesor se pone owner y tú follower</b>. Revisa que quede bien cada vez; el sistema no siempre lo hace solo."},
+ {c:"crm",q:"¿Qué es Llamar hoy?",kw:"llamar hoy bandeja dia task vence pidio llamada",
+  a:"Tu <b>bandeja del día</b>: leads que te pidieron llamada hoy, o tasks de seguimiento que vencen hoy. Se trabaja primero y debe quedar <b>vacía al cierre</b>."},
+ {c:"crm",q:"¿Cómo pasa el mensaje al 2 y al 3?",kw:"mensaje 2 3 env msj automatico se mueve solo secuencia",
+  a:"Mandas el mensaje 1 y mueves a <b>Se envió mensaje</b>; el sistema lo pasa <b>solo</b> a <b>Env. Msj 2</b> al día siguiente, y luego a <b>Env. Msj 3</b> (ahí doble marcaje otra vez). Sin respuesta → No contestó."},
+ {c:"crm",q:"No asistió a la asesoría, ¿qué hago?",kw:"no asistio reagendar 1 2 3 no show donde mover asesor",
+  a:"El asesor lo marca y cae en <b>Re-agendar 1</b>. Haces <b>Re-agendar 1 → 2 → 3</b> (doble marcaje + mensaje en cada uno). Si reagenda, vuelve a <b>As. Fin.</b> y confirmas otra vez; si no, <b>No reagendó</b>."},
+ // AGENDAR Y CONFIRMAR
+ {c:"agenda",q:"¿En qué calendario agendo?",kw:"calendario agendar oferta round robin cual",
+  a:"Hay <b>un calendario por oferta</b> (Financiamiento, Futuro, Recuperación, Actualización, Completar 500). Agenda en el de la oferta que marque el calificador. El <b>round robin</b> asigna al asesor; no lo repartas a mano."},
+ {c:"agenda",q:"¿Cómo confirmo la asistencia?",kw:"confirmar asistencia mañana hoy intentos doble marcaje",
+  a:"<b>Un día antes</b> (Conf. as. mañana): mandas el recordatorio y mueves a <b>Agenda confirmada</b>. <b>El día</b> (Conf. as. hoy): 3 intentos (mensaje + doble marcaje); cuando confirma → Agenda confirmada."},
+ {c:"agenda",q:"¿Qué hago con el grupo de WhatsApp?",kw:"grupo whatsapp crear bienvenida asesor lead journey comunicacion",
+  a:"Créalo al agendar, mete al <b>asesor y al lead</b>, da la bienvenida y <b>sigue el journey de comunicación del grupo</b> (recordatorios, prueba de plataforma, rescate) para que sí asista."},
+ // COMISIONES
+ {c:"comi",q:"¿Cuándo se paga mi comisión?",kw:"comision cuando se paga requisitos calificada asistida expediente",
+  a:"Solo si la agenda quedó <b>calificada + asistida + expediente completo</b>, y <b>moviste la oportunidad</b> en el CRM. Si falla cualquiera, no se paga esa semana."},
+ {c:"comi",q:"¿Qué día cae el pago?",kw:"pago dia viernes semanal lunes domingo cuando cobro",
+  a:"<b>Pago semanal, cada viernes:</b> cobras lo que produjiste de <b>lunes a domingo de la semana anterior</b>.<span class='note'>Los montos exactos de cada comisión están en el Centro de Información; no los cites de memoria.</span>"},
+ // TRACKER
+ {c:"tracker",q:"¿Qué lleno yo en el tracker?",kw:"tracker que lleno closer columnas registro linea negra",
+  a:"De la <b>línea negra hacia la izquierda</b>: fecha de agenda y de asesoría, datos del lead, closer, oferta, asesor, procedencia, expediente link. <b>No marques asistencia ni calificación</b>: eso lo pone el asesor."},
+ {c:"tracker",q:"¿Por qué no aparece mi comisión?",kw:"comision no aparece validador registro completo celda falta corte",
+  a:"Revisa el <b>validador de registro completo</b>: te dice qué celda te falta. Todo debe estar lleno <b>antes del corte</b>; lo que registres después no entra al pago de esa semana."},
+ // OBJECIONES
+ {c:"obj",q:"\"¿Para qué les pago si yo mismo puedo?\"",kw:"objecion para que pago yo mismo puedo modalidad 40",
+  a:"Puede, pero hay que hacerlo bien: la <b>fecha exacta</b> de la ventana de 250 semanas, con cuánto cotizar, cuándo parar y cómo armar el retroactivo. <b>Un error de dos meses cuesta miles.</b> Nosotros le damos el plan con fechas y, si lo necesita, el financiamiento."},
+ {c:"obj",q:"\"¿Es seguro? ¿Es legal?\"",kw:"objecion seguro legal imss estafa confianza 18000",
+  a:"La Modalidad 40 es un esquema <b>del propio IMSS</b>; el cliente cotiza directo al IMSS. Somos la <b>empresa #1 de pensiones en México</b> y hemos ayudado a <b>más de 18,000 personas</b>. Lo puede verificar."},
+ {c:"obj",q:"\"El interés se me hace alto\"",kw:"objecion interes caro alto compara gana paga",
+  a:"Compárelo con lo que <b>gana</b>, no con lo que paga: se recupera en <b>meses</b> y la pensión sube el <b>resto de su vida</b>, y se paga con su <b>misma pensión</b>."},
+ {c:"obj",q:"\"No tengo el dinero para el retroactivo\"",kw:"objecion no tengo dinero retroactivo financiamiento",
+  a:"<b>Justo por eso existe el financiamiento:</b> lo paga con su misma pensión, no de su bolsa."},
+ {c:"obj",q:"\"¿Y si me espero más años?\"",kw:"objecion espero mas años pension suba costo oportunidad",
+  a:"No siempre conviene: cada año que espera <b>deja de cobrar su pensión</b>. En la asesoría se le muestran los escenarios con números para que decida."}
+];
+
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+const chipsEl=document.getElementById('chips'),resEl=document.getElementById('results'),
+  countEl=document.getElementById('count'),qEl=document.getElementById('q'),clearEl=document.getElementById('clear');
+let activeCat=null, openSet=new Set();
+
+// chips
+const allChip=mk("Todo",null,"var(--muted)"); chipsEl.appendChild(allChip);
+Object.entries(CATS).forEach(([k,v])=>chipsEl.appendChild(mk(v.name,k,v.c)));
+function mk(label,key,color){
+  const b=document.createElement('button');b.className='chip';b.type='button';b.style.color=color;
+  b.innerHTML=(key?`<span class="dot" style="background:${color}"></span>`:'')+label;
+  b.setAttribute('aria-pressed', key===activeCat?'true':'false');
+  b.onclick=()=>{activeCat=(activeCat===key)?null:key; if(key===null)activeCat=null; render();};
+  b.dataset.k=key||'';
+  return b;
+}
+function scoreOf(e,toks){
+  const inKw=norm(e.kw),inQ=norm(e.q),inA=norm(e.a.replace(/<[^>]+>/g,''));
+  let s=0; toks.forEach(t=>{ if(inKw.includes(t))s+=3; if(inQ.includes(t))s+=2; if(inA.includes(t))s+=1;});
+  return s;
+}
+function render(){
+  const query=qEl.value.trim();
+  clearEl.classList.toggle('on', query.length>0);
+  chipsEl.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',(c.dataset.k||null)===activeCat?'true':'false'));
+  resEl.innerHTML='';
+  let list;
+  if(query){
+    const toks=norm(query).split(/\s+/).filter(t=>t.length>1);
+    list=E.map(e=>({e,s:scoreOf(e,toks)})).filter(x=>x.s>0).sort((a,b)=>b.s-a.s).map(x=>x.e);
+    if(activeCat)list=list.filter(e=>e.c===activeCat);
+    countEl.textContent=list.length?`${list.length} resultado${list.length>1?'s':''}`:'';
+    if(!list.length){resEl.innerHTML=`<div class="empty">No encontré una respuesta exacta a <b>"${query.replace(/</g,'')}"</b>.<br>Prueba con otras palabras, o pregúntalo en el canal de incidencias.</div>`;return;}
+    list.forEach(e=>resEl.appendChild(card(e,true,true)));
+  }else{
+    list=activeCat?E.filter(e=>e.c===activeCat):E;
+    countEl.textContent=activeCat?`${list.length} en ${CATS[activeCat].name}`:`${E.length} temas · escribe tu duda o elige una categoría`;
+    // group by category
+    const order=Object.keys(CATS).filter(k=>!activeCat||k===activeCat);
+    order.forEach(k=>{
+      const items=list.filter(e=>e.c===k); if(!items.length)return;
+      const lab=document.createElement('div');lab.className='grp-label';
+      lab.innerHTML=`<span class="dot" style="width:9px;height:9px;border-radius:50%;background:${CATS[k].c}"></span>${CATS[k].name}`;
+      resEl.appendChild(lab);
+      items.forEach(e=>resEl.appendChild(card(e,false,false)));
+    });
+  }
+}
+function card(e,showCat,open){
+  const id=e.q;
+  const d=document.createElement('div');d.className='card'+((open||openSet.has(id))?' open':'');
+  d.innerHTML=`<button class="qbtn" type="button">
+      <span class="qtag" style="background:${CATS[e.c].c}"></span>
+      <span class="qtext">${e.q}</span>
+      <span class="arrow">›</span></button>
+    <div class="ans"><div class="ans-in">${e.a}${showCat?`<span class="note">${CATS[e.c].name}</span>`:''}</div></div>`;
+  d.querySelector('.qbtn').onclick=()=>{
+    d.classList.toggle('open');
+    if(d.classList.contains('open'))openSet.add(id);else openSet.delete(id);
+  };
+  return d;
+}
+qEl.addEventListener('input',render);
+clearEl.onclick=()=>{qEl.value='';openSet.clear();render();qEl.focus();};
+render();
+</script>
+</body>
+</html>
