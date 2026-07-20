@@ -81,7 +81,7 @@
   <header>
     <p class="eyebrow">Closers de Financiamiento · Uso interno</p>
     <h1>Resuelve tu duda</h1>
-    <p class="sub">Escribe tu pregunta y encuentra la respuesta al instante.</p>
+    <p class="sub">Escribe tu duda con tus palabras y te la resolvemos. Abajo, las reglas por sección.</p>
   </header>
 
   <div class="searchbox">
@@ -90,7 +90,6 @@
     <button class="clearbtn" id="clear" aria-label="Limpiar">✕</button>
   </div>
 
-  <div class="chips" id="chips"></div>
   <div class="count" id="count"></div>
   <div class="results" id="results"></div>
 
@@ -105,7 +104,8 @@ const CATS={
   agenda:{name:"Agendar y confirmar",c:"var(--teal)"},
   comi:{name:"Comisiones",c:"var(--violet)"},
   tracker:{name:"Tracker",c:"var(--slate)"},
-  obj:{name:"Objeciones",c:"var(--red)"}
+  obj:{name:"Objeciones",c:"var(--red)"},
+  proceso:{name:"Proceso y herramientas",c:"#9a7b4e"}
 };
 const E=[
  // IMSS Y PRODUCTO
@@ -200,26 +200,25 @@ const E=[
  {c:"obj",q:"\"No tengo el dinero para el retroactivo\"",kw:"objecion no tengo dinero retroactivo financiamiento",
   a:"<b>Justo por eso existe el financiamiento:</b> lo paga con su misma pensión, no de su bolsa."},
  {c:"obj",q:"\"¿Y si me espero más años?\"",kw:"objecion espero mas años pension suba costo oportunidad",
-  a:"No siempre conviene: cada año que espera <b>deja de cobrar su pensión</b>. En la asesoría se le muestran los escenarios con números para que decida."}
+  a:"No siempre conviene: cada año que espera <b>deja de cobrar su pensión</b>. En la asesoría se le muestran los escenarios con números para que decida."},
+ // PROCESO Y HERRAMIENTAS (SOP)
+ {c:"proceso",q:"¿Cómo completo el expediente?",kw:"expediente completar carpeta drive subir semanas afore nombre link tracker",
+  a:"Crea una carpeta en el Drive de expedientes con el <b>nombre completo del cliente</b> (nombre, apellido paterno, materno). Dentro sube el <b>reporte de semanas del IMSS</b> y el <b>estado de cuenta del AFORE</b> (o el aproximado de Creditia si no lo tiene). Pega el link en el Tracker."},
+ {c:"proceso",q:"¿Cómo consigo el reporte de semanas del IMSS?",kw:"reporte semanas imss constancia consulta unica curp nss detallado descargar",
+  a:"En <b>Consulta Única</b>: entra, ve a Consultas, elige “Semanas Cotizadas IMSS”, escribe el <b>CURP</b>, espera ~1 min y refresca hasta que diga “Completada”, y descarga. Si no jala, pásalo al grupo de reportes con nombre completo, CURP y NSS."},
+ {c:"proceso",q:"¿Cómo saco el AFORE aproximado?",kw:"afore aproximado creditia calculo estado cuenta no tiene mod 10",
+  a:"Sube el <b>reporte de semanas</b> a <b>Creditia</b>, dale imprimir → abrir PDF en vista previa, y guárdalo con el nombre del cliente. Se usa solo si no tiene su estado de cuenta real; <b>en Mod 10 no aplica</b>, ahí va el AFORE real."},
+ {c:"proceso",q:"¿Qué pestañas debo tener abiertas?",kw:"pestañas herramientas abiertas crm tracker guion conversaciones consulta unica creditia calendarios",
+  a:"Centro de Información, Tracker, CRM (una con owner sin asignar y otra con lo tuyo), guión de ventas, ALLMK en conversaciones, agendas filtradas a ti, Consulta Única, Creditia, carpeta de expedientes, calendarios de los asesores y WhatsApp."},
+ {c:"proceso",q:"¿Cuál es el ritmo del día?",kw:"ritmo dia horario actividades mañana mensajes llamadas junta rojas cierre 10am",
+  a:"Junta a las <b>10 am</b>. En la mañana (9–12) mandas mensajes: confirmar agendas propias, confirmar asesorías de hoy y mañana, intentos 1 y 2. De <b>12 a 8 pm</b>, llamadas. Las llamadas agendadas o solicitadas se toman <b>a cualquier hora</b>. Al cierre, todas las <b>rojas vacías</b>."}
 ];
 
-const TOP=new Set(["¿Qué es la Modalidad 40?","¿Cuáles son los 5 productos?","¿Cómo funciona el financiamiento de PP?","¿Quién califica? (los must)","¿Qué descalifica de inmediato?","¿Qué red flags debo preguntar?","No me contestó nunca, ¿a dónde lo muevo?","Agendé la asesoría, ¿a dónde muevo la oportunidad?","No asistió a la asesoría, ¿qué hago?","¿Para qué les pago si yo mismo puedo?","¿Es seguro? ¿Es legal?","El interés se me hace alto"]);
+const TOP=new Set(["¿Qué es la Modalidad 40?","¿Cuáles son los 5 productos?","¿Cómo funciona el financiamiento de PP?","¿Quién califica? (los must)","¿Qué descalifica de inmediato?","¿Qué red flags debo preguntar?","No me contestó nunca, ¿a dónde lo muevo?","Agendé la asesoría, ¿a dónde muevo la oportunidad?","No asistió a la asesoría, ¿qué hago?","¿Para qué les pago si yo mismo puedo?","¿Es seguro? ¿Es legal?","El interés se me hace alto","¿Cómo completo el expediente?","¿Cómo consigo el reporte de semanas del IMSS?","¿Cuál es el ritmo del día?"]);
 const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-const chipsEl=document.getElementById('chips'),resEl=document.getElementById('results'),
+const resEl=document.getElementById('results'),
   countEl=document.getElementById('count'),qEl=document.getElementById('q'),clearEl=document.getElementById('clear');
 let activeCat=null, openSet=new Set();
-
-// chips
-const allChip=mk("Todo",null,"var(--muted)"); chipsEl.appendChild(allChip);
-Object.entries(CATS).forEach(([k,v])=>chipsEl.appendChild(mk(v.name,k,v.c)));
-function mk(label,key,color){
-  const b=document.createElement('button');b.className='chip';b.type='button';b.style.color=color;
-  b.innerHTML=(key?`<span class="dot" style="background:${color}"></span>`:'')+label;
-  b.setAttribute('aria-pressed', key===activeCat?'true':'false');
-  b.onclick=()=>{activeCat=(activeCat===key)?null:key; if(key===null)activeCat=null; render();};
-  b.dataset.k=key||'';
-  return b;
-}
 function scoreOf(e,toks){
   const inKw=norm(e.kw),inQ=norm(e.q),inA=norm(e.a.replace(/<[^>]+>/g,''));
   let s=0; toks.forEach(t=>{ if(inKw.includes(t))s+=3; if(inQ.includes(t))s+=2; if(inA.includes(t))s+=1;});
@@ -233,12 +232,10 @@ function grpLabel(k){
 function render(){
   const query=qEl.value.trim();
   clearEl.classList.toggle('on', query.length>0);
-  chipsEl.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',(c.dataset.k||null)===activeCat?'true':'false'));
   resEl.innerHTML='';
   if(query){
     const toks=norm(query).split(/\s+/).filter(t=>t.length>1);
     let list=E.map(e=>({e,s:scoreOf(e,toks)})).filter(x=>x.s>0).sort((a,b)=>b.s-a.s).map(x=>x.e);
-    if(activeCat)list=list.filter(e=>e.c===activeCat);
     if(!list.length){countEl.textContent='';resEl.innerHTML=`<div class="empty">No encontré esa duda con esas palabras.<br>Prueba de otra forma, o pásala al canal de incidencias.</div>`;return;}
     countEl.textContent=list.length===1?'1 respuesta':`Mejor respuesta arriba · ${list.length} relacionadas`;
     list.slice(0,6).forEach((e,i)=>resEl.appendChild(card(e,true,i===0)));
@@ -247,11 +244,15 @@ function render(){
   if(activeCat){
     const items=E.filter(e=>e.c===activeCat);
     countEl.textContent=`${items.length} en ${CATS[activeCat].name}`;
+    const back=document.createElement('button');back.className='morelink';back.type='button';back.style.paddingLeft='2px';
+    back.textContent='← Ver todas las reglas';
+    back.onclick=()=>{activeCat=null;render();window.scrollTo({top:0,behavior:'smooth'});};
+    resEl.appendChild(back);
     resEl.appendChild(grpLabel(activeCat));
     items.forEach(e=>resEl.appendChild(card(e,false,false)));
     return;
   }
-  countEl.textContent='Escribe tu duda arriba, o explora los temas más frecuentes';
+  countEl.textContent='Escribe tu duda arriba. Estas son las reglas por sección:';
   Object.keys(CATS).forEach(k=>{
     const items=E.filter(e=>e.c===k);
     const show=items.length<=3?items:items.filter(e=>TOP.has(e.q));
