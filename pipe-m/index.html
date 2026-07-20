@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>El camino del lead en el pipe manual · CF-M</title>
 <style>
   :root{
@@ -99,6 +100,12 @@
   .script + .script{margin-top:9px}
   .detail a.dlink{color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px solid var(--blue-soft)}
   .detail a.dlink:hover{border-bottom-color:var(--blue)}
+  .tool-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+  .tool-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-decoration:none;
+    border:1.5px solid;border-radius:11px;padding:10px 16px;background:var(--panel-2);
+    transition:transform .12s ease,box-shadow .12s ease}
+  .tool-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+  .tool-btn .ext{opacity:.6;font-weight:600}
   .redbar{margin:14px auto 0;max-width:860px;background:var(--red-soft);border:1px solid var(--line);border-left:3px solid var(--red);
     border-radius:14px;padding:12px 18px;font-size:13px;line-height:1.5}
   .redbar b{color:var(--red)}
@@ -164,7 +171,8 @@ const STEPS=[
     {t:"Mensaje 3 · último intento",m:"{{nombre}}, no quiero que deje pasar esta oportunidad. Usted trabajó toda su vida y merece la mejor pensión posible; en Pensión Perfecta llevamos 8 años ayudando a más de 18,000 personas a lograrlo, y su caso todavía está a tiempo. Regáleme una llamada corta y le agendo su asesoría sin costo con un experto. ¿En qué horario le marco hoy?"}
   ]},
  {ph:"En la llamada",type:"call",icon:"✅",title:"Califica",desc:"Identidad + red flags",stage:"Ley 73 · demandas · simulación",
-  detail:"Califica identidad: <b>Ley 73, edad, semanas cotizadas, tiempo sin cotizar, no pensionado.</b> Y pregunta las <b>red flags</b>, que son las que descalifican o hay que cuidar:<br>• <b>Demanda al IMSS, Infonavit o AFORE</b> (si está en proceso, descalifica).<br>• <b>Simulación laboral sin recibos timbrados</b> (descalifica).<br>• Demanda a un patrón · accionista · plataformas digitales (Didi/Uber) · crédito Infonavit.<br>Si no califica → <b>No califica</b> (o <b>N.C. As. PP</b> si aplica asesoría de pensiones). Calificaba, contestó, pero no quiso → <b>Perdido</b>."},
+  detail:"Califica identidad: <b>Ley 73, edad, semanas cotizadas, tiempo sin cotizar, no pensionado.</b> Y pregunta las <b>red flags</b>, que son las que descalifican o hay que cuidar:<br>• <b>Demanda al IMSS, Infonavit o AFORE</b> (si está en proceso, descalifica).<br>• <b>Simulación laboral sin recibos timbrados</b> (descalifica).<br>• Demanda a un patrón · accionista · plataformas digitales (Didi/Uber) · crédito Infonavit.<br>Si no califica → <b>No califica</b> (o <b>N.C. As. PP</b> si aplica asesoría de pensiones). Calificaba, contestó, pero no quiso → <b>Perdido</b>.",
+  links:[{icon:"🔎",label:"Abrir Creditia",href:"https://creditia-phi.vercel.app/"},{icon:"📄",label:"Abrir Consulta Única",href:"https://dash.consultaunica.mx/inicio"}]},
  {ph:"En la llamada",type:"call",icon:"🔥",title:"Crea necesidad",desc:"Para que sí asistan",stage:"dolor · deseo · costo · urgencia",
   detail:"Crear necesidad es lo que hace que <b>sí asistan</b> a la asesoría. Trabaja conciencia de <b>problema, dolor, deseo, costo y urgencia</b>. Sin necesidad, la agenda se cae."},
  {ph:"En la llamada",type:"move",icon:"📅",title:"Agenda + grupo",desc:"Mueve a As. Fin.",stage:"🔵 As. Fin. Ahora / Futuro",
@@ -203,6 +211,7 @@ function sel(i){
     <h2>${s.title}</h2>
     <span class="chip" style="background:${CS[s.type]};color:${C[s.type]}">${s.stage}</span></div>
     <p>${s.detail}</p>`;
+  if(s.links)h+=`<div class="tool-links">${s.links.map(l=>`<a class="tool-btn" href="${l.href}" target="_blank" rel="noopener" style="border-color:${C[s.type]};color:${C[s.type]}">${l.icon||""} ${l.label} <span class="ext">↗</span></a>`).join("")}</div>`;
   if(s.rule)h+=`<p class="rule">↳ ${s.rule}</p>`;
   if(s.script)h+=`<div class="script"><b>${s.script.t}</b>${s.script.m}</div>`;
   if(s.scripts)s.scripts.forEach(sc=>{h+=`<div class="script"><b>${sc.t}</b>${sc.m}</div>`;});
