@@ -96,6 +96,9 @@
   .script{margin-top:14px;background:var(--panel-2);border:1px solid var(--line-2);border-left:3px solid var(--blue);
     border-radius:12px;padding:12px 15px;font-size:13.5px;line-height:1.55}
   .script b{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+  .script + .script{margin-top:9px}
+  .detail a.dlink{color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px solid var(--blue-soft)}
+  .detail a.dlink:hover{border-bottom-color:var(--blue)}
   .redbar{margin:14px auto 0;max-width:860px;background:var(--red-soft);border:1px solid var(--line);border-left:3px solid var(--red);
     border-radius:14px;padding:12px 18px;font-size:13px;line-height:1.5}
   .redbar b{color:var(--red)}
@@ -139,7 +142,7 @@
     <b>Etapas rojas = vacías al cierre del día.</b> WhatsApp sin seguimiento · Agenda sin seguimiento · Task vencido · Seguimiento sin task. Si una roja dura 2 días sin atender, se te desasigna el lead y otro closer lo toma.
   </div>
 
-  <p class="footer-note">En el pipe manual <b>no hay automatizaciones: tú mueves todo a mano</b>, y se trabaja por prioridad, de izquierda a derecha. El estándar es que ningún closer se salte un paso ni deje una etapa roja al cierre.</p>
+  <p class="footer-note">En el pipe manual <b>las llamadas y los mensajes los haces tú a mano</b>; el sistema mueve algunas etapas solo (los mensajes pasan de Env. Msj 1 → 2 → 3, las alertas rojas y la confirmación) según lo que hagas. Se trabaja por prioridad, de izquierda a derecha; el estándar es que ningún closer se salte un paso ni deje una etapa roja al cierre.</p>
 </div>
 
 <script>
@@ -154,14 +157,18 @@ const STEPS=[
  {ph:"Primer contacto",type:"call",icon:"📞",title:"Llamada 2",desc:"Si no contestó la 1",stage:"segundo intento obligatorio",
   detail:"Son <b>2 intentos de llamada obligatorios</b> antes de escribir. Si contesta cualquiera de las dos, te vas directo a calificar. Si no contesta las dos, recién ahí entra el mensaje."},
  {ph:"Primer contacto",type:"msg",icon:"💬",title:"Mensaje 1·2·3",desc:"Solo si no contestó las 2 llamadas",stage:"⭕ Se envió mensaje → Env. Msj 2 → 3",
-  detail:"Si no contestó las 2 llamadas: mandas <b>mensaje intento 1</b> y mueves a <b>Se envió mensaje</b>. Al día siguiente aparece en <b>Env. Msj 2</b>, luego <b>Env. Msj 3</b> (ahí <b>doble marcaje otra vez</b>). Sin respuesta → <b>No contestó</b>. Si responde en cualquier momento, le hablas de inmediato: un mensaje de interés = llamada.",
-  script:{t:"Intento 1",m:"Hola [nombre], soy [tu nombre], asesor de Pensión Perfecta. Nos dejaste tus datos para revisar si te pudiéramos financiar tu Modalidad 40. ¿Es correcto?"}},
+  detail:"Si no contestó las 2 llamadas: mandas el <b>mensaje 1</b> y mueves a <b>Se envió mensaje</b>. El sistema lo pasa solo a <b>Env. Msj 2</b> al día siguiente, y después a <b>Env. Msj 3</b> (ahí <b>doble marcaje otra vez</b> antes de escribir). Sin respuesta → <b>No contestó</b>. Si responde en cualquier momento, le hablas de inmediato: un mensaje de interés = llamada. Estos son los mensajes reales que mandas:",
+  scripts:[
+    {t:"Mensaje 1 · primer contacto",m:"Buen día {{nombre}}. Soy {{tú}}, analista de Pensión Perfecta. Nos dejó sus datos para mejorar su pensión y, por lo que nos compartió, vale la pena que lo veamos pronto: en este trámite el tiempo corre y entre antes se mueva, más puede ganar. En una llamada corta le agendo una asesoría sin costo con uno de nuestros expertos, que le resuelve todas sus dudas y le explica, paso a paso, cuál es su mejor opción para llevarse la pensión más alta posible. ¿Le marco ahorita o a qué hora le queda bien hoy?"},
+    {t:"Mensaje 2 · segundo toque",m:"{{nombre}}, le marqué hace un momento y no logré localizarle, no se preocupe. Sigo pendiente de su caso porque de verdad vale la pena que revisemos cuánto puede subir la pensión que tanto trabajó. ¿En qué horario le llamo hoy?"},
+    {t:"Mensaje 3 · último intento",m:"{{nombre}}, no quiero que deje pasar esta oportunidad. Usted trabajó toda su vida y merece la mejor pensión posible; en Pensión Perfecta llevamos 8 años ayudando a más de 18,000 personas a lograrlo, y su caso todavía está a tiempo. Regáleme una llamada corta y le agendo su asesoría sin costo con un experto. ¿En qué horario le marco hoy?"}
+  ]},
  {ph:"En la llamada",type:"call",icon:"✅",title:"Califica",desc:"Identidad + red flags",stage:"Ley 73 · demandas · simulación",
   detail:"Califica identidad: <b>Ley 73, edad, semanas cotizadas, tiempo sin cotizar, no pensionado.</b> Y pregunta las <b>red flags</b>, que son las que descalifican o hay que cuidar:<br>• <b>Demanda al IMSS, Infonavit o AFORE</b> (si está en proceso, descalifica).<br>• <b>Simulación laboral sin recibos timbrados</b> (descalifica).<br>• Demanda a un patrón · accionista · plataformas digitales (Didi/Uber) · crédito Infonavit.<br>Si no califica → <b>No califica</b> (o <b>N.C. As. PP</b> si aplica asesoría de pensiones). Calificaba, contestó, pero no quiso → <b>Perdido</b>."},
  {ph:"En la llamada",type:"call",icon:"🔥",title:"Crea necesidad",desc:"Para que sí asistan",stage:"dolor · deseo · costo · urgencia",
   detail:"Crear necesidad es lo que hace que <b>sí asistan</b> a la asesoría. Trabaja conciencia de <b>problema, dolor, deseo, costo y urgencia</b>. Sin necesidad, la agenda se cae."},
  {ph:"En la llamada",type:"move",icon:"📅",title:"Agenda + grupo",desc:"Mueve a As. Fin.",stage:"🔵 As. Fin. Ahora / Futuro",
-  detail:"Agenda la asesoría, pide el <b>reporte de semanas</b> y el <b>estado de cuenta del AFORE</b>, y crea el <b>grupo de WhatsApp</b>. Mueve la oportunidad a <b>As. Fin. Ahora</b> o <b>Futuro</b>.",
+  detail:"Agenda la asesoría, pide el <b>reporte de semanas</b> y el <b>estado de cuenta del AFORE</b>, y crea el <b>grupo de WhatsApp</b>. Al crear el grupo, sigue paso a paso el <a class=\"dlink\" href=\"https://francoherrerasa-creator.github.io/calificador.closers/journey/\" target=\"_blank\" rel=\"noopener\">journey de comunicación del grupo →</a>. Mueve la oportunidad a <b>As. Fin. Ahora</b> o <b>Futuro</b>.",
   rule:"Si agendas pero no mueves la oportunidad, no le aparece al asesor y no se paga la comisión."},
  {ph:"Confirmar",type:"msg",icon:"🗓️",title:"Conf. mañana",desc:"Un día antes (T-1)",stage:"🟡 Conf. as. mañana → 🔵 Agenda confirmada",
   detail:"Un día antes, la oportunidad cae en <b>Conf. as. mañana</b>. Mandas el recordatorio y mueves a <b>Agenda confirmada</b> en cuanto lo envíes, conteste o no.",
@@ -198,6 +205,7 @@ function sel(i){
     <p>${s.detail}</p>`;
   if(s.rule)h+=`<p class="rule">↳ ${s.rule}</p>`;
   if(s.script)h+=`<div class="script"><b>${s.script.t}</b>${s.script.m}</div>`;
+  if(s.scripts)s.scripts.forEach(sc=>{h+=`<div class="script"><b>${sc.t}</b>${sc.m}</div>`;});
   d.innerHTML=h;
 }
 sel(0);
