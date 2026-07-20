@@ -68,6 +68,9 @@
     padding:2px 16px 12px 37px;margin-top:-4px}
   .empty{text-align:center;color:var(--muted);padding:30px 10px;font-size:14.5px}
   .empty b{color:var(--ink)}
+  .morelink{border:0;background:none;color:var(--green);font:inherit;font-weight:700;font-size:12.5px;cursor:pointer;
+    padding:8px 2px 2px 37px;text-align:left;display:block}
+  .morelink:hover{text-decoration:underline}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
   .foot{text-align:center;color:var(--faint);font-size:12.5px;margin-top:26px;line-height:1.6}
 </style>
@@ -200,6 +203,7 @@ const E=[
   a:"No siempre conviene: cada año que espera <b>deja de cobrar su pensión</b>. En la asesoría se le muestran los escenarios con números para que decida."}
 ];
 
+const TOP=new Set(["¿Qué es la Modalidad 40?","¿Cuáles son los 5 productos?","¿Cómo funciona el financiamiento de PP?","¿Quién califica? (los must)","¿Qué descalifica de inmediato?","¿Qué red flags debo preguntar?","No me contestó nunca, ¿a dónde lo muevo?","Agendé la asesoría, ¿a dónde muevo la oportunidad?","No asistió a la asesoría, ¿qué hago?","¿Para qué les pago si yo mismo puedo?","¿Es seguro? ¿Es legal?","El interés se me hace alto"]);
 const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
 const chipsEl=document.getElementById('chips'),resEl=document.getElementById('results'),
   countEl=document.getElementById('count'),qEl=document.getElementById('q'),clearEl=document.getElementById('clear');
@@ -221,32 +225,45 @@ function scoreOf(e,toks){
   let s=0; toks.forEach(t=>{ if(inKw.includes(t))s+=3; if(inQ.includes(t))s+=2; if(inA.includes(t))s+=1;});
   return s;
 }
+function grpLabel(k){
+  const lab=document.createElement('div');lab.className='grp-label';
+  lab.innerHTML=`<span class="dot" style="width:9px;height:9px;border-radius:50%;background:${CATS[k].c}"></span>${CATS[k].name}`;
+  return lab;
+}
 function render(){
   const query=qEl.value.trim();
   clearEl.classList.toggle('on', query.length>0);
   chipsEl.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',(c.dataset.k||null)===activeCat?'true':'false'));
   resEl.innerHTML='';
-  let list;
   if(query){
     const toks=norm(query).split(/\s+/).filter(t=>t.length>1);
-    list=E.map(e=>({e,s:scoreOf(e,toks)})).filter(x=>x.s>0).sort((a,b)=>b.s-a.s).map(x=>x.e);
+    let list=E.map(e=>({e,s:scoreOf(e,toks)})).filter(x=>x.s>0).sort((a,b)=>b.s-a.s).map(x=>x.e);
     if(activeCat)list=list.filter(e=>e.c===activeCat);
-    countEl.textContent=list.length?`${list.length} resultado${list.length>1?'s':''}`:'';
-    if(!list.length){resEl.innerHTML=`<div class="empty">No encontré una respuesta exacta a <b>"${query.replace(/</g,'')}"</b>.<br>Prueba con otras palabras, o pregúntalo en el canal de incidencias.</div>`;return;}
-    list.forEach(e=>resEl.appendChild(card(e,true,true)));
-  }else{
-    list=activeCat?E.filter(e=>e.c===activeCat):E;
-    countEl.textContent=activeCat?`${list.length} en ${CATS[activeCat].name}`:`${E.length} temas · escribe tu duda o elige una categoría`;
-    // group by category
-    const order=Object.keys(CATS).filter(k=>!activeCat||k===activeCat);
-    order.forEach(k=>{
-      const items=list.filter(e=>e.c===k); if(!items.length)return;
-      const lab=document.createElement('div');lab.className='grp-label';
-      lab.innerHTML=`<span class="dot" style="width:9px;height:9px;border-radius:50%;background:${CATS[k].c}"></span>${CATS[k].name}`;
-      resEl.appendChild(lab);
-      items.forEach(e=>resEl.appendChild(card(e,false,false)));
-    });
+    if(!list.length){countEl.textContent='';resEl.innerHTML=`<div class="empty">No encontré esa duda con esas palabras.<br>Prueba de otra forma, o pásala al canal de incidencias.</div>`;return;}
+    countEl.textContent=list.length===1?'1 respuesta':`Mejor respuesta arriba · ${list.length} relacionadas`;
+    list.slice(0,6).forEach((e,i)=>resEl.appendChild(card(e,true,i===0)));
+    return;
   }
+  if(activeCat){
+    const items=E.filter(e=>e.c===activeCat);
+    countEl.textContent=`${items.length} en ${CATS[activeCat].name}`;
+    resEl.appendChild(grpLabel(activeCat));
+    items.forEach(e=>resEl.appendChild(card(e,false,false)));
+    return;
+  }
+  countEl.textContent='Escribe tu duda arriba, o explora los temas más frecuentes';
+  Object.keys(CATS).forEach(k=>{
+    const items=E.filter(e=>e.c===k);
+    const show=items.length<=3?items:items.filter(e=>TOP.has(e.q));
+    resEl.appendChild(grpLabel(k));
+    show.forEach(e=>resEl.appendChild(card(e,false,false)));
+    if(items.length>show.length){
+      const m=document.createElement('button');m.className='morelink';m.type='button';
+      m.textContent=`Ver las ${items.length} de ${CATS[k].name} →`;
+      m.onclick=()=>{activeCat=k;render();window.scrollTo({top:0,behavior:'smooth'});};
+      resEl.appendChild(m);
+    }
+  });
 }
 function card(e,showCat,open){
   const id=e.q;
