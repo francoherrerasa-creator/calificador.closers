@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Playbook Closers · Pensión Perfecta</title>
+<style>
+  :root{
+    --ground:#eceee8;--card:#fffdf8;--ink:#16211b;--muted:#5a655c;--faint:#93a094;
+    --line:#dcd8cb;--green:#14683f;--green-ink:#0d4e2f;--green-soft:#e7f0e9;
+    --gold:#b0873a;--wash:#f7f4ec;--c1:#14683f;--c2:#b0873a;--c3:#2f7d76;
+    --font:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --ground:#0b0f0c;--card:#141a15;--ink:#e9ede7;--muted:#97a296;--faint:#6b766c;
+    --line:#252d26;--green:#54c188;--green-ink:#83d6aa;--green-soft:#15251b;
+    --gold:#d3aa60;--wash:#111611;--c1:#54c188;--c2:#d3aa60;--c3:#57b3a9;}}
+  :root[data-theme="dark"]{
+    --ground:#0b0f0c;--card:#141a15;--ink:#e9ede7;--muted:#97a296;--faint:#6b766c;
+    --line:#252d26;--green:#54c188;--green-ink:#83d6aa;--green-soft:#15251b;--gold:#d3aa60;--wash:#111611;--c1:#54c188;--c2:#d3aa60;--c3:#57b3a9;}
+  :root[data-theme="light"]{
+    --ground:#eceee8;--card:#fffdf8;--ink:#16211b;--muted:#5a655c;--faint:#93a094;
+    --line:#dcd8cb;--green:#14683f;--green-ink:#0d4e2f;--green-soft:#e7f0e9;--gold:#b0873a;--wash:#f7f4ec;--c1:#14683f;--c2:#b0873a;--c3:#2f7d76;}
+  *{box-sizing:border-box}
+  html,body{min-height:100%}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;
+    display:flex;flex-direction:column;justify-content:center;padding:clamp(14px,2.4vw,26px)}
+  .wrap{max-width:1120px;margin:0 auto;width:100%}
+  .hero{text-align:center;margin-bottom:clamp(14px,2vw,22px)}
+  .eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:800;margin:0 0 10px}
+  h1{font-size:clamp(26px,4.2vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1;margin:0}
+  .tag{font-size:clamp(13px,1.7vw,17px);color:var(--green-ink);font-weight:700;margin:10px 0 0}
+  .lede{color:var(--muted);font-size:clamp(12.5px,1.45vw,14.5px);margin:10px auto 0;max-width:70ch;line-height:1.55}
+  .lede b{color:var(--ink)}
+
+  .tl{display:grid;grid-template-columns:repeat(3,1fr);column-gap:clamp(12px,2vw,26px);align-items:stretch}
+  .line{grid-row:1;grid-column:1/-1;height:3px;background:var(--line);border-radius:2px;align-self:start;margin-top:7px;z-index:0}
+  .mark{grid-row:1;z-index:1;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+  .dot{width:18px;height:18px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px var(--ground)}
+  .stg{font-size:15px;font-weight:800;color:var(--c);letter-spacing:-.01em;margin-top:3px}
+  .sub{font-size:10px;color:var(--faint);font-weight:700;letter-spacing:.02em}
+  .rsm{font-size:12px;color:var(--muted);line-height:1.4;max-width:30ch;margin-top:4px}
+  .post{grid-row:2;position:relative;padding-top:15px;margin-top:8px}
+  .post::before{content:"";position:absolute;left:50%;top:0;width:2px;height:12px;background:var(--c);transform:translateX(-50%)}
+  .post ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+  .it{display:block;text-decoration:none;color:inherit;border-radius:11px;padding:9px 13px;background:var(--wash);border:1px solid var(--line);transition:border-color .12s,transform .12s}
+  a.it:hover{border-color:var(--c);transform:translateY(-1px)}
+  .it .nm{font-weight:700;font-size:13.4px;line-height:1.25;color:var(--ink)}
+  a.it .nm{color:var(--green-ink)}
+  a.it .nm::after{content:" ↗";color:var(--gold);font-size:10.5px;font-weight:800}
+  .it .wy{font-size:11.4px;color:var(--muted);line-height:1.35;margin-top:2px}
+
+  .foot{text-align:center;margin-top:clamp(16px,2.2vw,26px)}
+  .foot p{margin:0;font-size:clamp(14px,1.9vw,19px);font-weight:800;letter-spacing:-.015em}
+  .foot p em{font-style:normal;color:var(--green)}
+  .foot small{display:block;color:var(--faint);font-size:12px;margin-top:8px}
+  @media (max-width:760px){
+    .tl{grid-template-columns:1fr;row-gap:6px}
+    .mark,.post{grid-row:auto!important;grid-column:auto!important}
+    .post::before,.line{display:none}
+    .mark{align-items:flex-start;text-align:left;margin-top:10px}.rsm{max-width:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <p class="eyebrow">Pensión Perfecta · Equipo de Closers</p>
+    <h1>Playbook Closers</h1>
+    <p class="tag">Tu sistema para conocer, organizar y controlar cada parte del proceso.</p>
+    <p class="lede">Lo construimos <b>entre todos</b>: con tu feedback y lo que aprendimos juntos en las llamadas, lo que funcionó y lo que no. Aquí no improvisas: sigues el estándar, casi copiar y pegar, y te enfocas en lo que mejor haces, <b>cerrar</b>. Clic en cada pieza para abrirla.</p>
+  </div>
+
+  <div class="tl" id="tl"></div>
+
+  <div class="foot">
+    <p>Todo está aquí. Síguelo y <em>enfócate en cerrar</em>.</p>
+    <small>Este playbook es tuyo. Lo hicimos con lo que tú aportaste.</small>
+  </div>
+</div>
+<script>
+(function(){
+  var B="https://francoherrerasa-creator.github.io/calificador.closers/";
+  var SHEET="https://docs.google.com/spreadsheets/d/13536dAy223Rf3WLmK7MIT5BGBJxTk_vilJicE3RWYSQ/edit";
+  var CALLS="https://docs.google.com/spreadsheets/d/1zoevfh5FLrrb4hHYm1A50wzclirp-tRj/edit";
+  var DOC="https://docs.google.com/document/d/1fsip3unaq0up69KEDSEaShEsFDpkyvNFwJeoNo7X3tg/edit";
+  var SOP="https://docs.google.com/document/d/1ectV-TciEX8ydq0yrd-agRY9r2l-tmee4zMUBfX4BZA/edit";
+  var S=[
+    {c:"var(--c1)",stg:"BackOffice",sub:"ALLMK · Tracker · Davinci",
+     rsm:"Dónde vive tu lead y a dónde moverlo, sin dudar.",
+     post:[
+       {nm:"Journey del pipe",wy:"Sabes a dónde va cada lead",url:B+"pipe-m/"},
+       {nm:"Pre-Calificador",wy:"¿Entra y a qué producto?",url:B},
+       {nm:"SOP del Closer",wy:"Tu biblia: todo el estándar en un lugar",url:SOP}
+     ]},
+    {c:"var(--c2)",stg:"Journey del lead",sub:"De la llamada al cierre",
+     rsm:"Cómo llevar a tu lead con el mismo nivel, siempre.",
+     post:[
+       {nm:"Llamada de ~6 min, dirigida",wy:"Tú marcas el ritmo"},
+       {nm:"Plantillas de comunicación",wy:"Mensajes del journey, listos para copiar",url:DOC},
+       {nm:"Estándar de comunicación",wy:"Toda la secuencia del grupo de WhatsApp",url:B+"journey/"}
+     ]},
+    {c:"var(--c3)",stg:"Soporte y Team management",sub:"Tu apoyo y tu número",
+     rsm:"Lo que te ayuda a resolver solo y a mejorar cada día.",
+     post:[
+       {nm:"Scorecard, ritmo diario y reportes (EOD)",wy:"Tu número y el del equipo, día a día",url:SHEET},
+       {nm:"Análisis de llamadas",wy:"Cómo mejorar tu llamada: el 5 y el 4",url:CALLS},
+       {nm:"Resuelve tu duda y canales",wy:"Resuelve solo, sin preguntar",url:B+"resuelve/"}
+     ]}
+  ];
+  var tl=document.getElementById('tl');
+  function cell(cls,col,html,c){var d=document.createElement('div');d.className=cls;d.style.gridColumn=col;d.style.setProperty('--c',c);d.innerHTML=html;return d;}
+  var ln=document.createElement('div');ln.className='line';tl.appendChild(ln);
+  S.forEach(function(s,i){tl.appendChild(cell('mark',i+1,'<span class="dot"></span><span class="stg">'+s.stg+'</span><span class="sub">'+s.sub+'</span><span class="rsm">'+s.rsm+'</span>',s.c));});
+  S.forEach(function(s,i){
+    var items=s.post.map(function(it){
+      var tag=it.url?'a':'div',attr=it.url?(' href="'+it.url+'" target="_blank" rel="noopener"'):'';
+      return '<'+tag+' class="it"'+attr+'><div class="nm">'+it.nm+'</div><div class="wy">'+it.wy+'</div></'+tag+'>';
+    }).join('');
+    tl.appendChild(cell('post',i+1,'<ul>'+items+'</ul>',s.c));
+  });
+})();
+</script>
+</body>
+</html>
