@@ -27,15 +27,25 @@
   body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;
     display:flex;flex-direction:column;justify-content:center;padding:clamp(14px,2.4vw,26px)}
   .wrap{max-width:1120px;margin:0 auto;width:100%}
-  .hero{text-align:center;margin-bottom:clamp(14px,2vw,22px)}
+  .hero{text-align:center;margin-bottom:clamp(12px,1.8vw,18px)}
   .eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:800;margin:0 0 10px}
   h1{font-size:clamp(26px,4.2vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1;margin:0}
   .tag{font-size:clamp(13px,1.7vw,17px);color:var(--green-ink);font-weight:700;margin:10px 0 0}
   .lede{color:var(--muted);font-size:clamp(12.5px,1.45vw,14.5px);margin:10px auto 0;max-width:70ch;line-height:1.55}
   .lede b{color:var(--ink)}
 
+  .start{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;background:var(--green);
+    border-radius:15px;padding:14px 20px;margin:0 0 clamp(14px,2vw,20px);box-shadow:0 16px 34px -20px rgba(20,60,40,.6);transition:transform .12s}
+  .start:hover{transform:translateY(-2px)}
+  .start .badge{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#eafff2;
+    background:rgba(255,255,255,.16);border-radius:999px;padding:5px 12px;white-space:nowrap;flex:none}
+  .start .st{flex:1;min-width:0}
+  .start .st b{display:block;color:#fff;font-size:clamp(15px,1.9vw,19px);font-weight:800;letter-spacing:-.01em}
+  .start .st span{display:block;color:#dcf0e4;font-size:12.5px;margin-top:2px}
+  .start .go{color:#fff;font-size:20px;font-weight:800;flex:none}
+
   .tl{display:grid;grid-template-columns:repeat(3,1fr);column-gap:clamp(12px,2vw,26px);align-items:stretch}
-  .line{grid-row:1;grid-column:1/-1;height:3px;background:var(--line);border-radius:2px;align-self:start;margin-top:7px;z-index:0}
+  .line{grid-row:1;grid-column:1/-1;height:3px;background:var(--line);border-radius:2px;align-self:start;margin-top:8px;z-index:0}
   .mark{grid-row:1;z-index:1;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
   .dot{width:18px;height:18px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px var(--ground)}
   .stg{font-size:15px;font-weight:800;color:var(--c);letter-spacing:-.01em;margin-top:3px}
@@ -49,6 +59,7 @@
   .it .nm{font-weight:700;font-size:13.4px;line-height:1.25;color:var(--ink)}
   a.it .nm{color:var(--green-ink)}
   a.it .nm::after{content:" ↗";color:var(--gold);font-size:10.5px;font-weight:800}
+  .it.soon .nm::after{content:" · pronto";color:var(--faint);font-size:10px;font-weight:700}
   .it .wy{font-size:11.4px;color:var(--muted);line-height:1.35;margin-top:2px}
 
   .foot{text-align:center;margin-top:clamp(16px,2.2vw,26px)}
@@ -72,6 +83,12 @@
     <p class="lede">Lo construimos <b>entre todos</b>: con tu feedback y lo que aprendimos juntos en las llamadas, lo que funcionó y lo que no. Aquí no improvisas: sigues el estándar, casi copiar y pegar, y te enfocas en lo que mejor haces, <b>cerrar</b>. Clic en cada pieza para abrirla.</p>
   </div>
 
+  <a class="start" href="https://docs.google.com/document/d/1ectV-TciEX8ydq0yrd-agRY9r2l-tmee4zMUBfX4BZA/edit" target="_blank" rel="noopener">
+    <span class="badge">Empieza aquí</span>
+    <span class="st"><b>SOP del Closer</b><span>Tu biblia: todo el estándar en un solo lugar. De aquí cuelga todo.</span></span>
+    <span class="go">↗</span>
+  </a>
+
   <div class="tl" id="tl"></div>
 
   <div class="foot">
@@ -82,31 +99,27 @@
 <script>
 (function(){
   var B="https://francoherrerasa-creator.github.io/calificador.closers/";
-  var SHEET="https://docs.google.com/spreadsheets/d/13536dAy223Rf3WLmK7MIT5BGBJxTk_vilJicE3RWYSQ/edit";
-  var CALLS="https://docs.google.com/spreadsheets/d/1zoevfh5FLrrb4hHYm1A50wzclirp-tRj/edit";
   var DOC="https://docs.google.com/document/d/1fsip3unaq0up69KEDSEaShEsFDpkyvNFwJeoNo7X3tg/edit";
-  var SOP="https://docs.google.com/document/d/1ectV-TciEX8ydq0yrd-agRY9r2l-tmee4zMUBfX4BZA/edit";
   var S=[
     {c:"var(--c1)",stg:"BackOffice",sub:"ALLMK · Tracker · Davinci",
      rsm:"Dónde vive tu lead y a dónde moverlo, sin dudar.",
      post:[
-       {nm:"Journey del pipe",wy:"Sabes a dónde va cada lead",url:B+"pipe-m/"},
-       {nm:"Pre-Calificador",wy:"¿Entra y a qué producto?",url:B},
-       {nm:"SOP del Closer",wy:"Tu biblia: todo el estándar en un lugar",url:SOP}
+       {nm:"Journey del pipe M",wy:"Sabes a dónde va cada lead",url:B+"pipe-m/"},
+       {nm:"Pre-Calificador",wy:"¿Entra y a qué producto?",url:B}
      ]},
     {c:"var(--c2)",stg:"Journey del lead",sub:"De la llamada al cierre",
      rsm:"Cómo llevar a tu lead con el mismo nivel, siempre.",
      post:[
-       {nm:"Llamada de ~6 min, dirigida",wy:"Tú marcas el ritmo"},
-       {nm:"Plantillas de comunicación",wy:"Mensajes del journey, listos para copiar",url:DOC},
-       {nm:"Estándar de comunicación",wy:"Toda la secuencia del grupo de WhatsApp",url:B+"journey/"}
+       {nm:"Llamada de ~6 min, dirigida",wy:"El guión resumido de 6 min",soon:true},
+       {nm:"Versiones de mensaje",wy:"Varias redacciones del mismo mensaje, para no quemar tu línea",url:DOC},
+       {nm:"Comunicación en el grupo",wy:"Toda la secuencia del grupo de WhatsApp",url:B+"journey/"}
      ]},
-    {c:"var(--c3)",stg:"Soporte y Team management",sub:"Tu apoyo y tu número",
-     rsm:"Lo que te ayuda a resolver solo y a mejorar cada día.",
+    {c:"var(--c3)",stg:"Soporte y tu mejora",sub:"Resolver, mejorar y ganar más",
+     rsm:"Lo que te ayuda a resolver solo, mejorar y cerrar más.",
      post:[
-       {nm:"Scorecard, ritmo diario y reportes (EOD)",wy:"Tu número y el del equipo, día a día",url:SHEET},
-       {nm:"Análisis de llamadas",wy:"Cómo mejorar tu llamada: el 5 y el 4",url:CALLS},
-       {nm:"Resuelve tu duda y canales",wy:"Resuelve solo, sin preguntar",url:B+"resuelve/"}
+       {nm:"Resuelve tu duda",wy:"Objeciones, producto y tus dudas, al instante",url:B+"resuelve/"},
+       {nm:"Comisiones · Road to 3k",wy:"Cómo se arma tu cheque",soon:true},
+       {nm:"Canales de comunicación",wy:"Cada cosa por su canal"}
      ]}
   ];
   var tl=document.getElementById('tl');
@@ -116,7 +129,8 @@
   S.forEach(function(s,i){
     var items=s.post.map(function(it){
       var tag=it.url?'a':'div',attr=it.url?(' href="'+it.url+'" target="_blank" rel="noopener"'):'';
-      return '<'+tag+' class="it"'+attr+'><div class="nm">'+it.nm+'</div><div class="wy">'+it.wy+'</div></'+tag+'>';
+      var cl='it'+(it.soon?' soon':'');
+      return '<'+tag+' class="'+cl+'"'+attr+'><div class="nm">'+it.nm+'</div><div class="wy">'+it.wy+'</div></'+tag+'>';
     }).join('');
     tl.appendChild(cell('post',i+1,'<ul>'+items+'</ul>',s.c));
   });
