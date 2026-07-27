@@ -27,38 +27,32 @@
   body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;
     display:flex;flex-direction:column;justify-content:center;padding:clamp(14px,2.4vw,26px)}
   .wrap{max-width:1120px;margin:0 auto;width:100%}
-  .hero{text-align:center;margin-bottom:clamp(14px,2vw,22px)}
+  .hero{text-align:center;margin-bottom:clamp(16px,2.2vw,24px)}
   .eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:800;margin:0 0 10px}
   h1{font-size:clamp(26px,4.2vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1;margin:0}
-  .tag{font-size:clamp(13px,1.7vw,17px);color:var(--green-ink);font-weight:700;margin:10px 0 0}
-  .lede{color:var(--muted);font-size:clamp(12.5px,1.45vw,14.5px);margin:10px auto 0;max-width:70ch;line-height:1.55}
-  .lede b{color:var(--ink)}
-
+  .tag{font-size:clamp(13px,1.7vw,17px);color:var(--green-ink);font-weight:700;margin:11px 0 0}
+  .hint{color:var(--faint);font-size:12.5px;margin:8px 0 0}
   .tl{display:grid;grid-template-columns:repeat(3,1fr);column-gap:clamp(12px,2vw,26px);align-items:stretch}
   .line{grid-row:1;grid-column:1/-1;height:3px;background:var(--line);border-radius:2px;align-self:start;margin-top:8px;z-index:0}
   .mark{grid-row:1;z-index:1;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
   .dot{width:18px;height:18px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px var(--ground)}
-  .stg{font-size:15px;font-weight:800;color:var(--c);letter-spacing:-.01em;margin-top:3px}
-  .sub{font-size:10px;color:var(--faint);font-weight:700;letter-spacing:.02em}
-  .rsm{font-size:12px;color:var(--muted);line-height:1.4;max-width:30ch;margin-top:4px}
+  .stg{font-size:16px;font-weight:800;color:var(--c);letter-spacing:-.01em;margin-top:3px}
+  .sub{font-size:10.5px;color:var(--faint);font-weight:700;letter-spacing:.03em;text-transform:uppercase}
+  .rsm{font-size:12px;color:var(--muted);line-height:1.4;max-width:30ch;margin-top:5px}
   .post{grid-row:2;position:relative;padding-top:15px;margin-top:8px}
   .post::before{content:"";position:absolute;left:50%;top:0;width:2px;height:12px;background:var(--c);transform:translateX(-50%)}
   .post ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
   .it{display:block;text-decoration:none;color:inherit;border-radius:11px;padding:9px 13px;background:var(--wash);border:1px solid var(--line);transition:border-color .12s,transform .12s}
   a.it:hover{border-color:var(--c);transform:translateY(-1px)}
-  .it.step1{background:var(--green-soft);border-color:var(--c1)}
-  .it .nm{font-weight:700;font-size:13.4px;line-height:1.25;color:var(--ink);display:flex;align-items:center}
+  .it .nm{font-weight:700;font-size:13.6px;line-height:1.25;color:var(--ink)}
   a.it .nm{color:var(--green-ink)}
-  a.it .nm .txt::after{content:" ↗";color:var(--gold);font-size:10.5px;font-weight:800}
-  .it.soon .nm .txt::after{content:" · pronto";color:var(--faint);font-size:10px;font-weight:700}
-  .stepbadge{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;background:var(--c1);color:#fff;
-    font-size:10px;font-weight:800;margin-right:7px;flex:none}
-  .it .wy{font-size:11.4px;color:var(--muted);line-height:1.35;margin-top:2px}
+  a.it .nm::after{content:" ↗";color:var(--gold);font-size:10.5px;font-weight:800}
+  .it.soon .nm::after{content:" · pronto";color:var(--faint);font-size:10px;font-weight:700}
+  .it .wy{font-size:11.6px;color:var(--muted);line-height:1.35;margin-top:2px}
 
-  .foot{text-align:center;margin-top:clamp(16px,2.2vw,26px)}
+  .foot{text-align:center;margin-top:clamp(18px,2.4vw,28px)}
   .foot p{margin:0;font-size:clamp(14px,1.9vw,19px);font-weight:800;letter-spacing:-.015em}
   .foot p em{font-style:normal;color:var(--green)}
-  .foot small{display:block;color:var(--faint);font-size:12px;margin-top:8px}
   @media (max-width:760px){
     .tl{grid-template-columns:1fr;row-gap:6px}
     .mark,.post{grid-row:auto!important;grid-column:auto!important}
@@ -72,43 +66,43 @@
   <div class="hero">
     <p class="eyebrow">Pensión Perfecta · Equipo de Closers</p>
     <h1>Playbook Closers</h1>
-    <p class="tag">Tu sistema para conocer, organizar y controlar cada parte del proceso.</p>
-    <p class="lede">Lo construimos <b>entre todos</b>: con tu feedback y lo que aprendimos juntos en las llamadas, lo que funcionó y lo que no. Aquí no improvisas: sigues el estándar, casi copiar y pegar, y te enfocas en lo que mejor haces, <b>cerrar</b>. Clic en cada pieza para abrirla.</p>
+    <p class="tag">Sistema para entender, organizar y controlar cada parte del proceso.</p>
+    <p class="hint">Clic en cada pieza para abrirla.</p>
   </div>
 
   <div class="tl" id="tl"></div>
 
-  <div class="foot">
-    <p>Todo está aquí. Síguelo y <em>enfócate en cerrar</em>.</p>
-    <small>Este playbook es tuyo. Lo hicimos con lo que tú aportaste.</small>
-  </div>
+  <div class="foot"><p><em>Todo en un solo lugar.</em> Lo construimos entre todos: con tu feedback y lo que aprendimos juntos en las llamadas.</p></div>
 </div>
 <script>
 (function(){
   var B="https://francoherrerasa-creator.github.io/calificador.closers/";
   var DOC="https://docs.google.com/document/d/1fsip3unaq0up69KEDSEaShEsFDpkyvNFwJeoNo7X3tg/edit";
   var SOP="https://docs.google.com/document/d/1ectV-TciEX8ydq0yrd-agRY9r2l-tmee4zMUBfX4BZA/edit";
+  var CREDITIA="https://creditia-phi.vercel.app/";
+  var MEDIA="https://drive.google.com/drive/folders/1RpApcV4uYt3e0nLJ9Nl8xcT3OOjJZXu7?usp=drive_link";
+  var FORMS="https://forms.gle/GeDypheodBS6rgP58";
   var S=[
-    {c:"var(--c1)",stg:"BackOffice",sub:"ALLMK · Tracker · Davinci",
-     rsm:"Dónde vive tu lead y a dónde moverlo, sin dudar.",
+    {c:"var(--c1)",stg:"BackOffice",sub:"CRM y Sistemas",
+     rsm:"Los sistemas y estándares que ordenan tu operación.",
      post:[
-       {nm:"SOP del Closer",wy:"Empieza aquí: todo el estándar en un solo lugar",url:SOP,badge:"1"},
-       {nm:"Journey del pipe M",wy:"Sabes a dónde va cada lead",url:B+"pipe-m/"},
-       {nm:"Creditia",wy:"La app oficial: confirma si el lead pasa y a qué producto",url:"https://creditia-phi.vercel.app/"}
+       {nm:"SOP del Closer",wy:"Estándar de calidad del equipo",url:SOP},
+       {nm:"Versiones de mensajes",wy:"Evita el bloqueo de líneas",url:DOC},
+       {nm:"Creditia",wy:"Califica e identifica al lead",url:CREDITIA}
      ]},
-    {c:"var(--c2)",stg:"Journey del lead",sub:"De la llamada al cierre",
-     rsm:"Cómo llevar a tu lead con el mismo nivel, siempre.",
+    {c:"var(--c2)",stg:"Journey del lead",sub:"Paso a paso dentro de la operación",
+     rsm:"El recorrido del lead, paso a paso, de la llamada al grupo.",
      post:[
-       {nm:"Llamada de ~6 min, dirigida",wy:"El guión resumido de 6 min",soon:true},
-       {nm:"Versiones de mensaje",wy:"Varias redacciones del mismo mensaje, para no quemar tu línea",url:DOC},
-       {nm:"Comunicación en el grupo",wy:"Toda la secuencia del grupo de WhatsApp",url:B+"journey/"}
+       {nm:"Journey del Pipe CF-M",wy:"Paso a paso de qué hacer",url:B+"pipe-m/"},
+       {nm:"Guión 6 minutos",wy:"Máxima duración de la llamada",soon:true},
+       {nm:"Grupos de WhatsApp",wy:"Qué mandar y en qué momento",url:B+"journey/"}
      ]},
-    {c:"var(--c3)",stg:"Soporte y tu mejora",sub:"Resolver, mejorar y ganar más",
-     rsm:"Lo que te ayuda a resolver solo, mejorar y cerrar más.",
+    {c:"var(--c3)",stg:"Soporte y Mejora Continua",sub:"Resolver, mejorar y continuar",
+     rsm:"Tu apoyo para resolver dudas y seguir mejorando.",
      post:[
        {nm:"Resuelve tu duda",wy:"Objeciones, producto y tus dudas, al instante",url:B+"resuelve/"},
-       {nm:"Comisiones · Road to 3k",wy:"Cómo se arma tu cheque",soon:true},
-       {nm:"Canales de comunicación",wy:"Los 3 canales, cada cosa por su lugar",soon:true}
+       {nm:"Imágenes y Videos",wy:"Material de apoyo para el lead",url:MEDIA},
+       {nm:"Canales de comunicación",wy:"Para organizar cada cosa por su lugar",url:FORMS}
      ]}
   ];
   var tl=document.getElementById('tl');
@@ -118,9 +112,8 @@
   S.forEach(function(s,i){
     var items=s.post.map(function(it){
       var tag=it.url?'a':'div',attr=it.url?(' href="'+it.url+'" target="_blank" rel="noopener"'):'';
-      var cl='it'+(it.soon?' soon':'')+(it.badge?' step1':'');
-      var bdg=it.badge?'<span class="stepbadge">'+it.badge+'</span>':'';
-      return '<'+tag+' class="'+cl+'"'+attr+'><div class="nm">'+bdg+'<span class="txt">'+it.nm+'</span></div><div class="wy">'+it.wy+'</div></'+tag+'>';
+      var cl='it'+(it.soon?' soon':'');
+      return '<'+tag+' class="'+cl+'"'+attr+'><div class="nm">'+it.nm+'</div><div class="wy">'+it.wy+'</div></'+tag+'>';
     }).join('');
     tl.appendChild(cell('post',i+1,'<ul>'+items+'</ul>',s.c));
   });
