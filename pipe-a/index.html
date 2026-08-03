@@ -4,128 +4,313 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<title>El camino del lead en el pipe automático · CF-A</title>
+<title>Pipeline Automático · Closers de financiamiento</title>
 <style>
   :root{
-    --ground:#ecefe7; --panel:#fffffe; --panel-2:#f4f6ee;
-    --ink:#242b23; --muted:#697162; --faint:#8a9182; --line:#d9ddd0; --line-2:#e6e9de;
-    --green:#1e6f47; --green-2:#25865580; --green-soft:#e6f0e9;
-    --blue:#345f97; --blue-soft:#e6ecf5;
-    --gold:#9c7118; --gold-soft:#f1e9d7;
-    --red:#b34a3a; --red-soft:#f5e4e0;
-    --slate:#535c4c;
-    --shadow:0 1px 2px rgba(40,50,35,.05),0 10px 30px rgba(40,50,35,.08);
-    --shadow-dot:0 3px 8px rgba(40,50,35,.20);
-    --r:18px;
+    --brand-deep:#0a3f31; --brand:#0e5140; --brand-ink:#ffffff;
+    --ground:#f1f4ef; --panel:#ffffff; --panel-2:#f6f8f3;
+    --ink:#1b2620; --muted:#5c6b60; --faint:#8b978c;
+    --line:#dde3d9; --line-2:#e9ede5;
+    --accent:#1e8a5f; --accent-soft:#e4f0e9;
+    --blue:#35608f; --blue-soft:#e6ecf4;
+    --gold:#96690f; --gold-soft:#f3ecd9;
+    --red:#b04434; --red-soft:#f6e3df;
+    --slate:#556055;
+    --shadow:0 1px 2px rgba(20,40,30,.05),0 8px 24px rgba(20,40,30,.07);
+    --shadow-dot:0 3px 8px rgba(20,40,30,.22);
+    --r:16px;
+    --display:'Arial Narrow','Helvetica Neue Condensed','Liberation Sans Narrow',system-ui,sans-serif;
     --font:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
   }
   @media (prefers-color-scheme:dark){:root{
-    --ground:#14160f; --panel:#1d2017; --panel-2:#23261b;
-    --ink:#e9ecdf; --muted:#98a08d; --faint:#7a8271; --line:#2f342a; --line-2:#272c21;
-    --green:#54c088; --green-2:#54c08855; --green-soft:#182619;
-    --blue:#82abe8; --blue-soft:#182335; --gold:#d7ab55; --gold-soft:#2a2415;
-    --red:#e07d6f; --red-soft:#2d1b18; --slate:#a7af9a;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.4);
-    --shadow-dot:0 3px 10px rgba(0,0,0,.45);
+    --brand-deep:#06251d; --brand:#0a3a2d;
+    --ground:#12160f; --panel:#1b1f18; --panel-2:#20251c;
+    --ink:#e9ede0; --muted:#98a48f; --faint:#79856f;
+    --line:#2e352a; --line-2:#262c21;
+    --accent:#4dbd85; --accent-soft:#16261d;
+    --blue:#82abe8; --blue-soft:#172232; --gold:#d5aa54; --gold-soft:#292314;
+    --red:#e07d6f; --red-soft:#2c1a17; --slate:#a6b09a;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.42);
+    --shadow-dot:0 3px 10px rgba(0,0,0,.5);
   }}
   :root[data-theme="dark"]{
-    --ground:#14160f; --panel:#1d2017; --panel-2:#23261b;
-    --ink:#e9ecdf; --muted:#98a08d; --faint:#7a8271; --line:#2f342a; --line-2:#272c21;
-    --green:#54c088; --green-2:#54c08855; --green-soft:#182619;
-    --blue:#82abe8; --blue-soft:#182335; --gold:#d7ab55; --gold-soft:#2a2415;
-    --red:#e07d6f; --red-soft:#2d1b18; --slate:#a7af9a;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.4);
-    --shadow-dot:0 3px 10px rgba(0,0,0,.45);
+    --brand-deep:#06251d; --brand:#0a3a2d;
+    --ground:#12160f; --panel:#1b1f18; --panel-2:#20251c;
+    --ink:#e9ede0; --muted:#98a48f; --faint:#79856f;
+    --line:#2e352a; --line-2:#262c21;
+    --accent:#4dbd85; --accent-soft:#16261d;
+    --blue:#82abe8; --blue-soft:#172232; --gold:#d5aa54; --gold-soft:#292314;
+    --red:#e07d6f; --red-soft:#2c1a17; --slate:#a6b09a;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.42);
+    --shadow-dot:0 3px 10px rgba(0,0,0,.5);
   }
   :root[data-theme="light"]{
-    --ground:#ecefe7; --panel:#fffffe; --panel-2:#f4f6ee;
-    --ink:#242b23; --muted:#697162; --faint:#8a9182; --line:#d9ddd0; --line-2:#e6e9de;
-    --green:#1e6f47; --green-soft:#e6f0e9; --blue:#345f97; --blue-soft:#e6ecf5;
-    --gold:#9c7118; --gold-soft:#f1e9d7; --red:#b34a3a; --red-soft:#f5e4e0; --slate:#535c4c;
-    --shadow:0 1px 2px rgba(40,50,35,.05),0 10px 30px rgba(40,50,35,.08);
-    --shadow-dot:0 3px 8px rgba(40,50,35,.20);
+    --brand-deep:#0a3f31; --brand:#0e5140;
+    --ground:#f1f4ef; --panel:#ffffff; --panel-2:#f6f8f3;
+    --ink:#1b2620; --muted:#5c6b60; --faint:#8b978c;
+    --line:#dde3d9; --line-2:#e9ede5;
+    --accent:#1e8a5f; --accent-soft:#e4f0e9;
+    --blue:#35608f; --blue-soft:#e6ecf4; --gold:#96690f; --gold-soft:#f3ecd9;
+    --red:#b04434; --red-soft:#f6e3df; --slate:#556055;
+    --shadow:0 1px 2px rgba(20,40,30,.05),0 8px 24px rgba(20,40,30,.07);
+    --shadow-dot:0 3px 8px rgba(20,40,30,.22);
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font);line-height:1.5;
-    -webkit-font-smoothing:antialiased;padding:clamp(14px,2.2vw,26px) 0 38px}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,3vw,30px)}
-  header{text-align:center;margin-bottom:6px}
-  .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);font-weight:700;margin:0 0 8px}
-  h1{font-size:clamp(21px,2.9vw,30px);font-weight:800;letter-spacing:-.02em;margin:0;text-wrap:balance}
-  .sub{color:var(--muted);margin:6px 0 0;font-size:13.5px}
-  .rule{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;max-width:1000px;
-    margin:14px auto 0;background:var(--panel);border:1px solid var(--line);border-radius:14px;
-    padding:10px 20px;box-shadow:var(--shadow);font-size:13px;line-height:1.45}
-  .rule-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:800;
-    background:var(--green-soft);padding:5px 12px;border-radius:999px;white-space:nowrap}
-  .rule-body{color:var(--muted);text-align:left}
-  .rule-body .g{color:var(--ink);font-weight:800}
-  .scroller{overflow-x:auto;padding:6px 2px 4px;margin-top:8px;scrollbar-width:thin}
-  .board{min-width:1000px}
-  .phases{display:flex;padding:0 8px;margin-bottom:2px}
-  .pl{text-align:center;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700;
-    padding-bottom:12px;border-bottom:1px solid var(--line);position:relative}
-  .pl + .pl{margin-left:14px}
-  .track{position:relative;display:flex;padding:24px 8px 2px}
-  .track::before{content:"";position:absolute;top:46px;left:5.2%;right:5.2%;height:2px;
-    background:repeating-linear-gradient(90deg,var(--line) 0 8px,transparent 8px 15px)}
+    -webkit-font-smoothing:antialiased;font-size:14px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(15px,3vw,28px)}
+
+  /* ---------- banda de marca ---------- */
+  .brandbar{background:var(--brand-deep);color:var(--brand-ink)}
+  .brandbar .wrap{display:flex;align-items:center;gap:13px;padding-top:13px;padding-bottom:13px}
+  .mark{width:38px;height:38px;border-radius:11px;background:#fff;display:grid;place-items:center;flex:none}
+  .brandtxt strong{display:block;font-size:12.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;line-height:1.2}
+  .brandtxt span{display:block;font-size:11.5px;color:#a9cfbf;margin-top:2px}
+
+  /* ---------- hero ---------- */
+  .hero{background:var(--brand);color:var(--brand-ink)}
+  .hero .wrap{padding-top:26px;padding-bottom:28px}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#7fd3ac;margin:0 0 9px}
+  h1{font-family:var(--display);font-size:clamp(30px,5.2vw,46px);font-weight:700;line-height:1;margin:0;
+    letter-spacing:.005em;text-wrap:balance}
+  .hero p{margin:10px 0 0;font-size:13.5px;color:#bcdccd}
+  .hero p b{color:#fff;font-weight:700}
+
+  /* ---------- no negociables ---------- */
+  .must{margin:20px auto 0;background:var(--accent-soft);border:1px solid var(--accent);border-radius:var(--r);
+    padding:15px 17px 17px}
+  .must-h{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:12px}
+  .must-h h2{font-size:19px;font-weight:800;margin:0;color:var(--ink);letter-spacing:-.02em}
+  .tag{font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);
+    background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px;white-space:nowrap}
+  .must-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:10px}
+  .mcard{background:var(--panel);border:1px solid var(--line-2);border-radius:12px;padding:12px 13px;
+    display:flex;gap:10px;align-items:flex-start}
+  .mcard .mnum{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;
+    font-size:11.5px;font-weight:800;line-height:22px;text-align:center;flex:none;margin-top:0}
+  .mcard b{display:block;font-size:12.5px;font-weight:800;line-height:1.3}
+  .mcard div span{display:block;font-size:11.5px;color:var(--muted);line-height:1.45;margin-top:3px}
+
+  /* ---------- secciones ---------- */
+  .sec-h{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin:30px 0 0}
+  .sec-h h2{font-size:19px;font-weight:800;margin:0;letter-spacing:-.02em}
+  .sec-h span{font-size:12.5px;color:var(--muted)}
+  .cta{margin-left:auto;display:inline-flex;align-items:center;gap:7px;text-decoration:none;
+    background:var(--accent);color:#fff;font-size:12.5px;font-weight:800;border-radius:10px;
+    padding:9px 15px;transition:transform .12s ease,filter .12s ease;white-space:nowrap}
+  .cta:hover{transform:translateY(-1px);filter:brightness(1.08)}
+  .cta:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .cta span{opacity:.75;font-weight:700}
+
+  /* ---------- pestañas de herramientas ---------- */
+  .tabs{display:flex;flex-wrap:wrap;gap:7px;padding:14px 0 0}
+  .tab{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:var(--ink);
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 14px;
+    font-size:12.5px;font-weight:700;white-space:nowrap;
+    transition:border-color .13s ease,transform .13s ease,color .13s ease}
+  .tab:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+  .tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .tab i{font-style:normal;font-size:14px;line-height:1}
+
+  /* ---------- track ---------- */
+  .scroller{overflow-x:auto;padding:4px 0 2px;margin-top:12px;scrollbar-width:thin}
+  .board{min-width:1330px}
+  .phases{display:flex;padding:0 4px}
+  .pl{text-align:center;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
+    font-weight:800;padding-bottom:9px;border-bottom:1px solid var(--line)}
+  .pl + .pl{margin-left:10px}
+  .track{position:relative;display:flex;padding:16px 4px 4px}
+  .track::before{content:"";position:absolute;top:38px;left:5.5%;right:5.5%;height:2px;
+    background:repeating-linear-gradient(90deg,var(--line) 0 7px,transparent 7px 14px)}
   .node{flex:1;position:relative;z-index:1;background:none;border:0;cursor:pointer;color:inherit;
-    display:flex;flex-direction:column;align-items:center;gap:12px;padding:0 3px;font-family:inherit}
+    display:flex;flex-direction:column;align-items:center;gap:9px;padding:0 3px;font-family:inherit}
   .node:focus-visible{outline:none}
   .node:focus-visible .dot{box-shadow:var(--shadow-dot),0 0 0 3px var(--ground),0 0 0 5px var(--blue)}
-  .dot{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:16px;color:#fff;
-    position:relative;transition:transform .16s ease,box-shadow .16s ease;box-shadow:var(--shadow-dot);
+  .dot{width:40px;height:40px;border-radius:50%;font-weight:800;font-size:15px;line-height:34px;text-align:center;
+    color:#fff;position:relative;transition:transform .15s ease;box-shadow:var(--shadow-dot);
     background:var(--c);border:3px solid var(--ground)}
   .node:hover .dot{transform:translateY(-3px)}
-  .badge{position:absolute;right:-6px;bottom:-6px;width:20px;height:20px;border-radius:50%;background:var(--panel);
-    border:1px solid var(--line);display:grid;place-items:center;font-size:10px;line-height:1}
-  .txt{display:flex;flex-direction:column;align-items:center;gap:3px;min-height:66px}
-  .st-title{font-weight:800;font-size:13.5px;line-height:1.18;color:var(--c)}
-  .st-desc{font-size:11px;color:var(--muted);line-height:1.35;max-width:132px}
-  .node[aria-selected="true"] .dot{box-shadow:var(--shadow-dot),0 0 0 3px var(--ground),0 0 0 5px var(--c);transform:translateY(-3px)}
-  .legend{display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:center;align-items:center;margin:14px 0 2px;font-size:12.5px;color:var(--muted)}
-  .legend span{display:inline-flex;align-items:center;gap:8px}
-  .key{width:11px;height:11px;border-radius:50%}
-  .detail{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);
-    padding:18px 24px;margin:14px auto 0;max-width:860px;transition:none}
-  .dh{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-bottom:4px}
-  .dn{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px;flex:none;box-shadow:var(--shadow-dot)}
-  .detail h2{font-size:20px;font-weight:800;margin:0;letter-spacing:-.01em}
-  .chip{font-size:11.5px;font-weight:700;padding:5px 11px;border-radius:999px;letter-spacing:.02em}
-  .detail p{margin:12px 0 0;font-size:14.5px;line-height:1.62}
-  .detail .rule{color:var(--muted);font-size:13.5px;padding-left:2px}
-  .script{margin-top:14px;background:var(--panel-2);border:1px solid var(--line-2);border-left:3px solid var(--blue);
-    border-radius:12px;padding:12px 15px;font-size:13.5px;line-height:1.55}
-  .script b{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
-  .script + .script{margin-top:9px}
-  .detail a.dlink{color:var(--blue);font-weight:700;text-decoration:none;border-bottom:1px solid var(--blue-soft)}
-  .detail a.dlink:hover{border-bottom-color:var(--blue)}
-  .tool-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
-  .tool-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-decoration:none;
-    border:1.5px solid;border-radius:11px;padding:10px 16px;background:var(--panel-2);
-    transition:transform .12s ease,box-shadow .12s ease}
-  .tool-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
-  .tool-btn .ext{opacity:.6;font-weight:600}
-  .redbar{margin:14px auto 0;max-width:860px;background:var(--red-soft);border:1px solid var(--line);border-left:3px solid var(--red);
-    border-radius:14px;padding:12px 18px;font-size:13px;line-height:1.5}
-  .redbar b{color:var(--red)}
-  .footer-note{max-width:720px;margin:16px auto 0;text-align:center;color:var(--muted);font-size:13px;line-height:1.6}
-  .footer-note b{color:var(--ink)}
+  .badge{position:absolute;right:-6px;bottom:-6px;width:19px;height:19px;border-radius:50%;background:var(--panel);
+    border:1px solid var(--line);display:grid;place-items:center;font-size:9.5px;line-height:1}
+  .st-title{font-weight:800;font-size:12.5px;line-height:1.2;color:var(--c);text-align:center;max-width:118px}
+  .node[aria-expanded="true"] .dot{transform:translateY(-3px);
+    box-shadow:var(--shadow-dot),0 0 0 3px var(--ground),0 0 0 5px var(--c)}
+
+  /* ---------- detalle ---------- */
+  .detail{max-width:780px;margin:0 auto;overflow:hidden;max-height:0;transition:max-height .28s ease}
+  .detail.open{max-height:1400px}
+  .dbox{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);
+    padding:16px 20px 18px;margin:12px auto 0}
+  .dh{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:8px}
+  .dn{width:27px;height:27px;border-radius:50%;color:#fff;font-weight:800;font-size:13px;
+    line-height:27px;text-align:center;flex:none}
+  .dbox h3{font-size:17px;font-weight:800;margin:0;letter-spacing:-.01em}
+  .chip{font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.02em}
+  .lead{font-size:13.5px;line-height:1.55;margin:0 0 10px;color:var(--muted)}
+  .lead b{color:var(--ink)}
+  .dbox ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+  .dbox li{font-size:13px;line-height:1.45;padding-left:16px;position:relative}
+  .dbox li::before{content:"";position:absolute;left:2px;top:8px;width:5px;height:5px;border-radius:50%;background:var(--c)}
+  .dbox li b{font-weight:800}
+  .clock{margin-top:11px;display:flex;flex-wrap:wrap;gap:7px}
+  .clock i{font-style:normal;font-size:11.5px;font-weight:700;background:var(--panel-2);border:1px solid var(--line-2);
+    border-radius:9px;padding:6px 10px;color:var(--muted)}
+  .clock i b{color:var(--ink);font-weight:800}
+  .note{margin-top:11px;font-size:12.5px;color:var(--muted);border-left:3px solid var(--c);padding-left:11px;line-height:1.5}
+  .note b{color:var(--ink)}
+  .script{margin-top:11px;background:var(--panel-2);border:1px solid var(--line-2);border-left:3px solid var(--blue);
+    border-radius:11px;padding:11px 13px;font-size:12.5px;line-height:1.5}
+  .script b{display:block;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+  .branch{margin-top:12px}
+  .branch b.h{display:block;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);margin-bottom:7px}
+  .bgrid{display:grid;gap:8px;grid-template-columns:1fr}
+  @media(min-width:560px){.bgrid{grid-template-columns:repeat(3,1fr)}}
+  .bcard{background:var(--panel-2);border:1px solid var(--line-2);border-top:3px solid var(--k);
+    border-radius:11px;padding:11px 12px}
+  .bcard i{font-style:normal;font-size:15px;line-height:1;display:block;margin-bottom:5px}
+  .bcard b{display:block;font-size:12px;font-weight:800;line-height:1.25;color:var(--k)}
+  .bcard span{display:block;font-size:11px;color:var(--muted);line-height:1.4;margin-top:3px}
+  .bcard em{display:block;font-style:normal;font-size:11px;font-weight:800;color:var(--ink);
+    margin-top:7px;padding-top:7px;border-top:1px solid var(--line-2)}
+  .howto{margin-top:12px;background:var(--panel-2);border:1px solid var(--line-2);border-radius:12px;padding:12px 14px}
+  .howto b.h{display:block;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);margin-bottom:7px}
+  .howto ol{margin:0;padding-left:19px;display:flex;flex-direction:column;gap:5px}
+  .howto li{font-size:12.5px;line-height:1.45}
+  .howto li::marker{color:var(--c);font-weight:800}
+  .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .tool{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;text-decoration:none;
+    border:1.5px solid;border-radius:10px;padding:8px 13px;background:var(--panel-2);transition:transform .12s ease}
+  .tool:hover{transform:translateY(-1px)}
+  .tool span{opacity:.55;font-weight:600}
+
+  /* ---------- leyenda + roja ---------- */
+  .legend{display:flex;flex-wrap:wrap;gap:9px 17px;justify-content:center;margin:14px 0 0;font-size:11.5px;color:var(--muted)}
+  .legend b{display:inline-flex;align-items:center;gap:6px;font-weight:600}
+  .key{width:9px;height:9px;border-radius:50%}
+  .grupo{margin-top:11px;background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:11px 15px;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+  .grupo i{font-style:normal;font-size:15px;line-height:1;flex:none;opacity:.8}
+  .grupo p{margin:0;flex:1;min-width:230px;font-size:12px;color:var(--muted);line-height:1.45}
+  .grupo p b{color:var(--ink);font-weight:800}
+  .grupo a{margin-left:auto;color:var(--accent);font-size:12px;font-weight:800;text-decoration:none;
+    white-space:nowrap;border-bottom:1px solid transparent;transition:border-color .13s ease}
+  .grupo a:hover{border-bottom-color:var(--accent)}
+  .grupo a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .bars{display:grid;gap:11px;margin-top:12px;grid-template-columns:1fr}
+  @media(min-width:820px){.bars{grid-template-columns:1fr 1fr}}
+  .bar{background:var(--w-soft);border:1px solid var(--line);border-top:3px solid var(--w);
+    border-radius:12px;padding:12px 18px;font-size:12.5px;line-height:1.55;text-align:center}
+  .bar strong{color:var(--w);display:block;font-size:13.5px;font-weight:800;margin-bottom:5px;letter-spacing:-.01em}
+  .bar span{display:block;max-width:44ch;margin:0 auto;color:var(--muted)}
+  .bar b{font-weight:800;color:var(--ink)}
+
+  /* ---------- referencia de etapas ---------- */
+  .blocks{display:grid;gap:11px;margin-top:14px;grid-template-columns:1fr}
+  @media(min-width:620px){.blocks{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:940px){.blocks{grid-template-columns:repeat(4,1fr)}}
+  .blk{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--k);border-radius:14px;
+    box-shadow:var(--shadow);padding:14px 15px;cursor:pointer;text-align:left;font-family:inherit;color:inherit;
+    display:flex;flex-direction:column;gap:3px;transition:transform .13s ease,box-shadow .13s ease}
+  .blk:hover{transform:translateY(-2px)}
+  .blk:focus-visible{outline:2px solid var(--k);outline-offset:2px}
+  .blk[aria-expanded="true"]{box-shadow:var(--shadow),0 0 0 2px var(--k)}
+  .blk h3{font-size:14px;font-weight:800;margin:0;letter-spacing:-.01em;color:var(--k);
+    display:flex;align-items:center;gap:8px}
+  .blk h3 em{font-style:normal;margin-left:auto;font-size:10.5px;font-weight:800;color:var(--faint);
+    background:var(--panel-2);border-radius:999px;padding:2px 9px;flex:none}
+  .blk p{margin:0;font-size:11.5px;color:var(--muted);line-height:1.4}
+  .blk i{font-style:normal;font-size:10.5px;font-weight:800;color:var(--k);letter-spacing:.06em;
+    text-transform:uppercase;margin-top:4px}
+
+  .stagepanel{max-width:1120px;margin:0 auto;overflow:hidden;max-height:0;transition:max-height .3s ease}
+  .stagepanel.open{max-height:1600px}
+  .sbox{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--k);border-radius:14px;
+    box-shadow:var(--shadow);padding:15px 17px 17px;margin-top:11px}
+  .sbox > h4{font-size:13px;font-weight:800;margin:0 0 11px;color:var(--k);letter-spacing:.02em}
+  .sgrid{display:grid;gap:9px;grid-template-columns:1fr}
+  @media(min-width:640px){.sgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:960px){.sgrid{grid-template-columns:repeat(3,1fr)}}
+  .scard{background:var(--panel-2);border:1px solid var(--line-2);border-radius:11px;padding:10px 12px}
+  .scard b{display:block;font-size:12px;font-weight:800;line-height:1.3;margin-bottom:3px}
+  .scard span{display:block;font-size:11.3px;color:var(--muted);line-height:1.48}
+
+  /* ---------- herramientas ---------- */
+  .kit{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);padding:16px 17px 17px}
+  .kit + .kit{margin-top:11px}
+  .kit h3{font-size:13px;font-weight:800;margin:0 0 3px;letter-spacing:-.01em}
+  .kit p{margin:0 0 11px;font-size:11.5px;color:var(--muted)}
+  .kitgrid{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+  .kbtn{display:flex;align-items:center;gap:13px;text-decoration:none;color:inherit;
+    background:var(--panel-2);border:1px solid var(--line-2);border-radius:12px;
+    padding:12px 15px;position:relative;overflow:hidden;
+    transition:border-color .14s ease,background .14s ease,padding-left .14s ease}
+  .kbtn::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);
+    transform:scaleY(0);transform-origin:center;transition:transform .16s ease}
+  .kbtn:hover{border-color:var(--accent);background:var(--panel);padding-left:19px}
+  .kbtn em{display:none}
+  .kbtn:hover::before{transform:scaleY(1)}
+  .kbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .kbtn i{font-style:normal;font-size:18px;line-height:1;flex:none;width:24px;text-align:center}
+  .kbtn b{font-size:13px;font-weight:800;line-height:1.25;display:block}
+  .kbtn span{font-size:11.5px;color:var(--muted);line-height:1.35;display:block;margin-top:1px}
+  .kbtn em{font-style:normal;margin-left:auto;color:var(--faint);font-size:14px;flex:none;
+    transition:transform .16s ease,color .16s ease}
+  .kbtn:hover em{transform:translateX(3px);color:var(--accent)}
+  .kit.forms .kbtn::before{background:var(--red)}
+  .kit.forms .kbtn:hover{border-color:var(--red)}
+  .kit.forms .kbtn:hover em{color:var(--red)}
+
+  footer{margin:28px 0 36px;text-align:center;font-size:11.5px;color:var(--faint)}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <header>
-    <p class="eyebrow">Buenas prácticas · Closers de Financiamiento</p>
-    <h1>El camino del lead en el pipe automático</h1>
-    <p class="sub">CF-A · el lead escribe primero, tú respondes rápido</p>
-  </header>
+<div class="brandbar">
+  <div class="wrap">
+    <span class="mark" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 21.2c-.4 0-.8-.15-1.1-.44C7.3 17.5 3 13.9 3 9.6 3 6.5 5.4 4.1 8.4 4.1c1.4 0 2.7.55 3.6 1.5.9-.95 2.2-1.5 3.6-1.5 3 0 5.4 2.4 5.4 5.5 0 4.3-4.3 7.9-7.9 11.16-.3.29-.7.44-1.1.44Z" fill="#0e5140"/>
+        <path d="M12 15.6c-.25 0-.5-.1-.68-.29l-2.6-2.7a.98.98 0 0 1 .02-1.38.95.95 0 0 1 1.36.02l1.9 1.98 3.5-3.7a.95.95 0 0 1 1.37-.03c.38.37.4 1 .03 1.38l-4.2 4.43a.94.94 0 0 1-.7.29Z" fill="#fff"/>
+      </svg>
+    </span>
+    <span class="brandtxt">
+      <strong>Pensión Perfecta</strong>
+      <span>Best Practices · Closers de financiamiento</span>
+    </span>
+  </div>
+</div>
 
-  <div class="rule">
-    <span class="rule-tag">Primer contacto</span>
-    <span class="rule-body"><span class="g">Aquí el lead te escribe a ti.</span> El sistema lo asigna y manda las secuencias solo. Tu única regla: responder rápido, dentro de la ventana, mientras está caliente.</span>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Guía operativa · CRM ALLMK</p>
+    <h1>Pipeline Automático</h1>
+    <p>Tu guía del día a día. <b>Toca cada paso para abrirlo</b>, sigue el orden y haz lo que dice.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="must">
+    <div class="must-h">
+      <h2>No negociables</h2>
+      <span class="tag">Siempre, en cada contacto con lead</span>
+    </div>
+    <div class="must-grid">
+      <div class="mcard"><span class="mnum">1</span><div><b>Todo desde ALLMK</b><span>Llamadas y mensajes. Tu celular personal solo para crear el grupo.</span></div></div>
+      <div class="mcard"><span class="mnum">2</span><div><b>Deja una nota</b><span>Escribe qué pasó y después mueve la etapa.</span></div></div>
+      <div class="mcard"><span class="mnum">3</span><div><b>Siempre mueve de etapa</b><span>Lo que no está en ALLMK no existe y no se paga.</span></div></div>
+      <div class="mcard"><span class="mnum">4</span><div><b>Cierra el día en cero</b><span>Verdes, rojas, Llamar hoy y Msj. hoy.</span></div></div>
+    </div>
+  </div>
+
+  <div class="tabs" id="kit1"></div>
+
+  <div class="sec-h">
+    <h2>El journey del lead</h2>
+    <span>De su primer mensaje hasta que cierras tu trabajo.</span>
+    <a class="cta" href="https://club.allmk.app/v2/location/TOhtz5PHJUmWnKH2q3hs/opportunities" target="_blank" rel="noopener">📊 Abrir ALLMK <span>↗</span></a>
   </div>
 
   <div class="scroller">
@@ -135,85 +320,265 @@
     </div>
   </div>
 
+  <div class="detail" id="detail" aria-live="polite"></div>
+
   <div class="legend">
-    <span><i class="key" style="background:var(--green)"></i> Llamada</span>
-    <span><i class="key" style="background:var(--blue)"></i> Mensaje</span>
-    <span><i class="key" style="background:var(--gold)"></i> Mueve etapa</span>
-    <span><i class="key" style="background:var(--red)"></i> Rescate</span>
-    <span style="opacity:.72">Toca un paso para ver qué haces</span>
+    <b><i class="key" style="background:var(--accent)"></i> Llamada</b>
+    <b><i class="key" style="background:var(--gold)"></i> Mueve etapa</b>
+    <b><i class="key" style="background:var(--blue)"></i> Lo hace el sistema</b>
+    <b><i class="key" style="background:var(--slate)"></i> Registro</b>
+    <b><i class="key" style="background:var(--red)"></i> Rescate</b>
   </div>
 
-  <div class="detail" id="detail"></div>
-
-  <div class="redbar">
-    <b>Etapas rojas = vacías al cierre del día.</b> WhatsApp sin seguimiento · Agenda sin seguimiento · Task vencido · Seguimiento sin task. Si una roja dura 2 días sin atender, se te desasigna el lead y otro closer lo toma.
+  <div class="bars">
+    <div class="bar" style="--w:var(--accent);--w-soft:var(--accent-soft)">
+      <strong>Le cambiamos la vida a miles de personas</strong>
+      <span>Cada quien que agendas y asiste se puede llevar una pensión que sí le alcance. <b>No es una cita más en el calendario: es el retiro de una familia.</b></span>
+    </div>
+    <div class="bar" style="--w:var(--gold);--w-soft:var(--gold-soft)">
+      <strong>La ventana es de 24 horas</strong>
+      <span>Desde el último mensaje del cliente le escribes libre. Cuando se cierra, ALLMK ya solo te deja mandar <b>plantillas</b>. Por eso nada se queda un día sin mover.</span>
+    </div>
   </div>
 
-  <p class="footer-note">En el pipe automático <b>el lead escribe primero</b>: el sistema lo asigna y manda las secuencias de mensajes solo. Tu trabajo no es escribir plantillas, es <b>responder rápido a los que escriben y conversar</b>. Se trabaja por prioridad, de izquierda a derecha; el estándar es responder dentro de la ventana de 24h y no dejar ninguna etapa roja al cierre.</p>
+  <div class="grupo">
+    <i aria-hidden="true">👥</i>
+    <p><b>Agendar no es el final.</b> Dentro del grupo presentas al asesor, mandas los testimonios, resuelves dudas y refuerzas que asista.</p>
+    <a id="lnkGrupo" href="#" target="_blank" rel="noopener">Ver el journey del grupo &rsaquo;</a>
+  </div>
+
+  <div class="sec-h">
+    <h2>Las 23 etapas</h2>
+    <span>Te apareció una etapa y no sabes qué es. Toca su bloque.</span>
+  </div>
+
+  <div class="blocks" id="blocks"></div>
+  <div class="stagepanel" id="stagepanel" aria-live="polite"></div>
+
+  <div class="kit forms">
+    <h3>¿Algo no cuadra? Repórtalo</h3>
+    <p>No te quedes atorado ni lo dejes pasar. Cada cosa tiene su canal.</p>
+    <div class="kitgrid" id="kit2"></div>
+  </div>
+
+  <footer>Pensión Perfecta · Closers de financiamiento · Pipe CF-A</footer>
 </div>
 
 <script>
-const C={start:"var(--slate)",call:"var(--green)",msg:"var(--blue)",move:"var(--gold)",alert:"var(--red)"};
-const CS={start:"var(--panel-2)",call:"var(--green-soft)",msg:"var(--blue-soft)",move:"var(--gold-soft)",alert:"var(--red-soft)"};
+/* === URL base de nuestras guías. Al migrar a la organización, se cambia SOLO esta línea. === */
+const B = "https://francoherrerasa-creator.github.io/calificador.closers/";
+
+const C={auto:"var(--blue)",call:"var(--accent)",move:"var(--gold)",reg:"var(--slate)",alert:"var(--red)"};
+const CS={auto:"var(--blue-soft)",call:"var(--accent-soft)",move:"var(--gold-soft)",reg:"var(--panel-2)",alert:"var(--red-soft)"};
+
 const STEPS=[
- {ph:"Entrada",type:"start",icon:"📥",title:"El lead te escribe",desc:"Él inicia, el sistema te lo asigna",stage:"🟢 Lead envió msj · Nuevo Lead · Re-agendar envió msj",
-  detail:"En el automático <b>el lead escribe primero</b>: llena el formulario y el sistema lo invita a mandarte WhatsApp. Cae en una etapa verde (<b>Lead envió msj</b>, <b>Nuevo Lead</b> o <b>Re-agendar envió msj</b>) y el sistema <b>te lo asigna solo</b>. Filtra <b>“asignado a mí”</b> y trabaja de izquierda a derecha: lo de la izquierda es lo más caliente."},
- {ph:"Respuesta rápida",type:"msg",icon:"⚡",title:"Responde rápido",desc:"Ventana de 24h",stage:"atiende en menos de 1 día",
-  detail:"La clave del automático es la <b>velocidad</b>. Cuando el lead escribe, se abre una <b>ventana de 24h</b> para conversar libre. Atiéndelo <b>en menos de un día</b>: el que responde rápido agarra al lead caliente, el que responde tarde lo pierde.",
-  rule:"Un lead que escribe y no recibe respuesta pronto se enfría, o peor, reporta el número."},
- {ph:"Respuesta rápida",type:"move",icon:"🤖",title:"El sistema manda la secuencia",desc:"Tú NO mandas plantillas",stage:"⭕ En secuencia WA",
-  detail:"A diferencia del manual, <b>aquí tú no mandas las plantillas</b>. El sistema corre las secuencias automáticas (campaña de interés, reagendamiento) y mueve las etapas solo. Tu trabajo no es escribir la plantilla, es <b>conversar</b> con el que responde."},
- {ph:"Respuesta rápida",type:"call",icon:"💬",title:"Respondió WhatsApp",desc:"Conversa y pide permiso de llamada",stage:"🟣 Respondió WhatsApp · Lead llamó por tel.",
-  detail:"Cuando el lead contesta, cae en <b>Respondió WhatsApp</b> (o <b>Lead llamó por tel.</b>). Conversa, no mandes plantilla. Si quieres pasar a llamada, pídele que te dé <b>permiso de llamada</b> en WhatsApp (“permitir siempre”). Ahí empiezas a calificar.",
-  rule:"Un mensaje del lead es una puerta abierta: entra a conversar de inmediato."},
- {ph:"En la llamada",type:"call",icon:"✅",title:"Califica",desc:"Identidad + red flags",stage:"Ley 73 · demandas · simulación",
-  detail:"Califica identidad: <b>Ley 73, edad, semanas cotizadas, tiempo sin cotizar, no pensionado.</b> Y pregunta las <b>red flags</b>, que son las que descalifican o hay que cuidar:<br>• <b>Demanda al IMSS, Infonavit o AFORE</b> (si está en proceso, descalifica).<br>• <b>Simulación laboral sin recibos timbrados</b> (descalifica).<br>• Demanda a un patrón · accionista · plataformas digitales (Didi/Uber) · crédito Infonavit.<br>Si no califica → <b>No califica</b> (o <b>N.C. As. PP</b> si aplica asesoría de pensiones). Calificaba, contestó, pero no quiso → <b>Perdido</b>.",
-  links:[{icon:"🔎",label:"Abrir Creditia",href:"https://creditia-phi.vercel.app/"},{icon:"📄",label:"Abrir Consulta Única",href:"https://dash.consultaunica.mx/inicio"}]},
- {ph:"En la llamada",type:"call",icon:"🔥",title:"Crea necesidad",desc:"Para que sí asistan",stage:"dolor · deseo · costo · urgencia",
-  detail:"Crear necesidad es lo que hace que <b>sí asistan</b> a la asesoría. Trabaja conciencia de <b>problema, dolor, deseo, costo y urgencia</b>. Sin necesidad, la agenda se cae."},
- {ph:"En la llamada",type:"move",icon:"📅",title:"Agenda + grupo",desc:"Mueve a As. Fin.",stage:"🔵 As. Fin. Ahora / Futuro",
-  detail:"Agenda la asesoría, pide el <b>reporte de semanas</b> y el <b>estado de cuenta del AFORE</b>, y crea el <b>grupo de WhatsApp</b>. Al crear el grupo, sigue paso a paso el <a class=\"dlink\" href=\"https://francoherrerasa-creator.github.io/calificador.closers/journey/\" target=\"_blank\" rel=\"noopener\">journey de comunicación del grupo →</a>. Mueve la oportunidad a <b>As. Fin. Ahora</b> o <b>Futuro</b>.",
-  rule:"Si agendas pero no mueves la oportunidad, no le aparece al asesor y no se paga la comisión."},
- {ph:"Confirmar",type:"msg",icon:"🗓️",title:"Conf. mañana",desc:"Un día antes (T-1)",stage:"🟡 Conf. as. mañana → 🔵 Agenda confirmada",
-  detail:"Un día antes, la oportunidad cae en <b>Conf. as. mañana</b>. Mandas el recordatorio y mueves a <b>Agenda confirmada</b> en cuanto lo envíes, conteste o no.",
-  script:{t:"Recordatorio T-1",m:"Qué tal [nombre], todo listo por acá para tu asesoría de pensiones mañana a las [hora] (hora CDMX). Solo quería ver si me pudieras escribir un “ok” por aquí para confirmar."}},
- {ph:"Confirmar",type:"msg",icon:"📲",title:"Conf. hoy",desc:"El día de la cita",stage:"🟡 Conf. as. hoy → 🔵 Agenda confirmada",
-  detail:"El día de la cita cae en <b>Conf. as. hoy</b>. Haces hasta 3 intentos: intento 1 (mensaje), intento 2 y 3 (con permiso de llamada, <b>llamada + mensaje</b>). Cuando confirma, mueves a <b>Agenda confirmada</b>. Si no confirma, no muevas de etapa; si cancela o reagenda, a la que corresponda."},
- {ph:"Seguimiento y rescate",type:"move",icon:"🔁",title:"Seguimiento",desc:"El motor del día",stage:"🟡 Seguimiento · Llamar hoy · Msj hoy",
-  detail:"¿Interés pero no cerró hoy? → <b>Seguimiento con task</b> (menos de 30 días) o <b>Seguimiento futuro</b> (más de 30). <b>Llamar hoy</b> y <b>Msj hoy</b> son tu bandeja del día: se llenan de los tasks que vencen hoy y de los leads que te pidieron llamada o mensaje hoy.",
-  rule:"Al cierre del día, Llamar hoy y Msj hoy vacíos."},
- {ph:"Seguimiento y rescate",type:"alert",icon:"🚑",title:"No show",desc:"Reagendar sin perderlo",stage:"🟢 Re-agendar envió msj → No reagendó",
-  detail:"Si no asistió, el asesor lo marca y te regresa a reagendar. Cuando el lead vuelve a escribir cae en <b>Re-agendar envió msj</b>; conversas y lo empujas a reagendar. Si reagenda, vuelve a <b>As. Fin. Ahora/Futuro</b> y confirmas otra vez. Si no → <b>No reagendó</b>.",
-  script:{t:"Reagendar · rescate",m:"Intenté ayudarte con tu llamada para financiar tu Modalidad 40 pero no pudimos conectar. ¿Cómo sientes que deberíamos proceder para retomarlo?"}}
+{ph:"Contacto",t:"auto",icon:"📥",title:"El lead te escribe",stage:"Etapas verdes",
+ lead:"El sistema ya le mandó 3 mensajes. <b>Cuando contesta, te lo asigna a ti.</b>",
+ li:["Llega solo, tú no lo tomas","Todos los verdes ya te escribieron","Hoy les llamas, sin excepción"],
+ note:"Si al final del día sigue en verde, es que no lo llamaste.",
+ tools:[{i:"📊",l:"Abrir ALLMK",h:"https://club.allmk.app/v2/location/TOhtz5PHJUmWnKH2q3hs/opportunities"}]},
+
+{ph:"Contacto",t:"move",icon:"🪪",title:"¿Con o sin CURP?",stage:"Lead envió msj. (con CURP) · (sin CURP)",
+ lead:"Son dos rutas y <b>se trabajan distinto</b>. La del CURP es la rápida.",
+ li:["<b>Con CURP:</b> lo consultas en Creditia y Consulta Única antes de llamar","Si pasa → le llamas solo para avisar y agendar","Si no pasa → lo mueves a No califica","<b>Sin CURP:</b> le llamas para calificar, como siempre"],
+ note:"Prioriza los que ya mandaron CURP: esa llamada es corta y cierra más rápido.",
+ tools:[{i:"🔎",l:"Creditia",h:"https://creditia-phi.vercel.app/"},{i:"📄",l:"Consulta Única",h:"https://dash.consultaunica.mx/inicio"}]},
+
+{ph:"Contacto",t:"call",icon:"📞",title:"Doble marcación",stage:"Siempre desde ALLMK",
+ lead:"El pipe tiene un solo objetivo: <b>lograr la primera llamada.</b>",
+ li:["Dos llamadas seguidas, apenas te lo asignan","Si el lead da permiso, la llamada puede ser por WhatsApp","Contestó → Respondió WhatsApp","No contestó → tú lo mueves a Se intentó contactar"],
+ note:"<b>Prohibido usar tu teléfono personal.</b> Todo se mide en DaVinci: cuántos debiste contactar y cuántos contactaste. Fuera de ALLMK, no cuenta."},
+
+{ph:"Contacto",t:"auto",icon:"🔁",title:"Se intentó contactar",stage:"El loop de reintentos",
+ lead:"Aquí <b>el sistema trabaja por ti</b> mientras tú sigues llamando a otros.",
+ li:["El mensaje lo manda el sistema, y cada regreso manda uno distinto","Te lo regresa <b>5 veces</b>: con la primera son <b>6 dobles marcaciones</b> en total","Regresa a la etapa de donde salió, no siempre a la misma","Al agotarse se va solo a <b>No contestó</b>. Si venía de Re-agendar, a <b>No Reagendo</b>"],
+ clock:[["Antes de 12","vuelve 2 PM"],["12 a 2 PM","vuelve 3 PM"],["Después de 2 PM","vuelve mañana"]],
+ note:"Si responde en cualquier momento, sale solo del loop y se va a Respondió WhatsApp."},
+
+{ph:"Contacto",t:"call",icon:"💬",title:"Respondió WhatsApp",stage:"Respondió WhatsApp · Lead llamó por tel.",
+ lead:"Ya te contestó. <b>Ahora pásalo a llamada, hoy.</b>",
+ li:["Pregúntale si le marcas ahorita o a qué hora","Por teléfono calificas mejor que en el chat"],
+ note:"⏱️ Si lo dejas un día aquí, cae en <b>WhatsApp sin seguimiento</b> y se pone rojo."},
+
+{ph:"La llamada",t:"call",icon:"✅",title:"Califica",stage:"Ley 73 · red flags",
+ lead:"Con el CURP sacas su reporte y <b>confirmas que sí aplica</b> antes de agendar.",
+ li:["Ley 73, edad, semanas, tiempo sin cotizar, no pensionado","<b>Red flag:</b> demanda al IMSS, Infonavit o AFORE","<b>Red flag:</b> simulación laboral sin recibos timbrados","No aplica al financiamiento → No califica","No aplica al financiamiento pero sí a una asesoría de PP → N.C. - As. PP","Calificaba y no quiso → Perdido"],
+ branch:{t:"Y según lo que salga, se va a una de tres",c:[
+   {k:"var(--accent)",i:"✅",n:"Sí califica",d:"Creditia dice a qué producto va",w:"Sigue al paso 7"},
+   {k:"var(--slate)",i:"🟤",n:"No para financiamiento",d:"Pero sí para una asesoría de PP, de las que se venden",w:"N.C. - As. PP"},
+   {k:"var(--red)",i:"🟠",n:"No quiso",d:"Contestó, calificaba y aun así dijo que no",w:"Perdido"}]},
+ note:"<b>El que califica es Creditia, no tú.</b> Ella dice si va a Ahora, Futuro o Recuperación. Si Creditia dice que no, no se agenda.",
+ tools:[{i:"🔎",l:"Creditia",h:"https://creditia-phi.vercel.app/"},{i:"📄",l:"Consulta Única",h:"https://dash.consultaunica.mx/inicio"}]},
+
+{ph:"La llamada",t:"move",icon:"📅",title:"Agenda la cita",stage:"Asesoría agendada",
+ lead:"Crear necesidad antes de agendar <b>es lo que hace que sí asistan</b>.",
+ li:["Pide el reporte de semanas y el estado de cuenta del AFORE","Muévelo a Asesoría agendada","Ahora, Futuro y Recuperación van en el <b>campo</b>, no en la etapa","Esa noche la oportunidad <b>sale de tu pipe</b>: ya pasó al del asesor"],
+ steps:{t:"Cómo agendar en ALLMK",l:["Clic en <b>New</b> y busca el contacto por su teléfono","Elige el <b>calendario de la oferta que te marcó Creditia</b>: hay uno por producto","<b>Team Member y Calendar en Default</b>, nunca Custom","Elige un Slot disponible y da <b>Book Appointment</b>","Para saber qué asesor te tocó: <b>Appointment List View</b>, filtra por contacto y mira el owner"]},
+ note:"El asesor se asigna por round robin, <b>no lo repartas a mano</b>. Y si agendas sin mover la oportunidad, el asesor no la ve y no se paga tu comisión."},
+
+{ph:"Cierra tu trabajo",t:"reg",icon:"👥",title:"Grupo de WhatsApp",stage:"Equipo PP - [Nombre del cliente]",
+ lead:"Se crea <b>durante la llamada</b>, con el asesor adentro, y ahí los presentas.",
+ li:["Nombre exacto: <b>Equipo PP - Nombre completo del cliente</b>","Foto: el logo de PP según el producto, está en la carpeta de imágenes","Al inicio: Erick, Javier y el asesor asignado, los tres <b>admin</b>, más el lead","Cuando el lead avanza se agregan Claudio, Paula y Gestión","Se crea desde tu celular, no desde ALLMK"],
+ note:"Las 3 prioridades, en orden: <b>nombre correcto</b>, <b>miembros completos</b>, <b>que el cliente asista</b>.",
+ tools:[{i:"🖼️",l:"Imágenes de grupos",h:"https://drive.google.com/drive/folders/1uqq8yH3vQ0SRuUruV6ZKMdQu90GvAmLl?usp=sharing"},{i:"👥",l:"Journey del grupo",h:B+"journey/"}]},
+
+{ph:"Cierra tu trabajo",t:"reg",icon:"📁",title:"Expediente en Drive",stage:"Semanas + AFORE",
+ lead:"Sin expediente <b>el asesor no puede calcular</b>. Se junta en la misma llamada.",
+ li:["Crea una carpeta con el <b>nombre completo del cliente</b>","Truco: copia el nombre tal cual viene en el PDF del reporte de semanas","Sube los dos documentos: reporte de semanas del IMSS y estado de cuenta del AFORE","Copia el link de la carpeta, lo vas a necesitar para el Tracker"],
+ note:"En Recuperación de derechos el estado de cuenta <b>real es obligatorio</b>; el aproximado de Creditia no sirve. En Mod 40 retroactivo sí se acepta, pero intenta el real primero.",
+ tools:[{i:"📁",l:"Drive de expedientes",h:"https://drive.google.com/drive/folders/1oP-X5kNtgyE1N-xnYSfLBq1Msn8KG24j?usp=sharing"},{i:"📄",l:"Consulta Única",h:"https://dash.consultaunica.mx/inicio"}]},
+
+{ph:"Cierra tu trabajo",t:"auto",icon:"🗓️",title:"Confirmar la cita",stage:"Automático",
+ lead:"<b>No tienes que escribir nada.</b> Los recordatorios salen solos.",
+ li:["El sistema manda el de un día antes y el del mismo día","Salen desde tu número de ALLMK","Tú solo cuida que la etapa y la fecha estén bien","Refuerza la asistencia dentro del grupo"],
+ note:"Etapa mal puesta = mensajes que no salen = no show."},
+
+{ph:"Cierra tu trabajo",t:"reg",icon:"📊",title:"Llenar el Tracker",stage:"Un registro por asesoría",
+ lead:"Aquí es donde <b>se paga tu comisión</b>. Llénalo al colgar, no al final del día.",
+ li:["Un registro por cada asesoría que agendas","Pega el link de la carpeta del expediente","Se paga solo si el registro queda <b>completo</b> + asistió + calificó + expediente completo","Y solo si <b>moviste la oportunidad</b> en ALLMK"],
+ note:"Mover la etapa y llenar el tracker son <b>dos cosas distintas</b>. Te faltó una, no se paga.",
+ tools:[{i:"📈",l:"Abrir el Tracker",h:"https://docs.google.com/spreadsheets/d/1ImBBf0YLK9Qq3rbok7qF424JfI7SOYU5jsLGbH-rHg8/edit"},{i:"📘",l:"Cómo se llena",h:"https://docs.google.com/document/d/1Jg4MSGprfwWUgrBKqWw6OYEeyHLlh9tW3_I12xgOW9A/edit"}]},
+
+{ph:"Seguimiento",t:"move",icon:"🔂",title:"Seguimiento",stage:"Seguimiento · Llamar hoy · Msj. hoy",
+ lead:"Hay interés pero no cerró hoy. <b>Aquí vive tu día.</b>",
+ li:["Siempre con task, sin excepción","Llamar hoy y Msj. hoy cierran en cero","Sin task → Seguimiento sin task (roja)","Task no hecho → Task vencido (roja)"],
+ note:"Sin task el lead se pierde y tú ni te enteras."},
+
+{ph:"Seguimiento",t:"alert",icon:"🚑",title:"No show",stage:"Re-agendar → No Reagendo",
+ lead:"No asistió. El asesor la regresa y <b>el rescate es tuyo</b>.",
+ li:["El sistema le manda 3 mensajes de reagenda, en automático","Si contesta cualquiera → cae en <b>Re-agendar envió msj.</b>","Si no contesta ninguno → <b>igual te llega a Re-agendar</b> para que le llames","Ya agendó una vez: es de los que más vuelven a agendar","Reagenda → Asesoría agendada · No reagenda → No Reagendo"],
+ script:{t:"Mensaje de rescate",m:"Intenté ayudarte con tu llamada para financiar tu Modalidad 40 pero no pudimos conectar. ¿Cómo sientes que deberíamos proceder para retomarlo?"}},
+
+{ph:"Cada día",t:"reg",icon:"🌙",title:"Cierre del día",stage:"EOD",
+ lead:"Antes de soltar, <b>todos los días</b>.",
+ li:["Registra el outcome de cada llamada en el CRM","Actualiza las notas de los leads que trabajaste","Sube tu <b>peor llamada del día</b> para coaching","Inbox zero: contesta todo lo pendiente"],
+ script:{t:"Formato del EOD",m:"EOD [fecha] — [Tu nombre]<br>Leads contactados:<br>Leads sin respuesta:<br>Leads agendados:<br>Expedientes completos:<br>Agendas asistidas:<br>Roadblock principal:<br>Mejoraría si tuviera:"},
+ note:"El <b>roadblock</b> y el <b>mejoraría si tuviera</b> no son opcionales. Son los que sirven para quitarte piedras.",
+ tools:[{i:"💬",l:"Grupo del equipo",h:"https://chat.whatsapp.com/GJuaSEdRaKGDYAcG7UoS4a?s=cl&p=i&ilr=2"}]}
 ];
-const PHASES=[];
-STEPS.forEach(s=>{if(!PHASES.some(p=>p.name===s.ph))PHASES.push({name:s.ph,count:0});PHASES.find(p=>p.name===s.ph).count++;});
-const phEl=document.getElementById("phases"),tr=document.getElementById("track");
-PHASES.forEach(p=>{const d=document.createElement("div");d.className="pl";d.style.flex=p.count;d.textContent=p.name;phEl.appendChild(d);});
-STEPS.forEach((s,i)=>{
-  const b=document.createElement("button");b.className="node";b.type="button";b.setAttribute("role","tab");b.dataset.i=i;
-  b.style.setProperty("--c",C[s.type]);
-  b.innerHTML=`<span class="dot">${i+1}<span class="badge">${s.icon}</span></span>
-    <span class="txt"><span class="st-title">${s.title}</span><span class="st-desc">${s.desc}</span></span>`;
-  b.addEventListener("click",()=>sel(i));
-  tr.appendChild(b);
-});
-const nodes=[...tr.querySelectorAll(".node")];
-function sel(i){
-  const s=STEPS[i];
-  nodes.forEach(b=>b.setAttribute("aria-selected",b.dataset.i==i?"true":"false"));
-  const d=document.getElementById("detail");
-  let h=`<div class="dh"><span class="dn" style="background:${C[s.type]}">${i+1}</span>
-    <h2>${s.title}</h2>
-    <span class="chip" style="background:${CS[s.type]};color:${C[s.type]}">${s.stage}</span></div>
-    <p>${s.detail}</p>`;
-  if(s.links)h+=`<div class="tool-links">${s.links.map(l=>`<a class="tool-btn" href="${l.href}" target="_blank" rel="noopener" style="border-color:${C[s.type]};color:${C[s.type]}">${l.icon||""} ${l.label} <span class="ext">↗</span></a>`).join("")}</div>`;
-  if(s.rule)h+=`<p class="rule">↳ ${s.rule}</p>`;
-  if(s.script)h+=`<div class="script"><b>${s.script.t}</b>${s.script.m}</div>`;
-  if(s.scripts)s.scripts.forEach(sc=>{h+=`<div class="script"><b>${sc.t}</b>${sc.m}</div>`;});
-  d.innerHTML=h;
+
+const BLOCKS=[
+{n:"Entrada",k:"var(--accent)",sub:"Leads que ya te escribieron",s:[
+ ["🟢 Lead envió msj. (con CURP)","Ya mandó su CURP. Califícalo en Creditia y Consulta Única antes de llamar; la llamada es solo para avisar y agendar."],
+ ["🟢 Lead envió msj. (sin CURP)","Contestó pero sin CURP. Le llamas para calificar en la llamada."],
+ ["🟢 Otros leads","Oportunidad creada a mano desde otro pipeline y asignada a ti. Se trabaja igual que un lead nuevo."],
+ ["⭕ Re-agendar","No asistió a la asesoría. El asesor la regresa aquí y el rescate te toca a ti."],
+ ["🟢 Re-agendar envió msj.","Contestó al mensaje de reagenda. Llámalo y amarra la nueva fecha."],
+ ["🟢 Agenda Propia","El lead agendó solo desde el calendario. Aparece el día de la cita, no antes, y le llamas a la hora que marca tu calendario."]]},
+
+{n:"Flujo activo",k:"var(--blue)",sub:"Tu día a día",s:[
+ ["⭕ Se intentó contactar","Le marcaste y no contestó. El sistema manda el mensaje y te lo regresa hasta 5 veces."],
+ ["🟣 Lead llamó por tel.","El lead te marcó a ti, por WhatsApp o por llamada normal. Devuélvele de inmediato."],
+ ["🟣 Respondió WhatsApp","Contestó por WhatsApp. Pásalo a llamada hoy: si lo dejas un día, se pone rojo."],
+ ["🟡 Msj. hoy","Te toca mandarle mensaje hoy. Cierra en cero."],
+ ["🟡 Llamar hoy","Te toca llamarle hoy. Cierra en cero."],
+ ["⭕ Seguimiento","Hay interés y no cerró. Siempre con task."],
+ ["🔵 Asesoría agendada","Cita puesta. El tipo va en el campo, no en la etapa. Esa noche sale de tu pipe y pasa al del asesor."]]},
+
+{n:"Alarmas",k:"var(--red)",sub:"No son etapas de trabajo",s:[
+ ["🔴 WhatsApp sin seguimiento","Respondió y lo dejaste un día sin mover."],
+ ["🔴 Agenda sin seguimiento","Tenías una Agenda Propia y llegó el día de la cita sin que la movieras."],
+ ["🔴 Task vencido","Le pusiste task y no lo hiciste el día que tocaba."],
+ ["🔴 Seguimiento sin task","Lo mandaste a seguimiento sin ponerle task."]]},
+
+{n:"Cierres",k:"var(--slate)",sub:"Aquí termina el lead",s:[
+ ["🟤 No contestó","Agotó los reintentos sin contestar nunca. No hubo conversación."],
+ ["🟤 No califica","Sí hablaste con él y no cumple los requisitos del financiamiento."],
+ ["🟤 N.C. - As. PP","No califica para financiamiento pero sí para una asesoría de Pensión Perfecta, de las que se venden. Muévelo aquí para que se le ofrezca."],
+ ["🟠 Abandonó","Ya le hiciste el guión, quedó en mandarte algo o decidir, y dejó de contestar."],
+ ["🟠 Perdido","Contestó, calificaba, le explicaste todo y dijo que no."],
+ ["🟤 No Reagendo","Venía de Re-agendar y se agotaron los 5 regresos sin lograr la nueva cita."]]}
+];
+
+/* ---- tracks ---- */
+function buildTrack(list, trackEl, detEl){
+  let open=-1;
+  list.forEach((s,i)=>{
+    const b=document.createElement("button");
+    b.className="node"; b.type="button"; b.dataset.i=i;
+    b.setAttribute("aria-expanded","false");
+    b.style.setProperty("--c",C[s.t]);
+    b.innerHTML='<span class="dot">'+(i+1)+'<span class="badge">'+s.icon+'</span></span>'+
+                '<span class="st-title">'+s.title+'</span>';
+    b.addEventListener("click",()=>toggle(i));
+    trackEl.appendChild(b);
+  });
+  const nodes=[...trackEl.querySelectorAll(".node")];
+  function toggle(i){
+    if(open===i){ close(); return; }
+    open=i;
+    const s=list[i], c=C[s.t];
+    nodes.forEach(b=>b.setAttribute("aria-expanded", b.dataset.i==i?"true":"false"));
+    let h='<div class="dbox" style="--c:'+c+'">'+
+      '<div class="dh"><span class="dn" style="background:'+c+'">'+(i+1)+'</span>'+
+      '<h3>'+s.title+'</h3>'+
+      '<span class="chip" style="background:'+CS[s.t]+';color:'+c+'">'+s.stage+'</span></div>'+
+      '<p class="lead">'+s.lead+'</p><ul>'+s.li.map(x=>'<li>'+x+'</li>').join("")+'</ul>';
+    if(s.branch) h+='<div class="branch"><b class="h">'+s.branch.t+'</b><div class="bgrid">'+
+      s.branch.c.map(x=>'<div class="bcard" style="--k:'+x.k+'"><i>'+x.i+'</i><b>'+x.n+'</b><span>'+x.d+'</span><em>'+x.w+'</em></div>').join("")+'</div></div>';
+    if(s.steps) h+='<div class="howto"><b class="h">'+s.steps.t+'</b><ol>'+s.steps.l.map(x=>'<li>'+x+'</li>').join("")+'</ol></div>';
+    if(s.clock) h+='<div class="clock">'+s.clock.map(k=>'<i><b>'+k[0]+'</b> → '+k[1]+'</i>').join("")+'</div>';
+    if(s.note)  h+='<p class="note">'+s.note+'</p>';
+    if(s.script)h+='<div class="script"><b>'+s.script.t+'</b>'+s.script.m+'</div>';
+    if(s.tools) h+='<div class="tools">'+s.tools.map(t=>'<a class="tool" href="'+t.h+'" target="_blank" rel="noopener" style="border-color:'+c+';color:'+c+'">'+t.i+' '+t.l+' <span>↗</span></a>').join("")+'</div>';
+    h+='</div>';
+    detEl.innerHTML=h; detEl.classList.add("open");
+  }
+  function close(){
+    open=-1;
+    nodes.forEach(b=>b.setAttribute("aria-expanded","false"));
+    detEl.classList.remove("open");
+    setTimeout(()=>{ if(open===-1) detEl.innerHTML=""; },280);
+  }
 }
-sel(0);
+const PH=[];
+STEPS.forEach(s=>{const f=PH.find(x=>x.n===s.ph); if(f){f.c++;}else{PH.push({n:s.ph,c:1});}});
+const phEl=document.getElementById("phases");
+PH.forEach(x=>{const d=document.createElement("div");d.className="pl";d.style.flex=x.c;d.textContent=x.n;phEl.appendChild(d);});
+buildTrack(STEPS, document.getElementById("track"), document.getElementById("detail"));
+
+/* ---- herramientas ---- */
+const KIT=[
+ {i:"📘",n:"SOP del Closer",d:"El estándar completo, paso a paso",h:"https://docs.google.com/document/d/1ectV-TciEX8ydq0yrd-agRY9r2l-tmee4zMUBfX4BZA/edit"},
+ {i:"💡",n:"Resuelve tu duda",d:"Objeciones, producto y tus dudas al instante",h:B+"resuelve/"}
+];
+
+const FORMS=[
+ {i:"🛠️",n:"Canal de incidencias",d:"Algo del sistema no está jalando",h:"https://forms.gle/hw9mBnwQs4h1sUJa7"},
+ {i:"🎯",n:"Calidad de leads",d:"El lead no califica o llegó mal",h:"https://forms.gle/GeDypheodBS6rgP58"},
+ {i:"📵",n:"Línea de WhatsApp caída",d:"Tu número está bloqueado o no conecta",h:"https://forms.gle/RHkAAb4zivXvzoV57"}
+];
+const kbtn=x=>'<a class="kbtn" href="'+x.h+'" target="_blank" rel="noopener"><i>'+x.i+'</i><span style="flex:1"><b>'+x.n+'</b><span>'+x.d+'</span></span></a>';
+const ktab=x=>'<a class="tab" href="'+x.h+'" target="_blank" rel="noopener" title="'+x.d+'"><i>'+x.i+'</i>'+x.n+'</a>';
+document.getElementById("kit1").innerHTML=KIT.map(ktab).join("");
+document.getElementById("lnkGrupo").href=B+"journey/";
+document.getElementById("kit2").innerHTML=FORMS.map(kbtn).join("");
+
+/* ---- referencia: 4 bloques que abren ---- */
+const bl=document.getElementById("blocks"), sp=document.getElementById("stagepanel");
+let obl=-1;
+BLOCKS.forEach((b,i)=>{
+  const d=document.createElement("button");
+  d.className="blk"; d.type="button"; d.dataset.i=i;
+  d.setAttribute("aria-expanded","false");
+  d.style.setProperty("--k",b.k);
+  d.innerHTML='<h3>'+b.n+'<em>'+b.s.length+'</em></h3><p>'+b.sub+'</p><i>Ver etapas</i>';
+  d.addEventListener("click",()=>tblk(i));
+  bl.appendChild(d);
+});
+const blks=[...bl.querySelectorAll(".blk")];
+function tblk(i){
+  if(obl===i){
+    obl=-1; blks.forEach(x=>x.setAttribute("aria-expanded","false"));
+    sp.classList.remove("open"); setTimeout(()=>{ if(obl===-1) sp.innerHTML=""; },300); return;
+  }
+  obl=i; const b=BLOCKS[i];
+  blks.forEach(x=>x.setAttribute("aria-expanded", x.dataset.i==i?"true":"false"));
+  sp.innerHTML='<div class="sbox" style="--k:'+b.k+'"><h4>'+b.n+' · '+b.sub+'</h4><div class="sgrid">'+
+    b.s.map(x=>'<div class="scard"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>').join("")+'</div></div>';
+  sp.classList.add("open");
+}
 </script>
+
 </body>
 </html>
