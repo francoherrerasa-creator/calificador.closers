@@ -100,6 +100,14 @@
     padding:9px 15px;transition:transform .12s ease,filter .12s ease;white-space:nowrap}
   .cta:hover{transform:translateY(-1px);filter:brightness(1.08)}
   .cta:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .sec-actions{margin-left:auto;display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .sec-actions .cta{margin-left:0}
+  .ghost{display:inline-flex;align-items:center;gap:7px;text-decoration:none;background:var(--panel);
+    color:var(--ink);border:1px solid var(--line);font-size:12.5px;font-weight:800;border-radius:10px;
+    padding:8px 14px;white-space:nowrap;transition:border-color .13s ease,transform .12s ease}
+  .ghost:hover{border-color:var(--accent);transform:translateY(-1px)}
+  .ghost:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .ghost span{opacity:.6;font-weight:700}
   .cta span{opacity:.75;font-weight:700}
 
   /* ---------- pestañas de herramientas ---------- */
@@ -196,10 +204,10 @@
     white-space:nowrap;border-bottom:1px solid transparent;transition:border-color .13s ease}
   .grupo a:hover{border-bottom-color:var(--accent)}
   .grupo a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-  .bars{display:grid;gap:11px;margin-top:12px;grid-template-columns:1fr}
-  @media(min-width:820px){.bars{grid-template-columns:1fr 1fr}}
+  .bars{display:grid;gap:11px;margin-top:12px;grid-template-columns:1fr;justify-items:center}
   .bar{background:var(--w-soft);border:1px solid var(--line);border-top:3px solid var(--w);
-    border-radius:12px;padding:12px 18px;font-size:12.5px;line-height:1.55;text-align:center}
+    border-radius:12px;padding:12px 18px;font-size:12.5px;line-height:1.55;text-align:center;
+    width:100%;max-width:660px}
   .bar strong{color:var(--w);display:block;font-size:13.5px;font-weight:800;margin-bottom:5px;letter-spacing:-.01em}
   .bar span{display:block;max-width:44ch;margin:0 auto;color:var(--muted)}
   .bar b{font-weight:800;color:var(--ink)}
@@ -310,7 +318,10 @@
   <div class="sec-h">
     <h2>El journey del lead</h2>
     <span>15 pasos, del anuncio hasta que cierras tu día.</span>
-    <a class="cta" href="https://club.allmk.app/v2/location/TOhtz5PHJUmWnKH2q3hs/opportunities" target="_blank" rel="noopener">📊 Abrir ALLMK <span>↗</span></a>
+    <span class="sec-actions">
+      <a class="ghost" href="https://www.canva.com/design/DAHRXMY-QRQ/jp1sdDifxpr9e97v4DIT2g/view" target="_blank" rel="noopener">🗺️ Ver el proceso completo <span>↗</span></a>
+      <a class="cta" href="https://club.allmk.app/v2/location/TOhtz5PHJUmWnKH2q3hs/opportunities" target="_blank" rel="noopener">📊 Abrir ALLMK <span>↗</span></a>
+    </span>
   </div>
 
   <div class="scroller">
@@ -334,10 +345,6 @@
     <div class="bar" style="--w:var(--accent);--w-soft:var(--accent-soft)">
       <strong>Le cambiamos la vida a miles de personas</strong>
       <span>Cada quien que agendas y asiste se puede llevar una pensión que sí le alcance. <b>No es una cita más en el calendario: es el retiro de una familia.</b></span>
-    </div>
-    <div class="bar" style="--w:var(--gold);--w-soft:var(--gold-soft)">
-      <strong>La ventana es de 24 horas</strong>
-      <span>Desde el último mensaje del cliente le escribes libre. Cuando se cierra, ALLMK ya solo te deja mandar <b>plantillas</b>. Por eso nada se queda un día sin mover.</span>
     </div>
   </div>
 
