@@ -195,19 +195,22 @@
   .legend{display:flex;flex-wrap:wrap;gap:9px 17px;justify-content:center;margin:14px 0 0;font-size:11.5px;color:var(--muted)}
   .legend b{display:inline-flex;align-items:center;gap:6px;font-weight:600}
   .key{width:9px;height:9px;border-radius:50%}
-  .grupo{margin:16px auto 0;width:100%;max-width:660px;background:var(--accent-soft);
-    border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;
-    padding:16px 20px;text-align:center}
-  .grupo i{font-style:normal;font-size:22px;line-height:1;display:block;margin-bottom:6px}
-  .grupo strong{display:block;color:var(--accent);font-size:13.5px;font-weight:800;
-    margin-bottom:5px;letter-spacing:-.01em}
-  .grupo p{margin:0 auto;max-width:46ch;font-size:12.5px;color:var(--muted);line-height:1.55}
+  .grupo{margin-top:14px;background:var(--accent-soft);border:1px solid var(--line);
+    border-left:3px solid var(--accent);border-radius:12px;padding:13px 16px;
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .grupo i{font-style:normal;font-size:20px;line-height:1;flex:none}
+  .grupo .txt{flex:1;min-width:250px}
+  .grupo strong{display:block;color:var(--accent);font-size:13px;font-weight:800;
+    letter-spacing:-.01em;margin-bottom:2px}
+  .grupo p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.45}
   .grupo p b{color:var(--ink);font-weight:800}
-  .grupo a{display:inline-flex;align-items:center;gap:6px;margin-top:11px;color:#fff;
+  .grupo a{flex:none;display:inline-flex;align-items:center;gap:6px;color:#fff;
     background:var(--accent);font-size:12px;font-weight:800;text-decoration:none;
-    border-radius:10px;padding:8px 15px;transition:transform .12s ease,filter .12s ease}
+    border-radius:9px;padding:8px 14px;white-space:nowrap;
+    transition:transform .12s ease,filter .12s ease}
   .grupo a:hover{transform:translateY(-1px);filter:brightness(1.08)}
   .grupo a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  @media(max-width:560px){.grupo a{width:100%;justify-content:center}}
 
   /* ---------- referencia de etapas ---------- */
   .blocks{display:grid;gap:11px;margin-top:14px;grid-template-columns:1fr}
@@ -340,8 +343,10 @@
 
   <div class="grupo">
     <i aria-hidden="true">👥</i>
-    <strong>Agendar no es el final</strong>
-    <p>Dentro del grupo presentas al asesor, mandas los testimonios, resuelves dudas y refuerzas que asista.</p>
+    <div class="txt">
+      <strong>Agendar no es el final</strong>
+      <p>Dentro del grupo presentas al asesor, mandas los testimonios, resuelves dudas y refuerzas que asista.</p>
+    </div>
     <a id="lnkGrupo" href="#" target="_blank" rel="noopener">Ver el journey del grupo &rsaquo;</a>
   </div>
 
