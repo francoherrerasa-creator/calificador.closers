@@ -195,22 +195,19 @@
   .legend{display:flex;flex-wrap:wrap;gap:9px 17px;justify-content:center;margin:14px 0 0;font-size:11.5px;color:var(--muted)}
   .legend b{display:inline-flex;align-items:center;gap:6px;font-weight:600}
   .key{width:9px;height:9px;border-radius:50%}
-  .grupo{margin-top:11px;background:var(--panel);border:1px solid var(--line);border-radius:12px;
-    padding:11px 15px;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
-  .grupo i{font-style:normal;font-size:15px;line-height:1;flex:none;opacity:.8}
-  .grupo p{margin:0;flex:1;min-width:230px;font-size:12px;color:var(--muted);line-height:1.45}
+  .grupo{margin:16px auto 0;width:100%;max-width:660px;background:var(--accent-soft);
+    border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;
+    padding:16px 20px;text-align:center}
+  .grupo i{font-style:normal;font-size:22px;line-height:1;display:block;margin-bottom:6px}
+  .grupo strong{display:block;color:var(--accent);font-size:13.5px;font-weight:800;
+    margin-bottom:5px;letter-spacing:-.01em}
+  .grupo p{margin:0 auto;max-width:46ch;font-size:12.5px;color:var(--muted);line-height:1.55}
   .grupo p b{color:var(--ink);font-weight:800}
-  .grupo a{margin-left:auto;color:var(--accent);font-size:12px;font-weight:800;text-decoration:none;
-    white-space:nowrap;border-bottom:1px solid transparent;transition:border-color .13s ease}
-  .grupo a:hover{border-bottom-color:var(--accent)}
-  .grupo a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-  .bars{display:grid;gap:11px;margin-top:12px;grid-template-columns:1fr;justify-items:center}
-  .bar{background:var(--w-soft);border:1px solid var(--line);border-top:3px solid var(--w);
-    border-radius:12px;padding:12px 18px;font-size:12.5px;line-height:1.55;text-align:center;
-    width:100%;max-width:660px}
-  .bar strong{color:var(--w);display:block;font-size:13.5px;font-weight:800;margin-bottom:5px;letter-spacing:-.01em}
-  .bar span{display:block;max-width:44ch;margin:0 auto;color:var(--muted)}
-  .bar b{font-weight:800;color:var(--ink)}
+  .grupo a{display:inline-flex;align-items:center;gap:6px;margin-top:11px;color:#fff;
+    background:var(--accent);font-size:12px;font-weight:800;text-decoration:none;
+    border-radius:10px;padding:8px 15px;transition:transform .12s ease,filter .12s ease}
+  .grupo a:hover{transform:translateY(-1px);filter:brightness(1.08)}
+  .grupo a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 
   /* ---------- referencia de etapas ---------- */
   .blocks{display:grid;gap:11px;margin-top:14px;grid-template-columns:1fr}
@@ -341,16 +338,10 @@
     <b><i class="key" style="background:var(--red)"></i> Rescate</b>
   </div>
 
-  <div class="bars">
-    <div class="bar" style="--w:var(--accent);--w-soft:var(--accent-soft)">
-      <strong>Le cambiamos la vida a miles de personas</strong>
-      <span>Cada quien que agendas y asiste se puede llevar una pensión que sí le alcance. <b>No es una cita más en el calendario: es el retiro de una familia.</b></span>
-    </div>
-  </div>
-
   <div class="grupo">
     <i aria-hidden="true">👥</i>
-    <p><b>Agendar no es el final.</b> Dentro del grupo presentas al asesor, mandas los testimonios, resuelves dudas y refuerzas que asista.</p>
+    <strong>Agendar no es el final</strong>
+    <p>Dentro del grupo presentas al asesor, mandas los testimonios, resuelves dudas y refuerzas que asista.</p>
     <a id="lnkGrupo" href="#" target="_blank" rel="noopener">Ver el journey del grupo &rsaquo;</a>
   </div>
 
