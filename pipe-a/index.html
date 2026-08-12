@@ -16,6 +16,7 @@
     --gold:#96690f; --gold-soft:#f3ecd9;
     --red:#b04434; --red-soft:#f6e3df;
     --slate:#556055;
+    --plum:#6b4a91; --plum-soft:#efe9f7;
     --shadow:0 1px 2px rgba(20,40,30,.05),0 8px 24px rgba(20,40,30,.07);
     --shadow-dot:0 3px 8px rgba(20,40,30,.22);
     --r:16px;
@@ -30,6 +31,7 @@
     --accent:#4dbd85; --accent-soft:#16261d;
     --blue:#82abe8; --blue-soft:#172232; --gold:#d5aa54; --gold-soft:#292314;
     --red:#e07d6f; --red-soft:#2c1a17; --slate:#a6b09a;
+    --plum:#b79ae0; --plum-soft:#251d33;
     --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.42);
     --shadow-dot:0 3px 10px rgba(0,0,0,.5);
   }}
@@ -41,6 +43,7 @@
     --accent:#4dbd85; --accent-soft:#16261d;
     --blue:#82abe8; --blue-soft:#172232; --gold:#d5aa54; --gold-soft:#292314;
     --red:#e07d6f; --red-soft:#2c1a17; --slate:#a6b09a;
+    --plum:#b79ae0; --plum-soft:#251d33;
     --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.42);
     --shadow-dot:0 3px 10px rgba(0,0,0,.5);
   }
@@ -52,6 +55,7 @@
     --accent:#1e8a5f; --accent-soft:#e4f0e9;
     --blue:#35608f; --blue-soft:#e6ecf4; --gold:#96690f; --gold-soft:#f3ecd9;
     --red:#b04434; --red-soft:#f6e3df; --slate:#556055;
+    --plum:#6b4a91; --plum-soft:#efe9f7;
     --shadow:0 1px 2px rgba(20,40,30,.05),0 8px 24px rgba(20,40,30,.07);
     --shadow-dot:0 3px 8px rgba(20,40,30,.22);
   }
@@ -195,10 +199,29 @@
 
   /* ---------- leyenda + roja ---------- */
   .legend{display:flex;flex-wrap:wrap;gap:9px 17px;justify-content:center;margin:14px 0 0;font-size:11.5px;color:var(--muted)}
+  .twin{margin-top:18px;display:grid;gap:12px}
+  .tw{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 18px 17px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .tw::before{content:"";position:absolute;inset:0 auto 0 0;width:3px}
+  .tw-auto::before{background:var(--blue)}
+  .tw-extra::before{background:var(--plum)}
+  .tw header{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:11px}
+  .tw header b{font-family:var(--display);font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .tw-auto header b{color:var(--blue)} .tw-extra header b{color:var(--plum)}
+  .tw header span{font-size:12px;color:var(--muted)}
+  .tw-extra .achip{background:var(--plum-soft);color:var(--plum)}
+  .tw-extra .achip:hover,.tw-extra .achip[aria-expanded="true"]{border-color:var(--plum)}
   .autobox{margin-top:16px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--blue);
     border-radius:12px;padding:12px 16px}
   .autobox > b{display:block;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.02em;margin-bottom:3px}
   .autobox > span{display:block;font-size:11.5px;color:var(--muted);line-height:1.45;margin-bottom:10px}
+  .cross{margin-top:12px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+    padding:13px 17px;border-radius:12px;background:var(--brand-deep);color:#eaf3ee}
+  .cross-l{font-family:var(--display);font-size:10.5px;font-weight:700;letter-spacing:.19em;
+    text-transform:uppercase;opacity:.62;white-space:nowrap}
+  .cross p{margin:0;font-size:13.5px;line-height:1.45}
+  .cross b{color:#fff}
+
   .achips{display:flex;flex-wrap:wrap;gap:7px}
   .achip{display:inline-flex;align-items:center;gap:7px;background:var(--blue-soft);color:var(--blue);
     border:1px solid transparent;border-radius:999px;padding:6px 13px;font-size:12px;font-weight:700;
@@ -459,10 +482,14 @@
       <span class="tag">Siempre, en cada contacto con lead</span>
     </div>
     <div class="must-grid">
-      <div class="mcard"><span class="mnum">1</span><div><b>Todo termina en llamada</b><span>En verde no se escribe, se llama: ahí el sistema ya está escribiendo por ti. Tú escribes de ⭕ Se intentó contactar en adelante, y el mensaje solo sirve para conseguir la llamada.</span></div></div>
+      <div class="mcard"><span class="mnum">1</span><div><b>Todo termina en llamada</b><span>El mensaje no vende. Consigue la llamada.</span></div></div>
       <div class="mcard"><span class="mnum">2</span><div><b>Deja una nota</b><span>Escribe qué pasó y después mueve la etapa.</span></div></div>
       <div class="mcard"><span class="mnum">3</span><div><b>Siempre mueve de etapa</b><span>Lo que no está en ALLMK no existe y no se paga.</span></div></div>
       <div class="mcard"><span class="mnum">4</span><div><b>Cierra el día en cero</b><span>Verdes, rojas, Llamar hoy y Msj. hoy.</span></div></div>
+    </div>
+    <div class="cross">
+      <span class="cross-l">La regla que cruza todo</span>
+      <p>En <b>🟢 verde no escribes, llamas</b>: ahí el sistema ya está escribiendo por ti. Tú escribes de <b>⭕ Se intentó contactar</b> en adelante.</p>
     </div>
   </div>
 
@@ -493,12 +520,18 @@
     <b><i class="key" style="background:var(--red)"></i> Rescate</b>
   </div>
 
-  <div class="autobox">
-    <b>Lo que pasa solo, sin que lo toques</b>
-    <span>No son pasos tuyos, pero te conviene saber cómo funcionan. Toca cada uno.</span>
-    <div class="achips" id="stripAuto"></div>
+  <div class="twin">
+    <section class="tw tw-auto">
+      <header><b>Lo que pasa solo</b><span>No son pasos tuyos, pero te conviene saber cómo funcionan</span></header>
+      <div class="achips" id="stripAuto"></div>
+      <div class="detail" id="detailAuto" aria-live="polite"></div>
+    </section>
+    <section class="tw tw-extra">
+      <header><b>A realizar</b><span>Fuera de la llamada, pero igual de tuyo</span></header>
+      <div class="achips" id="stripExtra"></div>
+      <div class="detail" id="detailExtra" aria-live="polite"></div>
+    </section>
   </div>
-  <div class="detail" id="detailAuto" aria-live="polite"></div>
 
   <div class="sec-h">
     <h2>Las etapas del pipe</h2>
@@ -509,48 +542,53 @@
   <div class="stagepanel" id="stagepanel" aria-live="polite"></div>
 
   <div class="sec-h">
-    <h2>Seguimiento en WhatsApp</h2>
+    <h2>Seguimiento después de agendar</h2>
     <span>El journey del lead desde que agendas hasta que se conecta. 6 pasos: lo que haces tú y lo que manda el sistema.</span>
   </div>
 
 <div id="wa">
 <style>
-.jn{margin-top:6px}
-.jn-rail{display:grid;grid-template-columns:repeat(6,1fr);gap:0 8px;position:relative;min-width:760px}
-.jn-scr{overflow-x:auto;padding-bottom:8px}
-.jn-axis{grid-column:1/-1;grid-row:1;height:0;position:relative}
-.jn-axis::before{content:"";position:absolute;left:8.3%;right:8.3%;top:26px;height:3px;background:var(--line);border-radius:2px}
-.jn-n{grid-row:1;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;position:relative;z-index:2;padding:0 4px}
-.jn-n.c{--jc:var(--accent)} .jn-n.s{--jc:var(--slate)} .jn-n.a{--jc:var(--blue)}
-.jn-d{width:52px;height:52px;border-radius:50%;background:var(--jc);color:#fff;display:grid;place-items:center;font-size:19px;font-weight:850;box-shadow:0 0 0 6px var(--panel),0 8px 18px -8px var(--jc)}
-.jn-n.s .jn-d{background:var(--panel);color:var(--jc);border:2px dashed var(--jc)}
-.jn-t{font-size:12.5px;font-weight:850;letter-spacing:.05em;text-transform:uppercase;color:var(--jc);line-height:1.15}
-.jn-r{font-size:12px;color:var(--muted);line-height:1.35;max-width:19ch}
-.jn-keys{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 24px;margin-top:24px}
-.jn-k{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:750}
-.jn-sw{width:15px;height:15px;border-radius:50%}
-.jn-k.c .jn-sw{background:var(--accent)} .jn-k.a .jn-sw{background:var(--blue)}
-.jn-k.s .jn-sw{background:transparent;border:2px dashed var(--slate)}
-.jn-cta{display:flex;justify-content:center;margin-top:26px}
-@media(max-width:820px){.jn-rail{grid-template-columns:repeat(2,1fr);gap:26px 10px;min-width:0}.jn-axis{display:none}.jn-d{box-shadow:0 8px 18px -8px var(--jc)}}
+.jn{margin-top:16px}
+.jn-scr{overflow-x:auto;padding:2px 2px 10px}
+.jn-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;min-width:820px}
+.jn-c{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:13px;
+ padding:15px 14px 16px;box-shadow:var(--shadow);transition:transform .14s ease,border-color .14s ease}
+.jn-c:hover{transform:translateY(-2px);border-color:var(--jc)}
+.jn-c::before{content:"";position:absolute;top:0;left:14px;right:14px;height:3px;border-radius:0 0 3px 3px;background:var(--jc)}
+.jn-c.sys::before{background:repeating-linear-gradient(90deg,var(--jc) 0 5px,transparent 5px 10px)}
+.jn-c.you{--jc:var(--accent)} .jn-c.sys{--jc:var(--faint)} .jn-c.adv{--jc:var(--blue)}
+.jn-c::after{content:"";position:absolute;top:50%;right:-10px;width:10px;height:1px;background:var(--line);z-index:1}
+.jn-c:last-child::after{display:none}
+.jn-n{display:block;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.14em;
+ color:var(--faint);font-variant-numeric:tabular-nums;margin-bottom:7px}
+.jn-h{display:block;font-family:var(--display);font-size:15px;font-weight:700;letter-spacing:.07em;
+ text-transform:uppercase;color:var(--jc);line-height:1.1;margin-bottom:6px}
+.jn-p{display:block;font-size:12.5px;color:var(--muted);line-height:1.4}
+.jn-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:16px}
+.jn-keys{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:12px;color:var(--muted)}
+.jn-k{display:inline-flex;align-items:center;gap:7px;font-weight:600}
+.jn-sw{width:16px;height:3px;border-radius:2px}
+.jn-k.you .jn-sw{background:var(--accent)}
+.jn-k.sys .jn-sw{background:repeating-linear-gradient(90deg,var(--faint) 0 5px,transparent 5px 10px)}
+.jn-k.adv .jn-sw{background:var(--blue)}
+@media(max-width:820px){.jn-row{grid-template-columns:repeat(2,1fr);min-width:0}.jn-c::after{display:none}}
 </style>
 <div class="jn">
-  <div class="jn-scr"><div class="jn-rail">
-    <div class="jn-axis"></div>
-    <div class="jn-n c"><span class="jn-d">1</span><span class="jn-t">Cierre</span><span class="jn-r">Cierras día y hora y pides que guarden el contacto del asesor</span></div>
-    <div class="jn-n c"><span class="jn-d">2</span><span class="jn-t">Contacto</span><span class="jn-r">Mandas la tarjeta y la imagen del asesor</span></div>
-    <div class="jn-n s"><span class="jn-d">3</span><span class="jn-t">Bienvenida</span><span class="jn-r">Sale el primer mensaje y el video</span></div>
-    <div class="jn-n c"><span class="jn-d">4</span><span class="jn-t">Llamada</span><span class="jn-r">La mañana del día, marcas a tus leads con cita</span></div>
-    <div class="jn-n s"><span class="jn-d">5</span><span class="jn-t">Antesala</span><span class="jn-r">Sale el segundo mensaje, 2 horas antes</span></div>
-    <div class="jn-n a"><span class="jn-d">6</span><span class="jn-t">Entrega</span><span class="jn-r">El asesor crea el grupo y toma al cliente</span></div>
+  <div class="jn-scr"><div class="jn-row">
+    <div class="jn-c you"><span class="jn-n">01</span><span class="jn-h">Cierre</span><span class="jn-p">Cierras día y hora y pides que guarden el contacto del asesor</span></div>
+    <div class="jn-c you"><span class="jn-n">02</span><span class="jn-h">Contacto</span><span class="jn-p">Mandas la tarjeta y la imagen del asesor</span></div>
+    <div class="jn-c sys"><span class="jn-n">03</span><span class="jn-h">Bienvenida</span><span class="jn-p">Sale el primer mensaje y el video</span></div>
+    <div class="jn-c you"><span class="jn-n">04</span><span class="jn-h">Llamada</span><span class="jn-p">La mañana del día, marcas a tus leads con cita</span></div>
+    <div class="jn-c sys"><span class="jn-n">05</span><span class="jn-h">Antesala</span><span class="jn-p">Sale el segundo mensaje, dos horas antes</span></div>
+    <div class="jn-c adv"><span class="jn-n">06</span><span class="jn-h">Entrega</span><span class="jn-p">El asesor crea el grupo y toma al cliente</span></div>
   </div></div>
-  <div class="jn-keys">
-    <span class="jn-k c"><i class="jn-sw"></i>Lo haces tú</span>
-    <span class="jn-k s"><i class="jn-sw"></i>Lo manda el sistema solo</span>
-    <span class="jn-k a"><i class="jn-sw"></i>Lo hace el asesor</span>
-  </div>
-  <div class="jn-cta">
-    <a class="cta" href="https://pension-perfecta.github.io/calificador.closers/confirmacion/" target="_blank" rel="noopener">Ver el journey a detalle, con los guiones <span>&#8599;</span></a>
+  <div class="jn-foot">
+    <div class="jn-keys">
+      <span class="jn-k you"><i class="jn-sw"></i>Lo haces tú</span>
+      <span class="jn-k sys"><i class="jn-sw"></i>Lo manda el sistema</span>
+      <span class="jn-k adv"><i class="jn-sw"></i>Lo hace el asesor</span>
+    </div>
+    <a class="cta" href="https://pension-perfecta.github.io/calificador.closers/confirmacion/" target="_blank" rel="noopener">Ver el detalle y los guiones <span>&#8599;</span></a>
   </div>
 </div>
 </div>
@@ -651,17 +689,17 @@ const STEPS=[
  li:["Le hablas para confirmar que hoy es su asesoría","Si confirma → lo mueves a <b>🔵 Asesoría confirmada</b>","Si no contesta → lo mueves a ⭕ Se intentó contactar y <b>te lo regresa en 30 minutos</b> para el segundo intento","Si te dice que no se va a conectar → 🟠 Perdido","Los recordatorios por mensaje los sigue mandando el sistema solo, tú no escribes"],
  note:"Es la etapa que más mueve el show-up: una asesoría confirmada por llamada asiste mucho más que una que solo recibió mensajes. Y si la etapa está mal, los mensajes automáticos no salen."},
 
-{ph:"Si no cerró",t:"move",icon:"🔂",title:"Seguimiento",stage:"Seguimiento · Llamar hoy · Msj. hoy",
+{zone:"extra",ph:"Si no cerró",t:"move",icon:"🔂",title:"Seguimiento",stage:"Seguimiento · Llamar hoy · Msj. hoy",
  lead:"El lead tiene interés pero no cerró hoy. <b>Ojo: casi nunca debería llegar aquí.</b> El 99% de las llamadas tiene que terminar en una etapa final, y un \"déjame pensarlo\" no es seguimiento: se agenda y si hace falta se recorre.",
  li:["Lo mandas a Seguimiento y <b>siempre</b> le pones un task","Si el task es para menos de 30 días va a <b>Seguimiento</b>. Si es para más, a <b>Seguimiento futuro</b>","<b>Llamar hoy</b> y <b>Msj. hoy</b> los dejas en cero al terminar el día","Si no le pones task, <b>en 2 horas</b> aparece en 🔴 Seguimiento sin task","El día que toca el task, el lead se mueve solo a 🔴 Task por hacer hoy. Esa es tu bandeja y cierra en cero"],
  note:"Si una etapa roja se queda 2 días sin atender, <b>te quitan el lead</b> y se lo dan a otro closer."},
 
-{ph:"Si no cerró",t:"alert",icon:"🚑",title:"No show",stage:"Re-agendar → No Reagendo",
+{zone:"extra",ph:"Si no cerró",t:"alert",icon:"🚑",title:"No show",stage:"Re-agendar → No Reagendo",
  lead:"El cliente no llegó a su asesoría. <b>El asesor te la regresa y tú la rescatas.</b>",
  li:["El sistema le manda 3 mensajes para reagendar, en automático","Si contesta cualquiera de los 3 → cae en <b>🟢 Re-agendar envió msj.</b> y tú le llamas","Si no contesta ninguno → <b>igual te llega</b> a 🟢 Re-agendar para que le llames","Ya agendó una vez, así que es de los que más vuelven a agendar","Si vuelve a agendar → 🔵 Asesoría agendada. Si no → 🟤 No Reagendo"],
  script:{t:"Mensaje para rescatar",m:"Intenté ayudarte con tu llamada para financiar tu Modalidad 40 pero no pudimos conectar. ¿Cómo sientes que deberíamos proceder para retomarlo?"}},
 
-{ph:"Cada día",t:"reg",icon:"🌙",title:"Cierre del día",stage:"EOD",
+{zone:"extra",ph:"Cada día",t:"reg",icon:"🌙",title:"Cierre del día",stage:"EOD",
  lead:"Antes de soltar, <b>todos los días</b>.",
  li:["Registras qué pasó en cada llamada que hiciste","Actualizas las notas de los leads que trabajaste","Subes tu <b>peor llamada del día</b> para que te den coaching","Contestas todos los mensajes pendientes","Dejas en cero las verdes, las rojas, Llamar hoy y Msj. hoy"],
  script:{t:"Así se manda el EOD",m:"EOD [fecha] — [Tu nombre]<br>Leads contactados:<br>Leads sin respuesta:<br>Leads agendados:<br>Expedientes completos:<br>Agendas asistidas:<br>Roadblock principal:<br>Mejoraría si tuviera:"},
@@ -773,14 +811,16 @@ function buildTrack(list, trackEl, detEl){
     setTimeout(()=>{ if(open===-1) detEl.innerHTML=""; },280);
   }
 }
-const MIOS=STEPS.filter(s=>s.t!=="auto");     /* lo que hace el closer */
-const AUTO=STEPS.filter(s=>s.t==="auto");     /* lo que hace el sistema */
+const MIOS=STEPS.filter(s=>s.t!=="auto"&&!s.zone);     /* lo que hace el closer */
+const AUTO=STEPS.filter(s=>s.t==="auto"&&!s.zone);
+const EXTRA=STEPS.filter(s=>s.zone==="extra");     /* lo que hace el sistema */
 const PH=[];
 MIOS.forEach(s=>{const f=PH.find(x=>x.n===s.ph); if(f){f.c++;}else{PH.push({n:s.ph,c:1});}});
 const phEl=document.getElementById("phases");
 PH.forEach(x=>{const d=document.createElement("div");d.className="pl";d.style.flex=x.c;d.textContent=x.n;phEl.appendChild(d);});
 buildTrack(MIOS, document.getElementById("track"), document.getElementById("detail"));
 buildStrip(AUTO, document.getElementById("stripAuto"), document.getElementById("detailAuto"));
+buildStrip(EXTRA, document.getElementById("stripExtra"), document.getElementById("detailExtra"));
 
 
 
