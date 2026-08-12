@@ -72,6 +72,7 @@
   .q{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border:1px solid var(--line);border-radius:11px;background:var(--panel)}
   .pill{flex:none;font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:20px;margin-top:1px;letter-spacing:.03em}
   .pill.all{background:var(--okbg);color:var(--ok)}
+  .pill.dat{background:#e6ecf4;color:#35608f}
   .pill.ret{background:var(--warnbg);color:var(--warn)}
   .q .t{font-size:14.5px}
   .q .r{display:block;color:var(--muted);font-size:12.5px;margin-top:3px}
@@ -176,15 +177,20 @@
     </div>
   </section>
 
-  <h2><span class="n">2</span>El checklist de la llamada<small>preguntas que el sistema no puede saber</small></h2>
-  <p class="lead">El sistema saca casi todo del reporte del IMSS, pero hay cosas que solo la persona te puede decir. Haz estas preguntas durante la llamada. <b class="pill all" style="margin:0 2px">TODAS</b> = descalifica en cualquier oferta. <b class="pill ret" style="margin:0 2px">RETRO</b> = solo estorba en financiamiento retroactivo.</p>
+  <h2><span class="n">2</span>El checklist de la llamada<small>preguntas que sí o sí se hacen</small></h2>
+  <p class="lead">El sistema saca casi todo del reporte del IMSS, pero hay cosas que solo la persona te puede decir. <b>Estas diez van en todas las llamadas, sin excepción.</b> Las primeras ocho descalifican si contesta que sí.</p>
+
   <div class="card chk">
-    <div class="q"><span class="pill all">TODAS</span><span class="t">¿Ya recibe una pensión, o ya aceptó una resolución de pensión?<span class="r">Si contesta que sí, no procede.</span></span></div>
-    <div class="q"><span class="pill all">TODAS</span><span class="t">¿Ha demandado a algún patrón?<span class="r">Si la demanda ya avanzó, no procede. Si apenas está en conciliación o arbitraje, se revisa.</span></span></div>
-    <div class="q"><span class="pill all">TODAS</span><span class="t">¿Ha demandado al IMSS, al Infonavit o a su Afore, y sigue en proceso?<span class="r">Si sigue en proceso, no procede.</span></span></div>
-    <div class="q"><span class="pill ret">RETRO</span><span class="t">¿Alguna vez lo dieron de alta en un trabajo sin que realmente trabajara ahí? ¿Tiene recibos de nómina timbrados?<span class="r">Esto se llama simulación laboral. Solo importa en retroactivo.</span></span></div>
-    <div class="q"><span class="pill ret">RETRO</span><span class="t">¿Fue socio o accionista mayoritario en alguna empresa donde cotizó?<span class="r">Solo importa en retroactivo.</span></span></div>
-    <div class="q"><span class="pill ret">RETRO</span><span class="t">¿Está trabajando en una plataforma como Uber o Didi?<span class="r">No lo descalifica. Pídele que se dé de baja para no perder el retroactivo.</span></span></div>
+    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Ya estás pensionado o recibiendo algún tipo de pensión?</span></div>
+    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Ya aceptaste tu resolución de pensión, o tienes una negativa de pensión?</span></div>
+    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Alguna vez demandaste a un patrón?</span></div>
+    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Has demandado al IMSS, al Infonavit o al AFORE?</span></div>
+    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Alguna vez te dieron de alta en una empresa sin estar realmente trabajando?<span class="r">Si dice que sí, pregúntale: ¿esos recibos están timbrados? Esto se llama simulación laboral.</span></span></div>
+    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Fuiste accionista en alguna empresa en la que cotizaste?<span class="r">Si dice que sí, pregúntale: ¿mayoritario o minoritario?</span></span></div>
+    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Trabajas o trabajaste en alguna plataforma digital tipo Uber o Didi?<span class="r">Puedes verificarlo tú: si en el reporte de semanas su registro patronal trae dos estrellas, sí pertenece.</span></span></div>
+    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Tienes algún crédito Infonavit?<span class="r">Si dice que sí, pregúntale: ¿de cuánto y cuánto te falta pagar? Anótalo, pero con crédito vigente no procede.</span></span></div>
+    <div class="q"><span class="pill dat">DATO OBLIGATORIO</span><span class="t">¿Sabes cuánto tienes en tu AFORE, o tienes algún estado de cuenta?<span class="r">Necesitas el monto correcto. La referencia: al menos 100 mil por cada año que le falta de trabajar.</span></span></div>
+    <div class="q"><span class="pill dat">INTENCIÓN</span><span class="t">¿Qué es lo que buscas: financiamiento, o ya cuentas tú con el dinero y buscas más la asesoría o información en general?</span></div>
   </div>
 
   <h2><span class="n">3</span>Palabras que vas a oír<small>glosario rápido</small></h2>
