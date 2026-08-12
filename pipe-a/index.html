@@ -200,7 +200,7 @@
   /* ---------- leyenda + roja ---------- */
   .legend{display:flex;flex-wrap:wrap;gap:9px 17px;justify-content:center;margin:14px 0 0;font-size:11.5px;color:var(--muted)}
   .twin{margin-top:18px;display:grid;gap:12px}
-  .tw{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 18px 17px;
+  .tw{margin-top:18px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 18px 17px;
     box-shadow:var(--shadow);position:relative;overflow:hidden}
   .tw::before{content:"";position:absolute;inset:0 auto 0 0;width:3px}
   .tw-auto::before{background:var(--blue)}
@@ -520,26 +520,11 @@
     <b><i class="key" style="background:var(--red)"></i> Rescate</b>
   </div>
 
-  <div class="twin">
-    <section class="tw tw-auto">
-      <header><b>Lo que pasa solo</b><span>No son pasos tuyos, pero te conviene saber cómo funcionan</span></header>
-      <div class="achips" id="stripAuto"></div>
-      <div class="detail" id="detailAuto" aria-live="polite"></div>
-    </section>
     <section class="tw tw-extra">
       <header><b>A realizar</b><span>Fuera de la llamada, pero igual de tuyo</span></header>
       <div class="achips" id="stripExtra"></div>
       <div class="detail" id="detailExtra" aria-live="polite"></div>
     </section>
-  </div>
-
-  <div class="sec-h">
-    <h2>Las etapas del pipe</h2>
-    <span>Te apareció una etapa y no sabes qué es. Toca su bloque.</span>
-  </div>
-
-  <div class="blocks" id="blocks"></div>
-  <div class="stagepanel" id="stagepanel" aria-live="polite"></div>
 
   <div class="sec-h">
     <h2>Seguimiento después de agendar</h2>
@@ -592,6 +577,20 @@
   </div>
 </div>
 </div>
+    <section class="tw tw-auto">
+      <header><b>Lo que pasa solo</b><span>No son pasos tuyos, pero te conviene saber cómo funcionan</span></header>
+      <div class="achips" id="stripAuto"></div>
+      <div class="detail" id="detailAuto" aria-live="polite"></div>
+    </section>
+
+  <div class="sec-h">
+    <h2>Las etapas del pipe</h2>
+    <span>Te apareció una etapa y no sabes qué es. Toca su bloque.</span>
+  </div>
+
+  <div class="blocks" id="blocks"></div>
+  <div class="stagepanel" id="stagepanel" aria-live="polite"></div>
+
 
   <div class="kit forms">
     <h3>¿Algo no cuadra? Repórtalo</h3>
