@@ -107,7 +107,7 @@ h1{margin:0; font-size:clamp(26px,4.2vw,42px); line-height:1.05; letter-spacing:
 .key.a .sw{background:var(--asesor)}
 
 /* bloques de abajo */
-.abajo{display:grid; grid-template-columns:1fr 1.55fr; gap:18px; margin-top:46px; align-items:start}
+.abajo{display:grid; grid-template-columns:minmax(0,760px); justify-content:center; gap:18px; margin-top:46px; align-items:start}
 @media(max-width:820px){.abajo{grid-template-columns:1fr}}
 
 .mat{background:var(--card); border:1px solid var(--hair); border-radius:16px;
@@ -235,14 +235,7 @@ dialog::backdrop{background:var(--veil); backdrop-filter:blur(3px)}
 
   <div class="abajo">
 
-    <div class="mat">
-      <h3>Material de apoyo</h3>
-      <p>Imágenes y testimonios para reforzar durante el día. Tú decides qué mandar y cuándo, según el lead.</p>
-      <a class="enlace" href="https://drive.google.com/drive/folders/1rzTfzhMOoYxhee-iSKDZWVf3G0N-FabH" target="_blank" rel="noopener">
-        <span class="play" aria-hidden="true"></span>
-        <span><b>Abrir la carpeta</b><small>Imágenes y videos en Drive</small></span>
-      </a>
-    </div>
+    
 
     <div class="noshow">
       <span class="lbl">Si no se presenta</span>
