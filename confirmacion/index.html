@@ -125,12 +125,21 @@ h1{margin:0; font-size:clamp(26px,4.2vw,42px); line-height:1.05; letter-spacing:
 .enlace small{display:block; font-size:12px; color:var(--muted)}
 
 .dir{background:var(--card); border:1px solid var(--hair); border-left:3px solid var(--asesor);
-  border-radius:16px; padding:22px 24px 20px; box-shadow:var(--shadow)}
-.dir-h .lbl{display:inline-block; font-size:10px; font-weight:850; letter-spacing:.14em;
-  text-transform:uppercase; color:var(--asesor); background:var(--asesor-soft);
-  padding:4px 9px; border-radius:5px; margin-bottom:12px}
-.dir-h h3{margin:0 0 6px; font-size:19px; font-weight:850; letter-spacing:-.018em}
-.dir-h .sub{margin:0 0 16px; font-size:14px; color:var(--muted); max-width:60ch; text-wrap:pretty}
+  border-radius:16px; box-shadow:var(--shadow); overflow:hidden}
+.dir summary{display:flex; align-items:center; gap:14px; padding:18px 22px; cursor:pointer;
+  list-style:none; user-select:none}
+.dir summary::-webkit-details-marker{display:none}
+.dir summary:hover{background:var(--band)}
+.dir-ico{flex:none; width:38px; height:38px; border-radius:50%; display:grid; place-items:center;
+  background:var(--asesor-soft)}
+.dir-ico svg{width:18px; height:18px; fill:none; stroke:var(--asesor); stroke-width:1.9;
+  stroke-linecap:round; stroke-linejoin:round}
+.dir-txt{flex:1; min-width:0}
+.dir-txt b{display:block; font-size:16.5px; font-weight:800; letter-spacing:-.012em}
+.dir-txt small{display:block; margin-top:2px; font-size:13px; color:var(--muted)}
+.dir-chev{flex:none; font-size:13px; color:var(--muted); transition:transform .18s ease}
+.dir[open] .dir-chev{transform:rotate(180deg)}
+.dir-body{padding:0 22px 20px}
 .dir-scr{overflow-x:auto; border:1px solid var(--hair); border-radius:11px}
 .dir-t{width:100%; border-collapse:collapse; font-size:14.5px}
 .dir-t th{text-align:left; font-size:10px; font-weight:850; letter-spacing:.13em;
@@ -236,34 +245,41 @@ dialog::backdrop{background:var(--veil); backdrop-filter:blur(3px)}
 
   <div class="abajo">
 
-    <div class="dir">
-      <div class="dir-h">
-        <span class="lbl">Directorio</span>
-        <h3>Teléfonos de los asesores</h3>
-        <p class="sub">Para armar la tarjeta de contacto del paso 2. Si el número está mal, el lead guarda a la persona equivocada.</p>
+    <details class="dir">
+      <summary>
+        <span class="dir-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M6.6 3h3l1.5 4-2 1.4a12 12 0 0 0 5.5 5.5l1.4-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.2 2 2 0 0 1 6.6 3z"/></svg>
+        </span>
+        <span class="dir-txt">
+          <b>Teléfonos de los asesores</b>
+          <small>Para armar la tarjeta de contacto del paso 2</small>
+        </span>
+        <span class="dir-chev" aria-hidden="true">&#9662;</span>
+      </summary>
+      <div class="dir-body">
+        <div class="dir-scr">
+          <table class="dir-t">
+            <thead><tr><th>Asesor</th><th>Teléfono</th></tr></thead>
+            <tbody>
+              <tr><td>Arturo Zerza</td><td>52 477 124 4650</td></tr>
+              <tr><td>Emmanuel Macías</td><td>52 477 400 8756</td></tr>
+              <tr><td>Sofía</td><td>52 479 218 4782</td></tr>
+              <tr><td>Deniss</td><td>52 81 2188 8239</td></tr>
+              <tr><td>Carlos Escalante</td><td>52 474 156 0032</td></tr>
+              <tr><td>Emilio Bulding</td><td>52 474 293 1097</td></tr>
+              <tr><td>Enrique Lemus</td><td>52 477 569 2102</td></tr>
+              <tr><td>Gabriel Vega</td><td>52 474 109 0979</td></tr>
+              <tr><td>Néstor (Juan Carlos Martínez)</td><td>52 477 443 0582</td></tr>
+              <tr><td>Citlali</td><td>52 470 526 2917</td></tr>
+              <tr><td>Jenireth</td><td>52 477 400 1841</td></tr>
+              <tr><td>Magdiel</td><td>52 477 919 6536</td></tr>
+              <tr><td>Francisco Maldonado</td><td>52 477 495 1389</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <a class="dir-cta" href="https://drive.google.com/drive/folders/1fs72r8kT6igbnE_6e_0IlLu3YfrDoF6u?usp=drive_link" target="_blank" rel="noopener">Abrir las imágenes de los asesores <span aria-hidden="true">&#8599;</span></a>
       </div>
-      <div class="dir-scr">
-        <table class="dir-t">
-          <thead><tr><th>Asesor</th><th>Teléfono</th></tr></thead>
-          <tbody>
-            <tr><td>Arturo Zerza</td><td>52 477 124 4650</td></tr>
-            <tr><td>Emmanuel Macías</td><td>52 477 400 8756</td></tr>
-            <tr><td>Sofía</td><td>52 479 218 4782</td></tr>
-            <tr><td>Deniss</td><td>52 81 2188 8239</td></tr>
-            <tr><td>Carlos Escalante</td><td>52 474 156 0032</td></tr>
-            <tr><td>Emilio Bulding</td><td>52 1 474 293 1097</td></tr>
-            <tr><td>Enrique Lemus</td><td>52 477 569 2102</td></tr>
-            <tr><td>Gabriel Vega</td><td>52 474 109 0979</td></tr>
-            <tr><td>Néstor (Juan Carlos Martínez)</td><td>52 477 443 0582</td></tr>
-            <tr><td>Citlali</td><td>1 470 526 2917</td></tr>
-            <tr><td>Jenireth</td><td>52 1 477 400 1841</td></tr>
-            <tr><td>Magdiel</td><td>52 477 919 6536</td></tr>
-            <tr><td>Francisco Maldonado</td><td>52 477 495 1389</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <a class="dir-cta" href="https://drive.google.com/drive/folders/1fs72r8kT6igbnE_6e_0IlLu3YfrDoF6u?usp=drive_link" target="_blank" rel="noopener">Abrir las imágenes de los asesores <span aria-hidden="true">&#8599;</span></a>
-    </div>
+    </details>
 
   </div>
 
