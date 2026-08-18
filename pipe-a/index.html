@@ -664,10 +664,10 @@ const STEPS=[
  note:"Tres cosas y sin excepción: <b>mueve la oportunidad</b>, <b>llena el campo Tipo de asesoría</b> y <b>deja la nota con el link del expediente</b>. Si agendas y no mueves la oportunidad, el asesor no la ve y no te pagan. Y el asesor lo asigna el sistema por turnos: <b>no lo elijas tú.</b>",
  tools:[{i:"📊",l:"Abrir ALLMK",h:"https://club.allmk.app/v2/location/TOhtz5PHJUmWnKH2q3hs/opportunities"}]},
 
-{ph:"Al colgar",t:"reg",icon:"🪪",title:"Contacto del asesor",stage:"Ya no se crean grupos",
- lead:"<b>El grupo ya no lo creas tú.</b> Lo crea el asesor durante la asesoría. Lo tuyo es dejarle al lead el contacto del asesor guardado.",
- li:["Antes de colgar le pides que lo guarde: si no lo tiene guardado, WhatsApp le manda los mensajes a spam","Al colgar le mandas la <b>tarjeta de contacto</b> del asesor y luego su <b>imagen personalizada</b>","El nombre del asesor te sale en ALLMK en cuanto agendas","Los dos van escritos a mano desde el chat de ALLMK, nunca como plantilla","Cierras preguntándole: ¿me confirma en cuanto lo guarde?"],
- note:"Sin esa última pregunta la mitad dice que sí y no lo guarda. Y si no lo tiene guardado, no reconoce quién le escribe y no se conecta.",
+{ph:"Al colgar",t:"reg",icon:"🪪",title:"Contacto del asesor",stage:"Lo manda el sistema",
+ lead:"<b>Ya no mandas nada a mano.</b> En cuanto agendas, el sistema le manda solo la presentación del asesor con su foto y su número. Lo tuyo es pedirle que lo guarde.",
+ li:["Al mover la oportunidad a <b>🔵 Asesoría agendada</b>, el sistema manda solo la plantilla con la foto y el número del asesor","<b>Tú no la mandas.</b> Si la mandas además, el lead recibe el mensaje doble y eso puede tumbar el número de WhatsApp","Antes de colgar le pides dos cosas: que <b>guarde el número</b> que le va a llegar y que <b>conteste OK</b> a ese mensaje","Ese OK confirma que le llegó y además <b>abre la ventana</b> para que le puedas escribir después","Si no lo guarda, WhatsApp le manda a spam los mensajes del asesor"],
+ note:"<b>El grupo tampoco lo creas tú:</b> lo crea el asesor durante la asesoría. Y si no le pides el OK, la mitad no guarda el contacto, no reconoce quién le escribe y no se conecta.",
  tools:[{i:"🗺️",l:"Journey del lead después de agendar",h:B+"confirmacion/"},{i:"🖼️",l:"Imágenes de los asesores",h:"https://drive.google.com/drive/folders/1fs72r8kT6igbnE_6e_0IlLu3YfrDoF6u?usp=drive_link"}]},
 
 {ph:"Al colgar",t:"reg",icon:"📁",title:"Expediente en Drive",stage:"Semanas + AFORE",
@@ -685,7 +685,7 @@ const STEPS=[
 
 {ph:"El día de la cita",t:"call",icon:"🗓️",title:"Confirmar la asesoría",stage:"🔵 Confirmar asesoría → 🔵 Asesoría confirmada",
  lead:"<b>El día de la cita la oportunidad se mueve sola</b> de Asesoría agendada a 🔵 Confirmar asesoría. Ahí te toca <b>llamar</b>, no mandar mensaje.",
- li:["Le hablas para confirmar que hoy es su asesoría","Si confirma → lo mueves a <b>🔵 Asesoría confirmada</b>","Si no contesta → lo mueves a ⭕ Se intentó contactar y <b>te lo regresa en 30 minutos</b> para el segundo intento","Si te dice que no se va a conectar → 🟠 Perdido","Los recordatorios por mensaje los sigue mandando el sistema solo, tú no escribes"],
+ li:["Le hablas para confirmar que hoy es su asesoría","Si confirma → lo mueves a <b>🔵 Asesoría confirmada</b>","Si no contesta → lo mueves a ⭕ Se intentó contactar y <b>te lo regresa en 30 minutos</b> para el segundo intento","Si te dice que no se va a conectar → 🟠 Perdido","Los recordatorios los manda el sistema solo: uno el día antes y otro 2 horas antes. Tú no escribes"],
  note:"Es la etapa que más mueve el show-up: una asesoría confirmada por llamada asiste mucho más que una que solo recibió mensajes. Y si la etapa está mal, los mensajes automáticos no salen."},
 
 {zone:"extra",ph:"Si no cerró",t:"move",icon:"🔂",title:"Seguimiento",stage:"Seguimiento · Llamar hoy · Msj. hoy",

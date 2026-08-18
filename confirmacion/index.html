@@ -314,19 +314,19 @@ const P = [
    h:'Cierras día y hora, y pides que guarden el contacto',
    body:[
      {p:'Esto pasa dentro de la llamada, antes de colgar. El nombre del asesor te sale en ALLMK al agendar. <strong>Dile el porqué real:</strong> si no lo guarda, los mensajes se le pueden ir a spam.'},
-     {g:'Perfecto, ya quedó su asesoría el <span class="var">[día]</span> a las <span class="var">[hora]</span>, hora de Ciudad de México. Le voy a mandar ahorita por WhatsApp el contacto de <span class="var">[asesor]</span>, que es el asesor experto que lo va a atender. Le pido de favor que lo guarde en sus contactos: si no lo tiene guardado, WhatsApp puede mandarle los mensajes a spam, y él es quien lo va a estar buscando. ¿Me confirma en cuanto lo guarde?',
+     {g:'Perfecto, ya quedó su asesoría el <span class="var">[día]</span> a las <span class="var">[hora]</span>, hora de Ciudad de México. Ahorita le va a llegar por WhatsApp el contacto de <span class="var">[asesor]</span>, que es el asesor experto que lo va a atender. Le pido dos cosas: que lo guarde en sus contactos, porque si no WhatsApp puede mandarle los mensajes a spam, y que me conteste OK a ese mensaje para saber que le llegó. ¿Me lo confirma en cuanto lo tenga?',
       lbl:'Así se dice', rem:'No te saltes la última pregunta. Sin ella, la mitad dice que sí y no lo hace.'}
    ]},
 
- { r:'c', i:'card', t:'Contacto', res:'Mandas la tarjeta y la imagen del asesor',
-   fase:'Al agendar', quien:'Closer',
-   h:'Mandas la tarjeta y la imagen del asesor',
+ { r:'s', i:'card', t:'Contacto', res:'El sistema manda el contacto del asesor',
+   fase:'Al agendar', quien:'Sistema',
+   h:'El sistema manda el contacto del asesor',
    body:[
-     {p:'Primero la tarjeta de contacto, luego su imagen personalizada. Los dos por WhatsApp desde el chat de ALLMK. <strong>Escrito a mano, nunca como plantilla.</strong>'},
-     {g:'Señor <span class="var">[nombre]</span>, le comparto el contacto de <span class="var">[asesor]</span>, el asesor experto que lo va a atender en su asesoría del <span class="var">[día]</span> a las <span class="var">[hora]</span>. Guárdelo en sus contactos por favor; así sus mensajes no se le van a spam. Enseguida le mando su foto para que lo reconozca cuando lo contacte.',
-      lbl:'Así se dice', rem:'Manda la tarjeta y luego la imagen, uno tras otro, sin dejar que se enfríe.'},
+     {p:'Al mover la oportunidad a <strong>🔵 Asesoría agendada</strong> sale solo, con la foto y el número del asesor. <strong>El closer ya no manda nada a mano.</strong> Si lo manda además, el lead recibe el mensaje doble y eso puede tumbar el número de WhatsApp.'},
+     {g:'Gracias por su tiempo, <span class="var">[nombre]</span>. Su asesoría queda programada para el <span class="var">[día]</span> a las <span class="var">[hora]</span> con nuestro asesor experto. Le compartimos su foto y número de contacto. Por favor, guarde el número y respóndanos "OK" por este medio para confirmar la recepción de la información. También tenga a la mano su reporte de semanas del IMSS y su estado de cuenta del AFORE.',
+      lbl:'Lo que le llega al lead', rem:'Como es plantilla, sale aunque el lead nunca haya escrito por WhatsApp.'},
      {img:IMG_ASESOR, cap:'La imagen personalizada del asesor'},
-     {p:'Es la que le pone cara al nombre que acaba de guardar.'}
+     {p:'El OK del lead sirve para dos cosas: confirma que le llegó y abre la ventana de 24 horas para que el closer le pueda escribir libre.'}
    ]},
 
  { r:'s', i:'video', t:'Bienvenida', res:'Sale el primer mensaje y el video',
