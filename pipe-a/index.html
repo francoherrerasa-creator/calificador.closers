@@ -631,7 +631,7 @@ const STEPS=[
 
 {ph:"Tu llamada",t:"call",icon:"📞",title:"Doble marcación",stage:"Siempre desde ALLMK",
  lead:"Le marcas <b>dos veces seguidas</b>, apenas te lo asignan.",
- li:["Le marcas <b>dos veces seguidas</b> desde ALLMK","<b>Ya no metes nada en Creditia ni en Consulta Única antes de marcar.</b> Eso ya lo hace el sistema","Si el lead <b>no tiene CURP</b>: se lo pides en la llamada y lo calificas ahí mismo","La segunda llamada puede ser por WhatsApp, pero solo si el lead te dio permiso","Si contesta → la oportunidad se va sola a 🟣 Respondió WhatsApp","Si no contesta → <b>tú</b> la mueves a ⭕ Se intentó contactar"],
+ li:["Le marcas <b>dos veces seguidas</b> desde ALLMK","<b>Ya no metes nada en Creditia ni en Consulta Única antes de marcar.</b> Eso ya lo hace el sistema","Si el lead <b>no tiene CURP</b>: se lo pides en la llamada y lo calificas ahí mismo","Si ya trae CURP, lo <b>copias</b> de Resultado de calificación y lo <b>pegas</b> en Calificación closer. Ya no lo metes en Consulta Única","La segunda llamada puede ser por WhatsApp, pero solo si el lead te dio permiso","Si contesta → la oportunidad se va sola a 🟣 Respondió WhatsApp","Si no contesta → <b>tú</b> la mueves a ⭕ Se intentó contactar"],
  note:"<b>El orden de prioridad cambió.</b> Primero llamas a los de <b>🟢 Lead Calificado</b>, que ya pasaron el filtro. Luego a los de <b>(sin CURP)</b>. Los de <b>(con CURP)</b> van al final: si siguen ahí es porque su CURP dio error, y ese es trámite, no venta. Y desde tu teléfono personal <b>no cuenta</b>.",
  tools:[{i:"🎯",l:"Cómo calificar, paso a paso",h:B+"calificar/"}]},
 
@@ -653,7 +653,7 @@ const STEPS=[
  branch:{t:"El sistema te va a decir una de tres cosas",c:[
    {k:"var(--accent)",i:"✅",n:"Califica",d:"Te da la oferta: retroactivo ahora, futuro, recuperación de derechos, actualización de pensión mínima o completar 500 semanas",w:"Se mueve solo a 🟢 Lead Calificado"},
    {k:"var(--slate)",i:"🟤",n:"No califica",d:"El lead se borra solo del pipe. Tú no lo mueves",w:"Sale del pipe"},
-   {k:"var(--red)",i:"⚠️",n:"Error con el CURP",d:"Se queda en (con CURP). Es trámite: hay que conseguir su reporte de semanas",w:"Ver el paso de abajo"}]},
+   {k:"var(--red)",i:"⚠️",n:"Error con el CURP",d:"Ya no se queda contigo. Lo mandas a 🟢 Solicitar reporte IMSS y ahí lo consigue el área de reportes",w:"Sale de tu pipe"}]},
  note:"<b>El checklist son 10 preguntas y van en todas las llamadas.</b> Las primeras ocho descalifican si contesta que sí: pensión, resolución o negativa, demanda a patrón, demanda al IMSS o Infonavit o AFORE, simulación laboral, accionista, plataformas tipo Uber y crédito Infonavit. Las otras dos son el monto del AFORE y qué está buscando.",
  tools:[{i:"🎯",l:"Cómo calificar, paso a paso",h:B+"calificar/"}]},
 
@@ -670,9 +670,9 @@ const STEPS=[
  note:"<b>El grupo tampoco lo creas tú:</b> lo crea el asesor durante la asesoría. Y si no le pides el OK, la mitad no guarda el contacto, no reconoce quién le escribe y no se conecta.",
  tools:[{i:"🗺️",l:"Journey del lead después de agendar",h:B+"confirmacion/"},{i:"🖼️",l:"Imágenes de los asesores",h:"https://drive.google.com/drive/folders/1fs72r8kT6igbnE_6e_0IlLu3YfrDoF6u?usp=drive_link"}]},
 
-{ph:"Al colgar",t:"reg",icon:"📁",title:"Expediente en Drive",stage:"Semanas + AFORE",
+{ph:"Al colgar",t:"reg",icon:"📁",title:"El expediente",stage:"El AFORE lo subes tú",
  lead:"Sin expediente <b>el asesor no puede hacer los cálculos</b>. Se junta en la misma llamada.",
- li:["Entras al Drive de expedientes y creas una carpeta","La carpeta se llama con el <b>nombre completo del cliente</b>, igual al del PDF del reporte de semanas","Subes 2 documentos: el <b>reporte de semanas del IMSS</b> y el <b>estado de cuenta del AFORE</b>","Copias el link de la carpeta y lo pegas en <b>dos lugares</b>: en las <b>notas de la oportunidad</b> en ALLMK y en el <b>Tracker</b>"],
+ li:["El <b>reporte de semanas</b> ya lo trae el sistema solo al calificar. Ese no lo subes","El <b>AFORE</b> lo subes en ALLMK: en <b>Calificación closer</b>, campo AFORE estado de cuenta","Después le das clic a <b>enviar documentos al contacto</b>. Si lo dejas solo en la oportunidad y esa oportunidad se borra, el documento se pierde","<b>Mientras tanto sigues creando la carpeta en Drive y llenando el Tracker</b>, hasta nuevo aviso"],
  note:"Si es <b>Recuperación de derechos</b>, el estado de cuenta tiene que ser el real. El aproximado que genera el sistema no sirve.",
  tools:[{i:"📁",l:"Drive de expedientes",h:"https://drive.google.com/drive/folders/1oP-X5kNtgyE1N-xnYSfLBq1Msn8KG24j?usp=sharing"}]},
 
@@ -683,7 +683,7 @@ const STEPS=[
  note:"Mover la etapa y llenar el Tracker son <b>dos cosas distintas</b>. Si te falta una, no se paga.",
  tools:[{i:"📈",l:"Abrir el Tracker",h:"https://docs.google.com/spreadsheets/d/1ImBBf0YLK9Qq3rbok7qF424JfI7SOYU5jsLGbH-rHg8/edit"},{i:"📘",l:"Cómo se llena",h:"https://docs.google.com/document/d/1Jg4MSGprfwWUgrBKqWw6OYEeyHLlh9tW3_I12xgOW9A/edit"}]},
 
-{ph:"El día de la cita",t:"call",icon:"🗓️",title:"Confirmar la asesoría",stage:"🔵 Confirmar asesoría → 🔵 Asesoría confirmada",
+{ph:"El día de la cita",t:"call",icon:"🗓️",title:"Confirmar la asesoría",stage:"🟡 Confirmar asesoría → 🔵 Asesoría confirmada",
  lead:"<b>El día de la cita la oportunidad se mueve sola</b> de Asesoría agendada a 🔵 Confirmar asesoría. Ahí te toca <b>llamar</b>, no mandar mensaje.",
  li:["Le hablas para confirmar que hoy es su asesoría","Si confirma → lo mueves a <b>🔵 Asesoría confirmada</b>","Si no contesta → lo mueves a ⭕ Se intentó contactar y <b>te lo regresa en 30 minutos</b> para el segundo intento","Si te dice que no se va a conectar → 🟠 Perdido","Los recordatorios los manda el sistema solo: uno el día antes y otro 2 horas antes. Tú no escribes"],
  note:"Es la etapa que más mueve el show-up: una asesoría confirmada por llamada asiste mucho más que una que solo recibió mensajes. Y si la etapa está mal, los mensajes automáticos no salen."},
@@ -691,7 +691,7 @@ const STEPS=[
 {zone:"extra",ph:"Si no cerró",t:"move",icon:"🔂",title:"Seguimiento",stage:"Seguimiento · Llamar hoy · Msj. hoy",
  lead:"El lead tiene interés pero no cerró hoy. <b>Ojo: casi nunca debería llegar aquí.</b> El 99% de las llamadas tiene que terminar en una etapa final, y un \"déjame pensarlo\" no es seguimiento: se agenda y si hace falta se recorre.",
  li:["Lo mandas a Seguimiento y <b>siempre</b> le pones un task","Si el task es para menos de 30 días va a <b>Seguimiento</b>. Si es para más, a <b>Seguimiento futuro</b>","<b>Llamar hoy</b> y <b>Msj. hoy</b> los dejas en cero al terminar el día","Si no le pones task, <b>en 2 horas</b> aparece en 🔴 Seguimiento sin task","El día que toca el task, el lead se mueve solo a 🔴 Task por hacer hoy. Esa es tu bandeja y cierra en cero"],
- note:"Si una etapa roja se queda 2 días sin atender, <b>te quitan el lead</b> y se lo dan a otro closer."},
+ note:"Si una etapa roja se queda <b>3 días</b> sin atender, te quitan el lead y se lo dan a otro closer. Cuentan días naturales: si te cae un viernes, tienes sábado, domingo y lunes; el martes a las 00:01 lo pierdes."},
 
 {zone:"extra",ph:"Si no cerró",t:"alert",icon:"🚑",title:"No show",stage:"Re-agendar → No Reagendo",
  lead:"El cliente no llegó a su asesoría. <b>El asesor te la regresa y tú la rescatas.</b>",
@@ -710,7 +710,7 @@ const BLOCKS=[
 {n:"Entrada",k:"var(--accent)",sub:"Leads que ya te escribieron",s:[
  ["🟢 Lead Calificado","El sistema ya dijo que califica. Es tu mejor lead: la llamada es solo para agendar. Llámalo primero."],
  ["🟢 Lead (sin CURP)","Contestó pero sin CURP. Le llamas, le pides el CURP y lo calificas en la misma llamada."],
- ["🟢 Lead (con CURP)","Mandó su CURP y aun así sigue aquí, o sea que el CURP dio error. Es trámite: le pides por WhatsApp su reporte de semanas del IMSS y lo mueves a Seguimiento con task."],
+ ["🟢 Lead (con CURP)","Mandó su CURP y aun así sigue aquí, o sea que el CURP dio error. Lo mandas a 🟢 Solicitar reporte IMSS para que el área de reportes lo consiga."],
  ["🟢 Otros leads","Oportunidad creada a mano desde otro pipeline y asignada a ti. Se trabaja igual que un lead nuevo."],
  ["🟢 Re-agendar","No asistió a la asesoría. El asesor la regresa aquí y el rescate te toca a ti."],
  ["🟢 Re-agendar envió msj.","Contestó al mensaje de reagenda. Llámalo y amarra la nueva fecha."],
@@ -723,8 +723,9 @@ const BLOCKS=[
  ["🟡 Msj. hoy","Te toca mandarle mensaje hoy. Cierra en cero."],
  ["🟡 Llamar hoy","Te toca llamarle hoy. Cierra en cero."],
  ["⭕ Seguimiento","Hay interés y no cerró. Siempre con task."],
+ ["🟢 Solicitar reporte IMSS","El CURP dio error y no se pudo calificar. Lo mandas aquí y el área de reportes consigue el reporte de semanas con proveedores. Sale de tu pipe hasta que lo resuelvan."],
  ["🔵 Asesoría agendada","Cita puesta. La oferta va en el campo, no en la etapa."],
- ["🔵 Confirmar asesoría","Llegó el día de la cita. Te toca llamarle para confirmar. Si no contesta, a Se intentó contactar y te lo regresa en 30 minutos."],
+ ["🟡 Confirmar asesoría","Llegó el día de la cita. Es amarilla porque es tarea de hoy, no etapa final. Te toca llamarle para confirmar. Si no contesta, a Se intentó contactar y te lo regresa en 30 minutos."],
  ["🔵 Asesoría confirmada","Ya confirmó por teléfono que se va a conectar. Esa noche sale de tu pipe y pasa al del asesor."],
  ["🔴 Task por hacer hoy","Tu bandeja del día: los task que vencen hoy. No es un error, es lo que toca hacer. Cierra en cero."]]},
 
@@ -732,6 +733,7 @@ const BLOCKS=[
  ["🔴 WhatsApp sin seguimiento","Respondió y lo dejaste un día sin mover."],
  ["🔴 Agenda sin seguimiento","Tenías una Agenda Propia y llegó el día de la cita sin que la movieras."],
  ["🔴 Seguimiento sin task","Lo mandaste a seguimiento sin ponerle task. Salta en 2 horas."],
+ ["🔴 Pedir info / Reporte IMSS","El área de reportes no pudo conseguir su reporte de semanas. <b>Lee la nota</b>: ahí dice qué le tienes que pedir al cliente. Puede ser el CURP correcto, o que vaya al IMSS a aclarar un homónimo. Le llamas, le explicas y lo mandas a Seguimiento con task."],
  ["🔴 ¿Porqué no califica?","Falta capturar la razón por la que el sistema lo rechazó. Se llena y se cierra."]]},
 
 {n:"Cierres",k:"var(--slate)",sub:"Aquí termina el lead",s:[
