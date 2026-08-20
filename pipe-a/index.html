@@ -528,7 +528,7 @@
 
   <div class="sec-h">
     <h2>Seguimiento después de agendar</h2>
-    <span>El journey del lead desde que agendas hasta que se conecta. 6 pasos: lo que haces tú y lo que manda el sistema.</span>
+    <span>El journey del lead desde que agendas hasta que se conecta. 6 pasos: cuatro tuyos y dos del asesor.</span>
   </div>
 
 <div id="wa">
@@ -560,17 +560,16 @@
 </style>
 <div class="jn">
   <div class="jn-scr"><div class="jn-row">
-    <div class="jn-c you"><span class="jn-n">01</span><span class="jn-h">Cierre</span><span class="jn-p">Cierras día y hora y pides que guarden el contacto del asesor</span></div>
-    <div class="jn-c you"><span class="jn-n">02</span><span class="jn-h">Contacto</span><span class="jn-p">Mandas la tarjeta y la imagen del asesor</span></div>
-    <div class="jn-c sys"><span class="jn-n">03</span><span class="jn-h">Bienvenida</span><span class="jn-p">Sale el primer mensaje y el video</span></div>
-    <div class="jn-c you"><span class="jn-n">04</span><span class="jn-h">Llamada</span><span class="jn-p">La mañana del día, marcas a tus leads con cita</span></div>
-    <div class="jn-c sys"><span class="jn-n">05</span><span class="jn-h">Antesala</span><span class="jn-p">Sale el segundo mensaje, dos horas antes</span></div>
-    <div class="jn-c adv"><span class="jn-n">06</span><span class="jn-h">Entrega</span><span class="jn-p">El asesor crea el grupo y toma al cliente</span></div>
+    <div class="jn-c you"><span class="jn-n">01</span><span class="jn-h">Cierre</span><span class="jn-p">Cierras día y hora y le avisas del grupo</span></div>
+    <div class="jn-c you"><span class="jn-n">02</span><span class="jn-h">Grupo</span><span class="jn-p">Creas el grupo, presentas y mandas contacto e imagen</span></div>
+    <div class="jn-c adv"><span class="jn-n">03</span><span class="jn-h">Presentación</span><span class="jn-p">El asesor saluda y pide que guarden su número</span></div>
+    <div class="jn-c you"><span class="jn-n">04</span><span class="jn-h">Testimonio</span><span class="jn-p">Mandas el video de gancho al grupo</span></div>
+    <div class="jn-c you"><span class="jn-n">05</span><span class="jn-h">Llamada</span><span class="jn-p">Marcas a tus leads con cita ese día</span></div>
+    <div class="jn-c adv"><span class="jn-n">06</span><span class="jn-h">Asesoría</span><span class="jn-p">El asesor toma al cliente</span></div>
   </div></div>
   <div class="jn-foot">
     <div class="jn-keys">
       <span class="jn-k you"><i class="jn-sw"></i>Lo haces tú</span>
-      <span class="jn-k sys"><i class="jn-sw"></i>Lo manda el sistema</span>
       <span class="jn-k adv"><i class="jn-sw"></i>Lo hace el asesor</span>
     </div>
     <a class="cta" href="https://pension-perfecta.github.io/calificador.closers/confirmacion/" target="_blank" rel="noopener">Ver el detalle y los guiones <span>&#8599;</span></a>
@@ -664,10 +663,10 @@ const STEPS=[
  note:"Tres cosas y sin excepción: <b>mueve la oportunidad</b>, <b>llena el campo Tipo de asesoría</b> y <b>deja la nota con el link del expediente</b>. Si agendas y no mueves la oportunidad, el asesor no la ve y no te pagan. Y el asesor lo asigna el sistema por turnos: <b>no lo elijas tú.</b>",
  tools:[{i:"📊",l:"Abrir ALLMK",h:"https://club.allmk.app/v2/location/TOhtz5PHJUmWnKH2q3hs/opportunities"}]},
 
-{ph:"Al colgar",t:"reg",icon:"🪪",title:"Contacto del asesor",stage:"Lo manda el sistema",
- lead:"<b>Ya no mandas nada a mano.</b> En cuanto agendas, el sistema le manda solo la presentación del asesor con su foto y su número. Lo tuyo es pedirle que lo guarde.",
- li:["Al mover la oportunidad a <b>🔵 Asesoría agendada</b>, el sistema manda solo la plantilla con la foto y el número del asesor","<b>Tú no la mandas.</b> Si la mandas además, el lead recibe el mensaje doble y eso puede tumbar el número de WhatsApp","Antes de colgar le pides dos cosas: que <b>guarde el número</b> que le va a llegar y que <b>conteste OK</b> a ese mensaje","Ese OK confirma que le llegó y además <b>abre la ventana</b> para que le puedas escribir después","Si no lo guarda, WhatsApp le manda a spam los mensajes del asesor"],
- note:"<b>El grupo tampoco lo creas tú:</b> lo crea el asesor durante la asesoría. Y si no le pides el OK, la mitad no guarda el contacto, no reconoce quién le escribe y no se conecta.",
+{ph:"Al colgar",t:"reg",icon:"👥",title:"El grupo con el asesor",stage:"Lo creas tú",
+ lead:"<b>Lo creas tú, al colgar.</b> Van tres: el cliente, el asesor y tú. Ahí presentas al asesor y le mandas su contacto.",
+ li:["El grupo se llama <b>Pensión Perfecta · nombre del cliente</b>, con su nombre completo","Escribes la presentación <b>a mano</b>, con el nombre del asesor, el día y la hora. Nunca copiado y pegado igual en todos: eso es lo que tumba tu línea","Enseguida mandas la <b>tarjeta de contacto</b> del asesor y su <b>imagen personalizada</b>","Después el asesor saluda ahí mismo y le pide que guarde su número","Y le mandas el <b>video testimonio</b> de gancho, que es el que más mueve que se conecte"],
+ note:"<b>Un grupo por cliente y nadie más adentro.</b> Si el cliente pide salir, lo sacas el mismo día. Y el grupo se cierra cuando cierra el caso, se haya firmado o no.",
  tools:[{i:"🗺️",l:"Journey del lead después de agendar",h:B+"confirmacion/"},{i:"🖼️",l:"Imágenes de los asesores",h:"https://drive.google.com/drive/folders/1fs72r8kT6igbnE_6e_0IlLu3YfrDoF6u?usp=drive_link"}]},
 
 {ph:"Al colgar",t:"reg",icon:"📁",title:"El expediente",stage:"El AFORE lo subes tú",
@@ -685,7 +684,7 @@ const STEPS=[
 
 {ph:"El día de la cita",t:"call",icon:"🗓️",title:"Confirmar la asesoría",stage:"🟡 Confirmar asesoría → 🔵 Asesoría confirmada",
  lead:"<b>El día de la cita la oportunidad se mueve sola</b> de Asesoría agendada a 🔵 Confirmar asesoría. Ahí te toca <b>llamar</b>, no mandar mensaje.",
- li:["Le hablas para confirmar que hoy es su asesoría","Si confirma → lo mueves a <b>🔵 Asesoría confirmada</b>","Si no contesta → lo mueves a ⭕ Se intentó contactar y <b>te lo regresa en 30 minutos</b> para el segundo intento","Si te dice que no se va a conectar → 🟠 Perdido","Los recordatorios los manda el sistema solo: uno el día antes y otro 2 horas antes. Tú no escribes"],
+ li:["Le hablas para confirmar que hoy es su asesoría","Si confirma → lo mueves a <b>🔵 Asesoría confirmada</b>","Si no contesta → lo mueves a ⭕ Se intentó contactar y <b>te lo regresa en 30 minutos</b> para el segundo intento","Si te dice que no se va a conectar → 🟠 Perdido","El recordatorio de 2 horas antes lo manda el sistema al chat individual. No lo repitas en el grupo"],
  note:"Es la etapa que más mueve el show-up: una asesoría confirmada por llamada asiste mucho más que una que solo recibió mensajes. Y si la etapa está mal, los mensajes automáticos no salen."},
 
 {zone:"extra",ph:"Si no cerró",t:"move",icon:"🔂",title:"Seguimiento",stage:"Seguimiento · Llamar hoy · Msj. hoy",
