@@ -134,6 +134,7 @@ h1{margin:0; font-size:clamp(26px,4.2vw,42px); line-height:1.05; letter-spacing:
   border-radius:16px; box-shadow:var(--shadow); overflow:hidden}
 .dir summary{display:flex; align-items:center; gap:14px; padding:18px 22px; cursor:pointer;
   list-style:none; user-select:none}
+  .dbody a{color:var(--closer); font-weight:800; text-underline-offset:3px}
   .dir-link{display:flex; align-items:center; gap:14px; padding:18px 22px; text-decoration:none;
   color:inherit; border-left-color:var(--closer)}
   .dir-link .dir-chev{font-size:15px}
@@ -293,19 +294,8 @@ dialog::backdrop{background:var(--veil); backdrop-filter:blur(3px)}
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10.2 8.6l5 3.4-5 3.4z"/></svg>
       </span>
       <span class="dir-txt">
-        <b>Video 13 · el que va siempre</b>
-        <small>El testimonio del paso 4</small>
-      </span>
-      <span class="dir-chev" aria-hidden="true">&#8599;</span>
-    </a>
-
-    <a class="dir dir-link" href="https://drive.google.com/drive/folders/1rzTfzhMOoYxhee-iSKDZWVf3G0N-FabH?usp=drive_link" target="_blank" rel="noopener">
-      <span class="dir-ico" aria-hidden="true">
-        <svg viewBox="0 0 24 24"><rect x="2" y="6" width="13" height="12" rx="2"/><path d="M15 11l6-3v8l-6-3z"/></svg>
-      </span>
-      <span class="dir-txt">
-        <b>Todos los testimonios</b>
-        <small>Por si le queda mejor otro caso</small>
+        <b>Video a mandar</b>
+        <small>El testimonio del paso 4, va en todas</small>
       </span>
       <span class="dir-chev" aria-hidden="true">&#8599;</span>
     </a>
@@ -386,8 +376,7 @@ const P = [
    h:'Mandas el video de gancho al grupo',
    body:[
      {p:'Ya que el grupo está armado y el asesor se presentó, mandas un video testimonio. Es lo que le pone cara y resultado a lo que le acabas de prometer, y es de lo que más mueve que el día de la cita sí se conecte.'},
-     {p:'<strong>El 13 va siempre.</strong> Ese no se negocia. Si quieres mandar otro además, escoge el que le quede a su caso.'},
-     {p:'Los dos accesos están abajo: el video 13 directo y la carpeta completa.'},
+     {p:'<strong>Video a mandar:</strong> <a href="https://drive.google.com/file/d/1adZyuBt0LRwFTxs9Z7de6Gt9dl9lFRid/view?usp=drive_link" target="_blank" rel="noopener">abrir el video</a>. Ese va siempre, en todas.'},
      {g:'<span class="var">[Nombre]</span>, le comparto el caso de una persona que estaba justo como usted. Véalo con calma, dura poco. El <span class="var">[día]</span> el asesor le va a explicar cuánto le tocaría a usted.',
       lbl:'Así se manda', rem:'Mándalo con una línea tuya, no solo el video pelón. El video sin contexto no lo abren.'}
    ]},
