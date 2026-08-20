@@ -111,9 +111,7 @@ h1{margin:0; font-size:clamp(26px,4.2vw,42px); line-height:1.05; letter-spacing:
 
 /* bloques de abajo */
 .abajo{display:grid; grid-template-columns:repeat(2,minmax(0,368px)); justify-content:center;
-  gap:14px; margin-top:26px; align-items:stretch}
-  .dir-hot{grid-column:1/-1; border-left-color:var(--closer); background:linear-gradient(180deg,#fff, #f4f9f5)}
-  .dir-hot .dir-txt b{color:var(--closer)}
+  gap:16px; margin-top:26px; align-items:stretch}
 @media(max-width:820px){.abajo{grid-template-columns:1fr}}
 
 .mat{background:var(--card); border:1px solid var(--hair); border-radius:16px;
@@ -137,6 +135,7 @@ h1{margin:0; font-size:clamp(26px,4.2vw,42px); line-height:1.05; letter-spacing:
   .dbody a{color:var(--closer); font-weight:800; text-underline-offset:3px}
   .dir-link{display:flex; align-items:center; gap:14px; padding:18px 22px; text-decoration:none;
   color:inherit; border-left-color:var(--closer)}
+  .dir{display:flex; flex-direction:column; justify-content:center}
   .dir-link .dir-chev{font-size:15px}
 .dir summary::-webkit-details-marker{display:none}
 .dir summary:hover{background:var(--band)}
@@ -288,17 +287,6 @@ dialog::backdrop{background:var(--veil); backdrop-filter:blur(3px)}
         </div>
       </div>
     </details>
-
-    <a class="dir dir-link dir-hot" href="https://drive.google.com/file/d/1adZyuBt0LRwFTxs9Z7de6Gt9dl9lFRid/view?usp=drive_link" target="_blank" rel="noopener">
-      <span class="dir-ico" aria-hidden="true">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10.2 8.6l5 3.4-5 3.4z"/></svg>
-      </span>
-      <span class="dir-txt">
-        <b>Video a mandar</b>
-        <small>El testimonio del paso 4, va en todas</small>
-      </span>
-      <span class="dir-chev" aria-hidden="true">&#8599;</span>
-    </a>
 
     <a class="dir dir-link" href="https://drive.google.com/drive/folders/1fs72r8kT6igbnE_6e_0IlLu3YfrDoF6u?usp=sharing" target="_blank" rel="noopener">
       <span class="dir-ico" aria-hidden="true">
