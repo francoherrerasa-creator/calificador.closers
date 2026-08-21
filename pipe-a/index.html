@@ -658,9 +658,9 @@ const STEPS=[
 
 {ph:"Tu llamada",t:"move",icon:"📅",title:"Agenda la cita",stage:"🔵 Asesoría agendada",
  lead:"Agendas dentro de ALLMK, en el calendario de la oferta que te dio el sistema en <b>Califica para</b>.",
- li:["Le pides el <b>reporte de semanas</b> del IMSS y el <b>estado de cuenta del AFORE</b>","Mueves la oportunidad a <b>🔵 Asesoría agendada</b>","<b>Marcas el producto en el campo</b> Tipo de asesoría. Ahora, Futuro y Recuperación ya no son etapas, son campo","<b>Escribes una nota en la oportunidad y pegas ahí el link de la carpeta del expediente.</b> La carpeta la creas en el paso 6, antes de colgar","Esa noche la oportunidad desaparece de tu pipe. Ya pasó a la del asesor"],
- steps:{t:"Cómo agendar en ALLMK, paso a paso",l:["Le das clic a <b>New</b>","Buscas al contacto por su teléfono","Eliges el <b>calendario de la oferta</b> que salió en Califica para. Hay uno por cada oferta","En <b>Team Member</b> y en <b>Calendar</b> dejas <b>Default</b>. Nunca Custom","Eliges un horario libre y le das <b>Book Appointment</b>","Para saber qué asesor te tocó: entras a <b>Appointment List View</b>, filtras por el contacto y ves el <b>owner</b>","Antes de cerrar la oportunidad: le das clic a <b>Notes</b>, escribes qué pasó en la llamada y <b>pegas el link de la carpeta del expediente</b>"]},
- note:"Tres cosas y sin excepción: <b>mueve la oportunidad</b>, <b>llena el campo Tipo de asesoría</b> y <b>deja la nota con el link del expediente</b>. Si agendas y no mueves la oportunidad, el asesor no la ve y no te pagan. Y el asesor lo asigna el sistema por turnos: <b>no lo elijas tú.</b>",
+ li:["Le pides el <b>reporte de semanas</b> del IMSS y el <b>estado de cuenta del AFORE</b>","Mueves la oportunidad a <b>🔵 Asesoría agendada</b>","<b>Marcas el producto en el campo</b> Tipo de asesoría. Ahora, Futuro y Recuperación ya no son etapas, son campo","<b>Escribes una nota en la oportunidad</b> con lo que pasó en la llamada. El expediente ya no lo armas tú, se guarda solo","Esa noche la oportunidad desaparece de tu pipe. Ya pasó a la del asesor"],
+ steps:{t:"Cómo agendar en ALLMK, paso a paso",l:["Le das clic a <b>New</b>","Buscas al contacto por su teléfono","Eliges el <b>calendario de la oferta</b> que salió en Califica para. Hay uno por cada oferta","En <b>Team Member</b> y en <b>Calendar</b> dejas <b>Default</b>. Nunca Custom","Eliges un horario libre y le das <b>Book Appointment</b>","Para saber qué asesor te tocó: entras a <b>Appointment List View</b>, filtras por el contacto y ves el <b>owner</b>","Antes de cerrar la oportunidad: le das clic a <b>Notes</b> y escribes qué pasó en la llamada"]},
+ note:"Tres cosas y sin excepción: <b>mueve la oportunidad</b>, <b>llena el campo Tipo de asesoría</b> y <b>deja tu nota</b>. Si agendas y no mueves la oportunidad, el asesor no la ve y no te pagan. Y el asesor lo asigna el sistema por turnos: <b>no lo elijas tú.</b>",
  tools:[{i:"📊",l:"Abrir ALLMK",h:"https://club.allmk.app/v2/location/TOhtz5PHJUmWnKH2q3hs/opportunities"}]},
 
 {ph:"Al colgar",t:"reg",icon:"👥",title:"El grupo con el asesor",stage:"Lo creas tú",
@@ -669,16 +669,15 @@ const STEPS=[
  note:"<b>Un grupo por cliente y nadie más adentro.</b> Si el cliente pide salir, lo sacas el mismo día. Y el grupo se cierra cuando cierra el caso, se haya firmado o no.",
  tools:[{i:"🗺️",l:"Journey del lead después de agendar",h:B+"confirmacion/"},{i:"🖼️",l:"Imágenes de los asesores",h:"https://drive.google.com/drive/folders/1fs72r8kT6igbnE_6e_0IlLu3YfrDoF6u?usp=drive_link"}]},
 
-{ph:"Al colgar",t:"reg",icon:"📁",title:"El expediente",stage:"El AFORE lo subes tú",
- lead:"Sin expediente <b>el asesor no puede hacer los cálculos</b>. Se junta en la misma llamada.",
- li:["El <b>reporte de semanas</b> ya lo trae el sistema solo al calificar. Ese no lo subes","El <b>AFORE</b> lo subes en ALLMK: en <b>Calificación closer</b>, campo AFORE estado de cuenta","Después le das clic a <b>enviar documentos al contacto</b>. Si lo dejas solo en la oportunidad y esa oportunidad se borra, el documento se pierde","<b>Mientras tanto sigues creando la carpeta en Drive y llenando el Tracker</b>, hasta nuevo aviso"],
- note:"Si es <b>Recuperación de derechos</b>, el estado de cuenta tiene que ser el real. El aproximado que genera el sistema no sirve.",
- tools:[{i:"📁",l:"Drive de expedientes",h:"https://drive.google.com/drive/folders/1oP-X5kNtgyE1N-xnYSfLBq1Msn8KG24j?usp=sharing"}]},
+{ph:"Al colgar",t:"reg",icon:"📁",title:"El AFORE",stage:"Es lo único que subes tú",
+ lead:"El expediente <b>ya se arma solo</b>. Lo único que sigue en tus manos es el estado de cuenta del AFORE.",
+ li:["El <b>reporte de semanas</b> y el <b>reporte de calificación</b> se generan solos al calificar y quedan guardados en el contacto, en <b>Expediente</b>. No les tomes foto ni los subas","El <b>AFORE</b> sí lo subes tú: en ALLMK, <b>Calificación closer</b>, campo AFORE estado de cuenta","Después le das clic a <b>enviar documentos al contacto</b>. Si lo dejas solo en la oportunidad y esa oportunidad se borra, el documento se pierde","<b>Ya no creas carpeta en Drive.</b> Eso se acabó"],
+ note:"Si es <b>Recuperación de derechos</b>, el estado de cuenta tiene que ser el real. El aproximado que genera el sistema no sirve."},
 
 
 {ph:"Al colgar",t:"reg",icon:"📊",title:"Llenar el Tracker",stage:"Un registro por asesoría",
  lead:"<b>Aquí es donde se paga tu comisión.</b> Se llena al colgar, no al final del día.",
- li:["Llenas un registro por cada asesoría que agendas","Pegas el link de la carpeta del expediente","Se te paga si el registro queda completo, el cliente asistió, calificó y el expediente está completo","Y además tienes que haber movido la oportunidad en ALLMK"],
+ li:["Llenas un registro por cada asesoría que agendas","En la columna del link de la carpeta escribes <b>ALLMK</b>. Ya no va ningún link de Drive","Se te paga si el registro queda completo, el cliente asistió y calificó","Y además tienes que haber movido la oportunidad en ALLMK"],
  note:"Mover la etapa y llenar el Tracker son <b>dos cosas distintas</b>. Si te falta una, no se paga.",
  tools:[{i:"📈",l:"Abrir el Tracker",h:"https://docs.google.com/spreadsheets/d/1ImBBf0YLK9Qq3rbok7qF424JfI7SOYU5jsLGbH-rHg8/edit"},{i:"📘",l:"Cómo se llena",h:"https://docs.google.com/document/d/1Jg4MSGprfwWUgrBKqWw6OYEeyHLlh9tW3_I12xgOW9A/edit"}]},
 

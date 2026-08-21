@@ -123,8 +123,9 @@
         <li><span class="do">Justo abajo, en <span class="f">Enviar CURP a calificar</span>, elige la opción <b>Análisis</b>. Luego toca el botón <span class="btnblue">Update</span>.</span><span class="see">con esto el sistema salió a buscar sus datos. Empieza a contar 1 a 2 minutos.</span></li>
         <li><span class="do">No te quedes esperando. Mientras corre, sigue la llamada y ve haciendo las preguntas del <b>checklist</b> (más abajo en esta página).</span></li>
         <li><span class="do">Cuando pasen esos 1 o 2 minutos, abre <span class="f">Resultado de calificación</span> y lee el renglón <b>Califica para</b>.</span><span class="see">el nombre de la oferta, por ejemplo "financiamiento retroactivo". Si aparecen dos, quédate con la primera.</span></li>
-        <li><span class="do">Mira también <span class="f">Aportación necesaria</span>. Si dice <b>$0</b>, perfecto, agéndalo. Si dice un monto, lee el recuadro amarillo de abajo antes de agendar.</span></li>
-        <li><span class="do">Si en lugar de una oferta dice <b>no califica</b>, ahí mismo viene el motivo. Explícaselo con calma, y mueve a la persona a la columna <span class="f">no califica</span>.</span></li>
+        <li><span class="do">Si dice <b>no califica</b> o <b>error en el CURP</b>, <b>paras ahí</b>. No preguntas nada más. El motivo viene en el mismo renglón: explícaselo con calma y mueve a la persona a la columna <span class="f">no califica</span>.</span></li>
+        <li><span class="do">Si hay oferta y <span class="f">Semanas por reintegrar</span> trae un número, pregúntale de cuánto dispone para completar esas semanas.</span><span class="see">si viene en 0 o vacío, sáltate esta pregunta.</span></li>
+        <li><span class="do"><b>Solo si la oferta empieza con Financiamiento retroactivo</b>, llena en <span class="f">Resultado de calificación</span> los campos <b>Aportación personal necesaria</b> y <b>Puede hacer la aportación</b>.</span><span class="see">en cualquier otra oferta se quedan vacíos. Ya no están en Calificación closer, se movieron aquí.</span></li>
       </ol>
     </div>
     <div class="callout">
@@ -134,6 +135,10 @@
     <div class="callout tip">
       <span class="h">¿Y si el sistema todavía dice "procesando"?</span>
       Dale un minuto más, cierra la persona y vuelve a abrirla. El resultado aparece solo.
+    </div>
+    <div class="callout tip">
+      <span class="h">Si el cliente te manda su reporte de semanas en la llamada</span>
+      Súbelo tú ahí mismo: <span class="f">Calificación closer</span>, campo <b>Reporte de semanas IMSS</b>. Luego, en <span class="f">Enviar datos para calificar</span>, eliges <b>Enviar reporte</b> y le das Update. Con eso califica sin pasar por Consulta Única. <b>No lo mandes al área de reportes</b>: ellos son para cuando el reporte hay que conseguirlo con proveedor.
     </div>
   </section>
 
@@ -212,17 +217,19 @@
       <li><span class="do">Ve a consultas del IMSS, semanas cotizadas. Escribe el CURP y dale consultar.</span></li>
       <li><span class="do">Entra a resultados y descarga el reporte.</span></li>
     </ol>
-    <p style="margin:12px 0 4px"><b>Revisar si califica</b></p>
+    <p style="margin:12px 0 4px"><b>Mandarlo a calificar</b></p>
     <ol class="steps">
-      <li><span class="do">Entra a la calculadora de pensión perfecta y toca nuevo cálculo.</span></li>
-      <li><span class="do">Sube el reporte que bajaste y pon la fecha de hoy.</span></li>
-      <li><span class="do">Abre análisis de calificación. Te dice la oferta, o que no califica.</span></li>
+      <li><span class="do">Regresa a ALLMK, a la oportunidad. En <span class="f">Calificación closer</span>, campo <b>Reporte de semanas IMSS</b>, sube el archivo que bajaste.</span></li>
+      <li><span class="do">Abajo, en <span class="f">Enviar datos para calificar</span>, elige <b>Enviar reporte</b> y dale Update.</span><span class="see">ese botón dispara la calificación sin pasar por Consulta Única.</span></li>
+      <li><span class="do">Sal y vuelve a entrar. El resultado aparece en <span class="f">Resultado de calificación</span> como siempre.</span></li>
     </ol>
+    <p style="margin:12px 0 0;color:var(--muted)">Aunque tengas acceso a la calculadora, <b>no subas nada directo ahí</b>. Siempre desde ALLMK.</p>
   </details>
 
   <h2><span class="n">5</span>Reglas que no se rompen</h2>
   <ul class="hard">
     <li>Llama siempre desde ALLMK con tu número. Nunca desde tu WhatsApp ni tu celular.</li>
+    <li><b>Todo se manda a calificar desde ALLMK</b>, nunca directo en la calculadora. Desde ALLMK viaja el código del contacto y el reporte se guarda solo; por fuera el sistema no sabe de quién es y se pierde.</li>
     <li>No mandes mensajes tú. Los mensajes salen solos.</li>
     <li>No muevas un lead de una columna verde a otra columna verde.</li>
     <li>No le des montos de pensión al lead. Eso lo dice el experto en la asesoría.</li>
