@@ -98,18 +98,18 @@
 <div class="wrap">
   <p class="eyebrow">Pensión Perfecta · CF-A</p>
   <h1>Cómo calificar a un lead, paso a paso</h1>
-  <p class="sub">Esta guía es para que no te pierdas. Léela con calma la primera vez. Cuando le agarres la mano, vas a tardar 2 minutos por lead.</p>
+  <p class="sub">Metes el CURP en ALLMK, el sistema califica solo en 1 o 2 minutos y te dice para qué aplica. Tu chamba: llamar, meter el CURP, hacer el checklist y agendar.</p>
 
   <div class="idea">
-    <b>La idea en una frase.</b> Antes tú tenías que entrar a varias páginas para saber si una persona calificaba. Ahora no. Tú metes el CURP en el sistema (ALLMK), el sistema hace todo solo y en 1 o 2 minutos te dice si la persona califica y para qué. Tu chamba es llamar, meter el CURP, hacer unas preguntas y agendar. Nada más.
+    <b>La regla que no se rompe.</b> Todo se manda a calificar <b>desde ALLMK</b>, nunca directo en la calculadora. Desde ALLMK viaja el código del contacto y el reporte se guarda solo en su ficha. Por fuera, se pierde.
   </div>
 
   <h2><span class="n">1</span>Primero: ¿con qué lead estás?<small>toca una opción</small></h2>
-  <p class="lead">No todos los leads se trabajan igual. Toca el tuyo y abajo te salen los pasos exactos.</p>
+  <p class="lead">Toca el tuyo y abajo salen los pasos exactos.</p>
   <div class="tabs" role="tablist">
-    <button class="tab" role="tab" aria-selected="true" id="t-sin" onclick="pick('sin')"><b>1. Sin CURP</b><span>La persona escribió pero no dejó su CURP</span></button>
-    <button class="tab" role="tab" aria-selected="false" id="t-con" onclick="pick('con')"><b>2. Con CURP pero marcó error</b><span>Dejó CURP y aun así sigue aquí</span></button>
-    <button class="tab" role="tab" aria-selected="false" id="t-cal" onclick="pick('cal')"><b>3. Ya calificado</b><span>El sistema ya dijo que sí califica</span></button>
+    <button class="tab" role="tab" aria-selected="true" id="t-sin" onclick="pick('sin')"><b>1. Sin CURP</b><span>Escribió pero no dejó CURP</span></button>
+    <button class="tab" role="tab" aria-selected="false" id="t-con" onclick="pick('con')"><b>2. Con CURP pero marcó error</b><span>Dejó CURP y dio error</span></button>
+    <button class="tab" role="tab" aria-selected="false" id="t-cal" onclick="pick('cal')"><b>3. Ya calificado</b><span>El sistema ya dijo que sí</span></button>
   </div>
 
   <!-- SIN CURP -->
@@ -117,28 +117,23 @@
     <div class="card">
       <p class="lead" style="padding-top:8px"><b>Qué es este lead:</b> te escribió por WhatsApp pero todavía no nos dio su CURP. Tú se lo vas a pedir por teléfono y lo calificas en la misma llamada.</p>
       <ol class="steps">
-        <li><span class="do">Entra a la columna <span class="f">lead envió mensaje sin CURP</span> y toca una persona.</span></li>
-        <li><span class="do">Llámale desde ALLMK, con tu número asignado. Salúdalo y pídele su CURP.</span><span class="see">arriba, un botón para llamar. No uses tu celular ni tu WhatsApp.</span></li>
-        <li><span class="do">Dentro de esa persona, busca la sección <span class="f">Calificación closer</span> y pega el CURP en la casilla del CURP.</span></li>
-        <li><span class="do">Justo abajo, en <span class="f">Enviar CURP a calificar</span>, elige la opción <b>Análisis</b>. Luego toca el botón <span class="btnblue">Update</span>.</span><span class="see">con esto el sistema salió a buscar sus datos. Empieza a contar 1 a 2 minutos.</span></li>
-        <li><span class="do">No te quedes esperando. Mientras corre, sigue la llamada y ve haciendo las preguntas del <b>checklist</b> (más abajo en esta página).</span></li>
-        <li><span class="do">Cuando pasen esos 1 o 2 minutos, abre <span class="f">Resultado de calificación</span> y lee el renglón <b>Califica para</b>.</span><span class="see">el nombre de la oferta, por ejemplo "financiamiento retroactivo". Si aparecen dos, quédate con la primera.</span></li>
-        <li><span class="do">Si dice <b>no califica</b> o <b>error en el CURP</b>, <b>paras ahí</b>. No preguntas nada más. El motivo viene en el mismo renglón: explícaselo con calma y mueve a la persona a la columna <span class="f">no califica</span>.</span></li>
-        <li><span class="do">Si hay oferta y <span class="f">Semanas por reintegrar</span> trae un número, pregúntale de cuánto dispone para completar esas semanas.</span><span class="see">si viene en 0 o vacío, sáltate esta pregunta.</span></li>
-        <li><span class="do"><b>Solo si la oferta empieza con Financiamiento retroactivo</b>, llena en <span class="f">Resultado de calificación</span> los campos <b>Aportación personal necesaria</b> y <b>Puede hacer la aportación</b>.</span><span class="see">en cualquier otra oferta se quedan vacíos. Ya no están en Calificación closer, se movieron aquí.</span></li>
+        <li><span class="do">Entra a <span class="f">lead envió mensaje sin CURP</span> y toca una persona.</span></li>
+        <li><span class="do">Llámale desde ALLMK con tu número y pídele su CURP.</span><span class="see">nunca desde tu celular ni tu WhatsApp.</span></li>
+        <li><span class="do">En <span class="f">Calificación closer</span> pega el CURP. Abajo, en <span class="f">Enviar CURP a calificar</span>, elige <b>Análisis</b> y dale <span class="btnblue">Update</span>.</span></li>
+        <li><span class="do">Mientras corre, sigue la llamada con el <b>checklist</b> de abajo. No te quedes esperando.</span></li>
+        <li><span class="do">Abre <span class="f">Resultado de calificación</span> y lee <b>Califica para</b>.</span><span class="see">si aparecen dos ofertas, quédate con la primera. Si dice "procesando", cierra y vuelve a abrir.</span></li>
+        <li><span class="do">Si dice <b>no califica</b> o <b>error en el CURP</b>: <b>paras ahí</b>. Explícale el motivo, que viene en el mismo renglón, y muévelo a <span class="f">no califica</span>.</span></li>
+        <li><span class="do">Si hay oferta, revisa <span class="f">Semanas por reintegrar</span>. Si trae número, pregúntale de cuánto dispone.</span><span class="see">si viene en 0 o vacío, sáltatelo.</span></li>
+        <li><span class="do"><b>Solo si es Financiamiento retroactivo</b>, llena ahí mismo <b>Aportación personal necesaria</b> y <b>Puede hacer la aportación</b>.</span><span class="see">en otras ofertas se quedan vacíos. Se movieron aquí desde Calificación closer.</span></li>
       </ol>
     </div>
     <div class="callout">
-      <span class="h">Si "Aportación necesaria" trae un monto (solo pasa en retroactivo)</span>
-      Ese número es el dinero que el cliente tendría que poner de su bolsa, porque su AFORE no alcanza para cubrir todo. No es tu comisión ni un cobro nuestro. Pregúntale tal cual: "para avanzar se necesitan unos $X de su parte, ¿cuenta con esa cantidad?". Si dice que sí, agéndalo. Si dice que no, no lo agendes; lo puedes referir a alguien más. <span style="color:var(--muted)">El dato <code>Tiempo sin cotizar</code> es solo para tu información, no cambia nada.</span>
-    </div>
-    <div class="callout tip">
-      <span class="h">¿Y si el sistema todavía dice "procesando"?</span>
-      Dale un minuto más, cierra la persona y vuelve a abrirla. El resultado aparece solo.
+      <span class="h">Si "Aportación necesaria" trae un monto (solo en retroactivo)</span>
+      Es dinero que el cliente pone de su bolsa porque su AFORE no alcanza. No es tu comisión ni un cobro nuestro. Pregúntale tal cual: "para avanzar se necesitan unos $X de su parte, ¿cuenta con esa cantidad?". Si sí, agéndalo. Si no, no lo agendes.
     </div>
     <div class="callout tip">
       <span class="h">Si el cliente te manda su reporte de semanas en la llamada</span>
-      Súbelo tú ahí mismo: <span class="f">Calificación closer</span>, campo <b>Reporte de semanas IMSS</b>. Luego, en <span class="f">Enviar datos para calificar</span>, eliges <b>Enviar reporte</b> y le das Update. Con eso califica sin pasar por Consulta Única. <b>No lo mandes al área de reportes</b>: ellos son para cuando el reporte hay que conseguirlo con proveedor.
+      Súbelo tú: <span class="f">Calificación closer</span>, campo <b>Reporte de semanas IMSS</b>. Luego en <span class="f">Enviar datos para calificar</span> eliges <b>Enviar reporte</b> y Update. Califica sin pasar por Consulta Única. <b>No lo mandes al área de reportes</b>: ellos son para conseguirlo con proveedor.
     </div>
   </section>
 
@@ -147,21 +142,20 @@
     <div class="card">
       <p class="lead" style="padding-top:8px"><b>Qué es este lead:</b> la persona sí nos dejó su CURP, pero se quedó en esta columna porque el CURP dio algún error. Primero arreglas el CURP, luego calificas igual que los demás.</p>
       <ol class="steps">
-        <li><span class="do">Abre la persona y ve a <span class="f">Calificación closer</span> para ver el CURP que dejó.</span></li>
-        <li><span class="do">Revisa si es un <b>error de dedo</b>: muy seguido escriben un 0 (cero) donde va una O (letra), o repiten una letra. Compáralo bien.</span></li>
-        <li><span class="do">Si fue error de dedo: háblale y pídele que te lo dicte otra vez. Con el CURP correcto, sigues igual que un lead sin CURP.</span></li>
-        <li><span class="do">Si al meterlo dice <b>"CURP ya consultada hoy"</b>: no es problema. Borra, cópialo y pégalo de nuevo, y aparece el resultado.</span></li>
-        <li><span class="do">Si dice <b>"CURP duplicado" o "no se puede procesar"</b>: esto no se arregla por teléfono. Sigue el recuadro rojo de abajo.</span></li>
+        <li><span class="do">Abre la persona y ve el CURP en <span class="f">Calificación closer</span>.</span></li>
+        <li><span class="do">Casi siempre es <b>error de dedo</b>: un 0 donde va O, o una letra repetida. Compáralo bien.</span></li>
+        <li><span class="do">Si fue eso, pídele que te lo dicte otra vez y sigues igual que un lead sin CURP.</span></li>
+        <li><span class="do">Si dice <b>"CURP ya consultada hoy"</b>: bórralo, cópialo y pégalo de nuevo.</span></li>
+        <li><span class="do">Si dice <b>"duplicado"</b> o <b>"no se puede procesar"</b>: no se arregla por teléfono, ve al recuadro rojo.</span></li>
       </ol>
     </div>
     <div class="callout no">
       <span class="h">CURP duplicado o que no se puede procesar</span>
       <ol class="steps" style="margin-top:2px">
-        <li><span class="do">Mueve la oportunidad a <span class="f">🟢 Solicitar reporte IMSS</span>. Con eso sale de tu pipe.</span><span class="see">ya no lo pides tú por WhatsApp ni lo subes después.</span></li>
-        <li><span class="do">El <b>área de reportes</b> lo consigue con proveedores externos. Le dan seguimiento diario hasta que llega.</span></li>
-        <li><span class="do">Si lo consiguen, el sistema lo califica solo y te regresa el lead ya con resultado.</span></li>
-        <li><span class="do">Si no se pudo, te va a llegar en <span class="f">🔴 Pedir info / Reporte IMSS</span>. <b>Lee la nota</b>: ahí dice exactamente qué pedirle al cliente.</span></li>
-        <li><span class="do">Casi siempre va a ser que el cliente tenga que ir <b>en persona a su subdelegación del IMSS</b> a corregir sus datos. Le llamas, se lo explicas y le pones un task para darle seguimiento.</span><span class="see">cuando el cliente te confirme que ya fue, lo regresas a Solicitar reporte IMSS y se vuelve a pedir.</span></li>
+        <li><span class="do">Muévelo a <span class="f">🟢 Solicitar reporte IMSS</span>. Sale de tu pipe.</span><span class="see">ya no lo pides tú ni lo subes después.</span></li>
+        <li><span class="do">El <b>área de reportes</b> lo consigue con proveedores y le da seguimiento diario. Si lo logran, el sistema lo califica solo y te lo regresa con resultado.</span></li>
+        <li><span class="do">Si no se pudo, te llega en <span class="f">🔴 Pedir info / Reporte IMSS</span>. <b>Lee la nota</b>: ahí dice qué pedirle.</span></li>
+        <li><span class="do">Casi siempre es que vaya <b>en persona a su subdelegación del IMSS</b>. Le llamas, se lo explicas y le pones un task.</span><span class="see">cuando confirme que ya fue, lo regresas a Solicitar reporte IMSS.</span></li>
       </ol>
     </div>
   </section>
@@ -171,34 +165,36 @@
     <div class="card">
       <p class="lead" style="padding-top:8px"><b>Qué es este lead:</b> el sistema ya lo revisó y ya dijo que sí califica. Aquí no calificas nada. Es el lead más fácil.</p>
       <ol class="steps">
-        <li><span class="do">Llámale desde ALLMK con tu número asignado.</span></li>
-        <li><span class="do">Tu único objetivo es <b>agendar</b> la asesoría. Nada de pedir CURP ni revisar nada más.</span></li>
-        <li><span class="do">La columna <span class="f">Reagendar</span> se trabaja exactamente igual: solo llamar y agendar.</span></li>
+        <li><span class="do">Llámale desde ALLMK con tu número.</span></li>
+        <li><span class="do">Tu único objetivo es <b>agendar</b>. Nada de pedir CURP ni revisar más.</span></li>
+        <li><span class="do"><span class="f">Reagendar</span> se trabaja igual: llamar y agendar.</span></li>
       </ol>
     </div>
     <div class="callout tip">
       <span class="h">Para tu tranquilidad</span>
-      Cuando alguien manda un CURP bueno, el sistema lo revisa solo: si no califica lo saca del pipeline, y si califica lo manda solito a "lead calificado". Por eso aquí ya llegan listos.
+      Con un CURP bueno el sistema revisa solo: si no califica lo saca del pipeline, y si califica lo manda a "lead calificado". Por eso aquí llegan listos.
     </div>
   </section>
 
   <h2><span class="n">2</span>El checklist de la llamada<small>preguntas que sí o sí se hacen</small></h2>
-  <p class="lead">El sistema saca casi todo del reporte del IMSS, pero hay cosas que solo la persona te puede decir. <b>Estas diez van en todas las llamadas, sin excepción.</b> Las primeras ocho descalifican si contesta que sí.</p>
+  <p class="lead"><b>Diez preguntas, en todas las llamadas.</b> Las primeras ocho descalifican si contesta que sí.</p>
 
   <div class="card chk">
     <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Ya estás pensionado o recibiendo algún tipo de pensión?</span></div>
     <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Ya aceptaste tu resolución de pensión, o tienes una negativa de pensión?</span></div>
     <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Alguna vez demandaste a un patrón?</span></div>
     <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Has demandado al IMSS, al Infonavit o al AFORE?</span></div>
-    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Alguna vez te dieron de alta en una empresa sin estar realmente trabajando?<span class="r">Si dice que sí, pregúntale: ¿esos recibos están timbrados? Esto se llama simulación laboral.</span></span></div>
-    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Fuiste accionista en alguna empresa en la que cotizaste?<span class="r">Si dice que sí, pregúntale: ¿mayoritario o minoritario?</span></span></div>
-    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Trabajas o trabajaste en alguna plataforma digital tipo Uber o Didi?<span class="r">Puedes verificarlo tú: si en el reporte de semanas su registro patronal trae dos estrellas, sí pertenece.</span></span></div>
-    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Tienes algún crédito Infonavit?<span class="r">Si dice que sí, pregúntale: ¿de cuánto y cuánto te falta pagar? Anótalo, pero con crédito vigente no procede.</span></span></div>
-    <div class="q"><span class="pill dat">DATO OBLIGATORIO</span><span class="t">¿Sabes cuánto tienes en tu AFORE, o tienes algún estado de cuenta?<span class="r">Necesitas el monto correcto. La referencia: al menos 100 mil por cada año que le falta de trabajar.</span></span></div>
+    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Alguna vez te dieron de alta en una empresa sin estar realmente trabajando?<span class="r">Si sí: ¿están timbrados? Eso es simulación laboral.</span></span></div>
+    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Fuiste accionista en alguna empresa en la que cotizaste?<span class="r">Si sí: ¿mayoritario o minoritario?</span></span></div>
+    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Trabajas o trabajaste en alguna plataforma digital tipo Uber o Didi?<span class="r">Verifícalo: registro patronal con dos estrellas en el reporte = sí pertenece.</span></span></div>
+    <div class="q"><span class="pill all">DESCALIFICA</span><span class="t">¿Tienes algún crédito Infonavit?<span class="r">Si sí: ¿de cuánto y cuánto falta? Con crédito vigente no procede.</span></span></div>
+    <div class="q"><span class="pill dat">DATO OBLIGATORIO</span><span class="t">¿Sabes cuánto tienes en tu AFORE, o tienes algún estado de cuenta?<span class="r">Referencia: al menos 100 mil por cada año que le falta de trabajar.</span></span></div>
     <div class="q"><span class="pill dat">INTENCIÓN</span><span class="t">¿Qué es lo que buscas: financiamiento, o ya cuentas tú con el dinero y buscas más la asesoría o información en general?</span></div>
   </div>
 
   <h2><span class="n">3</span>Palabras que vas a oír<small>glosario rápido</small></h2>
+  <details>
+  <summary>Ábrelo si alguna palabra no te suena</summary>
   <div class="card gloss">
     <div><b>ALLMK</b> · el sistema donde trabajas todo el día. Ahí llegan tus leads, ahí llamas y ahí calificas.</div>
     <div><b>Oportunidad</b> · cada persona (tarjeta) dentro del pipeline. La abres para ver sus datos y su conversación.</div>
@@ -207,33 +203,34 @@
     <div><b>AFORE</b> · el ahorro de pensión de la persona. En retroactivo, si no alcanza, el cliente pone la diferencia.</div>
     <div><b>NSS</b> · número de seguro social. Solo lo necesitas cuando el CURP da error.</div>
   </div>
+  </details>
 
   <h2><span class="n">4</span>Si el sistema se cae<small>calificar a mano, de respaldo</small></h2>
   <details>
     <summary>Ábrelo solo si la automatización no funciona</summary>
     <p style="margin:0 0 4px"><b>Bajar el reporte de semanas</b></p>
     <ol class="steps">
-      <li><span class="do">Entra a Consulta Única. El usuario y la contraseña están en el centro de información.</span></li>
-      <li><span class="do">Ve a consultas del IMSS, semanas cotizadas. Escribe el CURP y dale consultar.</span></li>
+      <li><span class="do">Entra a Consulta Única. Usuario y contraseña en el centro de información.</span></li>
+      <li><span class="do">Consultas del IMSS, semanas cotizadas. Escribe el CURP y consulta.</span></li>
       <li><span class="do">Entra a resultados y descarga el reporte.</span></li>
     </ol>
     <p style="margin:12px 0 4px"><b>Mandarlo a calificar</b></p>
     <ol class="steps">
-      <li><span class="do">Regresa a ALLMK, a la oportunidad. En <span class="f">Calificación closer</span>, campo <b>Reporte de semanas IMSS</b>, sube el archivo que bajaste.</span></li>
-      <li><span class="do">Abajo, en <span class="f">Enviar datos para calificar</span>, elige <b>Enviar reporte</b> y dale Update.</span><span class="see">ese botón dispara la calificación sin pasar por Consulta Única.</span></li>
-      <li><span class="do">Sal y vuelve a entrar. El resultado aparece en <span class="f">Resultado de calificación</span> como siempre.</span></li>
+      <li><span class="do">Regresa a ALLMK. En <span class="f">Calificación closer</span>, campo <b>Reporte de semanas IMSS</b>, sube el archivo.</span></li>
+      <li><span class="do">Abajo, en <span class="f">Enviar datos para calificar</span>, elige <b>Enviar reporte</b> y Update.</span></li>
+      <li><span class="do">Sal y vuelve a entrar. El resultado sale en <span class="f">Resultado de calificación</span>.</span></li>
     </ol>
-    <p style="margin:12px 0 0;color:var(--muted)">Aunque tengas acceso a la calculadora, <b>no subas nada directo ahí</b>. Siempre desde ALLMK.</p>
+    <p style="margin:12px 0 0;color:var(--muted)">Aunque tengas acceso a la calculadora, <b>no subas nada directo ahí</b>.</p>
   </details>
 
   <h2><span class="n">5</span>Reglas que no se rompen</h2>
   <ul class="hard">
-    <li>Llama siempre desde ALLMK con tu número. Nunca desde tu WhatsApp ni tu celular.</li>
-    <li><b>Todo se manda a calificar desde ALLMK</b>, nunca directo en la calculadora. Desde ALLMK viaja el código del contacto y el reporte se guarda solo; por fuera el sistema no sabe de quién es y se pierde.</li>
-    <li>No mandes mensajes tú. Los mensajes salen solos.</li>
-    <li>No muevas un lead de una columna verde a otra columna verde.</li>
-    <li>No le des montos de pensión al lead. Eso lo dice el experto en la asesoría.</li>
-    <li>Antes de cerrar el día, deja vacías las columnas verdes, moradas y rojas.</li>
+    <li><b>Todo se califica desde ALLMK</b>, nunca directo en la calculadora.</li>
+    <li>Llama desde ALLMK con tu número. Nunca desde tu celular ni tu WhatsApp.</li>
+    <li>No mandes mensajes tú. Salen solos.</li>
+    <li>No muevas un lead de una columna verde a otra verde.</li>
+    <li>No le des montos de pensión. Eso lo dice el experto en la asesoría.</li>
+    <li>Al cierre del día, verdes, moradas y rojas en cero.</li>
   </ul>
 
   <p class="foot">Pensión Perfecta · guía de calificación CF-A</p>
